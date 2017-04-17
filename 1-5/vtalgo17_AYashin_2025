@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+void HowMuch(int, int);
+
+int main() {
+  int t, n, k; // кол-во элементов
+  cin >> t;
+
+  for (int i = 0; i < t; i++) {
+    cin >> n;
+    cin >> k;
+    HowMuch(n, k);
+  }
+  return 0;
+}
+
+void HowMuch(int n, int k) {
+  int in_team = n / k;
+  int teams_plus_one = n % k;
+  int teams = k - teams_plus_one;
+  int total = 0;
+
+  for (int i = 0; i < k; i++) {
+    if (teams_plus_one != 0) {
+      total = total + ((in_team + 1) * (in_team + 1) * (teams_plus_one - 1) +
+                       (in_team) * (in_team + 1) * teams);
+      teams_plus_one--;
+    } else {
+      total = total + (in_team * in_team * (teams - 1));
+      teams--;
+    }
+  }
+  printf("%d\n", total);
+}

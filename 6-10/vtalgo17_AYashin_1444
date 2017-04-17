@@ -1,0 +1,233 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <algorithm>
+
+using namespace std;
+
+struct point {
+  int x;
+  int y;
+  int index;
+  float angle;
+  float distance;
+  bool is_entered;
+};
+
+int FindMinY(point *arr, int number) {
+  int MinY_index = 0;
+  int MinY = 1001;
+  for (int i = 0; i < number; i++) {
+    if (arr[i].y < MinY || (arr[i].y == MinY && arr[i].x < arr[MinY_index].x)) {
+      MinY = arr[i].y;
+      MinY_index = i;
+    }
+  }
+  return MinY_index;
+}
+
+void FindAngles(point *arr, int number, int MinY_index) {
+  float null_Angle = 180;
+  bool left_side = false, right_side = false;
+  for (int i = 0; i < number; i++) {
+    if (arr[i].y == arr[MinY_index].y && arr[i].index != MinY_index)
+      arr[i].angle = 180;
+    else if (arr[i].index == MinY_index)
+      arr[i].angle = 0;
+    else if (arr[i].x == arr[MinY_index].x)
+      arr[i].angle = 90;
+    else if (arr[MinY_index].x > arr[i].x)
+      arr[i].angle = atan(((float)(arr[i].y - arr[MinY_index].y) /
+                           (arr[MinY_index].x - arr[i].x))) *
+                     180 / 3.14159265;
+    else
+      arr[i].angle = atan(((float)(arr[i].y - arr[MinY_index].y) /
+                           (arr[MinY_index].x - arr[i].x))) *
+                         180 / 3.14159265 +
+                     180;
+    arr[i].distance = sqrtf((float)((arr[i].y - arr[MinY_index].y) *
+                                        (arr[i].y - arr[MinY_index].y) +
+                                    (arr[MinY_index].x - arr[i].x) *
+                                        (arr[MinY_index].x - arr[i].x)));
+    if (arr[i].angle < arr[0].angle)
+      left_side = true;
+    if (arr[i].angle > arr[0].angle)
+      right_side = true;
+  }
+
+  for (int i = 0; i < number; i++) {
+
+    if (i != MinY_index && arr[i].angle < null_Angle && right_side) {
+      null_Angle = 180;
+      arr[MinY_index].angle = null_Angle;
+      break;
+    } else if (i != MinY_index && arr[i].angle < null_Angle && left_side) {
+      null_Angle = arr[i].angle;
+      arr[MinY_index].angle = null_Angle;
+      break;
+    }
+  }
+}
+
+void Sort(point *arr, int left, int right) {
+  int i = left, r = right;
+  float center_angle = arr[(i + r) / 2].angle;
+
+  while (i <= r) {
+    while (arr[i].angle < center_angle)
+      i++;
+    while (arr[r].angle > center_angle)
+      r--;
+    if (i <= r) {
+      float tmp_angle = arr[i].angle;
+      arr[i].angle = arr[r].angle;
+      arr[r].angle = tmp_angle;
+      float tmp_dist = arr[i].distance;
+      arr[i].distance = arr[r].distance;
+      arr[r].distance = tmp_dist;
+      int tmp_x = arr[i].x;
+      arr[i].x = arr[r].x;
+      arr[r].x = tmp_x;
+      int tmp_y = arr[i].y;
+      arr[i].y = arr[r].y;
+      arr[r].y = tmp_y;
+      int tmp_index = arr[i].index;
+      arr[i].index = arr[r].index;
+      arr[r].index = tmp_index;
+      i++;
+      r--;
+    }
+  }
+  if (left < r)
+    Sort(arr, left, r);
+  if (right > i)
+    Sort(arr, i, right);
+}
+
+void FixTheSort(point *arr, int number) {
+  int how_much = 1;
+  for (int i = 0; i < number; i++) {
+
+    float old_value;
+    bool left_side = false, right_side = false;
+    if (arr[i].angle <= arr[0].angle)
+      left_side = true;
+    if (arr[i].angle > arr[0].angle)
+      right_side = true;
+    if (old_value == arr[i].angle)
+      how_much++;
+    if (how_much > 1 && arr[i + 1].angle != old_value && right_side) {
+      for (int k = i - how_much + 1; k <= i; k++) {
+        for (int r = i - how_much + 1; r < i; r++) {
+          if (arr[k].distance > arr[r].distance) {
+            float tmp_angle = arr[k].angle;
+            arr[k].angle = arr[r].angle;
+            arr[r].angle = tmp_angle;
+            float tmp_dist = arr[k].distance;
+            arr[k].distance = arr[r].distance;
+            arr[r].distance = tmp_dist;
+            int tmp_x = arr[k].x;
+            arr[k].x = arr[r].x;
+            arr[r].x = tmp_x;
+            int tmp_y = arr[k].y;
+            arr[k].y = arr[r].y;
+            arr[r].y = tmp_y;
+            int tmp_index = arr[k].index;
+            arr[k].index = arr[r].index;
+            arr[r].index = tmp_index;
+          }
+        }
+      }
+      how_much = 1;
+    }
+    if (how_much > 1 && arr[i + 1].angle != old_value && left_side) {
+      for (int k = i - how_much + 1; k <= i; k++) {
+        for (int r = i - how_much + 1; r < i; r++) {
+          if (arr[k].distance < arr[r].distance) {
+            float tmp_angle = arr[k].angle;
+            arr[k].angle = arr[r].angle;
+            arr[r].angle = tmp_angle;
+            float tmp_dist = arr[k].distance;
+            arr[k].distance = arr[r].distance;
+            arr[r].distance = tmp_dist;
+            int tmp_x = arr[k].x;
+            arr[k].x = arr[r].x;
+            arr[r].x = tmp_x;
+            int tmp_y = arr[k].y;
+            arr[k].y = arr[r].y;
+            arr[r].y = tmp_y;
+            int tmp_index = arr[k].index;
+            arr[k].index = arr[r].index;
+            arr[r].index = tmp_index;
+          }
+        }
+      }
+      how_much = 1;
+      left_side = false, right_side = false;
+    }
+
+    old_value = arr[i].angle;
+  }
+}
+
+void FixtheFirst(point *arr, int number) {
+  int how_much = 1;
+  bool is_in_part = false;
+  for (int i = 0; i < number; i++) {
+
+    float old_value;
+    float first_dist;
+    if (old_value == arr[i].angle)
+      how_much++;
+    if (how_much > 1 && arr[i + 1].angle != old_value) {
+      for (int k = i - how_much + 1; k <= i; k++)
+        if (arr[k].index == 1) {
+          is_in_part = true;
+        }
+      if (is_in_part) {
+      }
+
+      how_much = 1;
+      is_in_part = false;
+    }
+
+    old_value = arr[i].angle;
+  }
+}
+
+int main() {
+
+  int number;
+  cin >> number;
+  struct point arr[number];
+  for (int i = 0; i < number; i++) {
+    cin >> arr[i].x;
+    cin >> arr[i].y;
+    arr[i].index = i;
+  }
+
+  int MinY_index = FindMinY(arr, number);
+
+  FindAngles(arr, number, MinY_index);
+
+  Sort(arr, 0, number - 1);
+
+  FixTheSort(arr, number);
+  printf("%d\n", number);
+  bool show = false;
+  for (int i = 0; i < number; i++) {
+    if (arr[i].index + 1 == 1)
+      show = true;
+    if (show)
+      printf("%d\n", arr[i].index + 1);
+  }
+
+  for (int i = 0; i < number; i++) {
+
+    if (arr[i].index + 1 == 1)
+      show = false;
+    if (show)
+      printf("%d\n", arr[i].index + 1);
+  }
+  return 0;
+}

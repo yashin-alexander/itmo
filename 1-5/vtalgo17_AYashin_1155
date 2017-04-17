@@ -1,0 +1,113 @@
+#include <iostream>
+
+using namespace std;
+
+struct NODE {
+  int Number;
+  char Name;
+  struct NODE *Nei[3];
+  // A B C D E F G H
+  // 0 1 2 3 4 5 6 7
+};
+
+void remove_vertex(NODE *cube) {
+  for (int i = 0; i < 8; i++) {
+    while (cube[i].Number > 0 && cube[i].Nei[0]->Number > 0) {
+      cube[i].Number--;
+      cube[i].Nei[0]->Number--;
+      printf("%c%c-\n", cube[i].Name, cube[i].Nei[0]->Name);
+    }
+    while (cube[i].Number > 0 && cube[i].Nei[1]->Number > 0) {
+      cube[i].Number--;
+      cube[i].Nei[1]->Number--;
+      printf("%c%c-\n", cube[i].Name, cube[i].Nei[1]->Name);
+    }
+    while (cube[i].Number > 0 && cube[i].Nei[2]->Number > 0) {
+      cube[i].Number--;
+      cube[i].Nei[2]->Number--;
+      printf("%c%c-\n", cube[i].Name, cube[i].Nei[2]->Name);
+    }
+  }
+}
+
+int main() {
+  NODE cube[8];
+  cin >> cube[0].Number;
+  cube[0].Nei[0] = &cube[1];
+  cube[0].Nei[1] = &cube[3];
+  cube[0].Nei[2] = &cube[4];
+  cube[0].Name = 'A';
+  cin >> cube[1].Number;
+  cube[1].Nei[0] = &cube[0];
+  cube[1].Nei[1] = &cube[2];
+  cube[1].Nei[2] = &cube[5];
+  cube[1].Name = 'B';
+  cin >> cube[2].Number;
+  cube[2].Nei[0] = &cube[1];
+  cube[2].Nei[1] = &cube[6];
+  cube[2].Nei[2] = &cube[3];
+  cube[2].Name = 'C';
+  cin >> cube[3].Number;
+  cube[3].Nei[0] = &cube[0];
+  cube[3].Nei[1] = &cube[2];
+  cube[3].Nei[2] = &cube[7];
+  cube[3].Name = 'D';
+  cin >> cube[4].Number;
+  cube[4].Nei[0] = &cube[0];
+  cube[4].Nei[1] = &cube[5];
+  cube[4].Nei[2] = &cube[7];
+  cube[4].Name = 'E';
+  cin >> cube[5].Number;
+  cube[5].Nei[0] = &cube[4];
+  cube[5].Nei[1] = &cube[1];
+  cube[5].Nei[2] = &cube[6];
+  cube[5].Name = 'F';
+  cin >> cube[6].Number;
+  cube[6].Nei[0] = &cube[5];
+  cube[6].Nei[1] = &cube[7];
+  cube[6].Nei[2] = &cube[2];
+  cube[6].Name = 'G';
+  cin >> cube[7].Number;
+  cube[7].Nei[0] = &cube[6];
+  cube[7].Nei[1] = &cube[4];
+  cube[7].Nei[2] = &cube[3];
+  cube[7].Name = 'H';
+
+  int sum = 0, sum_nechet = 0, sum_chet = 0;
+  for (int i = 0; i < 8; i++)
+    sum = cube[i].Number + sum;
+  sum_chet = cube[0].Number + cube[2].Number + cube[7].Number + cube[5].Number;
+  sum_nechet =
+      cube[1].Number + cube[3].Number + cube[4].Number + cube[6].Number;
+
+  if (sum % 2 == 1) {
+    printf("IMPOSSIBLE\n");
+    return 0;
+  }
+  if (sum_chet - sum_nechet != 0) {
+    printf("IMPOSSIBLE\n");
+    return 0;
+  }
+
+  remove_vertex(cube);
+
+  for (int i = 0; i < 8; i++) {
+    while (cube[i].Number > 0) {
+      for (int j = 0; j < 3; j++) {
+        for (int k = 0; k < 3; k++) {
+          for (int n = 0; n < 3; n++) {
+            if (cube->Nei[j]->Nei[k]->Nei[n]->Number != 0) {
+              cube->Nei[j]->Number++;
+              cube->Nei[j]->Nei[k]->Number++;
+              printf("%c%c+\n", cube->Nei[j]->Name, cube->Nei[j]->Nei[k]->Name);
+
+              remove_vertex(cube);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return 0;
+}

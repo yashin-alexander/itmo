@@ -1,0 +1,88 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+void InsertionSort(float *an, int *num, int N) {
+  for (int i = 1; i < N; i++) {
+    for (int j = 1; j < i; j++) {
+      if (an[j] >= an[i]) {
+        float tmp_x = an[i];
+        int tmp_num = num[i];
+        for (int k = i; k > j; k--) {
+          an[k] = an[k - 1];
+          num[k] = num[k - 1];
+        }
+        an[j] = tmp_x;
+        num[j] = tmp_num;
+      }
+    }
+  }
+  // НАПИШИТЕ ЭТУ ФУНКЦИЮ
+}
+
+void First(int **table, int N, int left) {
+  int tmp_x = table[left][0];
+  int tmp_y = table[left][1];
+  int tmp_n = table[left][2];
+  for (int k = left; k >= 1; k--) {
+    table[k][0] = table[k - 1][0];
+    table[k][1] = table[k - 1][1];
+    table[k][2] = table[k - 1][2];
+  }
+  table[0][0] = tmp_x;
+  table[0][1] = tmp_y;
+  table[0][2] = tmp_n;
+}
+
+int main() {
+  int n;
+  cin >> n;
+
+  int **table = new int *[n];
+  for (int i = 0; i < n; i++)
+    table[i] = new int[3];
+
+  float *an = new float[n];
+  int *num = new int[n];
+
+  int left = 2000000000;
+  int left_coord = 2000000000;
+
+  for (int i = 0; i < n; i++) {
+    cin >> table[i][0];
+    cin >> table[i][1];
+    table[i][2] = i + 1;
+    if (table[i][0] < left_coord) {
+      left = table[i][2] - 1;
+      left_coord = table[i][0];
+    }
+  }
+  First(table, n, left);
+
+  for (int i = 0; i < n; i++) {
+    float multy;
+    if (table[i][0] == table[0][0] && table[i][1] > table[0][1]) {
+      an[i] = 90.1;
+    } else if (table[i][0] == table[0][0] && table[i][1] < table[0][1]) {
+      an[i] = -90;
+    } else if (table[i][1] == table[0][1] && table[i][0] > table[0][0]) {
+      an[i] = 0;
+    } else if (table[i][1] > table[0][1] && table[i][0] > table[0][0]) {
+      multy = (float)(table[i][1] - table[0][1]) / (table[i][0] - table[0][0]);
+      an[i] = atan(multy) * 180 / 3.14159265;
+      // printf("+0\n");
+    } else if (table[i][1] < table[0][1] && table[i][0] > table[0][0]) {
+      multy = (float)(table[i][1] - table[0][1]) / (table[i][0] - table[0][0]);
+      an[i] = atan(multy) * 180 / 3.14159265;
+      // printf("+270\n");
+    }
+    // printf("multi = %f  i=%d \n",multy,i+1);
+    num[i] = table[i][2];
+  }
+  num[0] = table[0][2];
+  InsertionSort(an, num, n);
+  printf("%d %d", num[0], num[(n / 2)]);
+
+  return 0;
+}

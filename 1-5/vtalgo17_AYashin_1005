@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+void BIN(int a, int n, bool *binary) {
+
+  for (int i = n - 1; i >= 0; i--) { //Заполняем массив
+    if (a % 2 == 0) {
+      binary[i] = false;
+    } else {
+      binary[i] = true;
+    }
+    a = a / 2;
+  }
+}
+
+int main() {
+  int n, t, min = INT32_MAX;
+  vector<int> array;
+  cin » n;
+  for (int i = 0; i < n; ++i) {
+    cin » t;
+    array.push_back(t);
+  }
+  int sum1 = 0, sum2 = 0;
+
+  bool bitmask[n]; //Массив в котором символоми записано число в BIN
+
+  for (int y = 0; y < pow(2.0, n); ++y) {
+    BIN(y, n, bitmask);
+
+    for (int i = 0; i < n; ++i) {
+      if (bitmask[i]) {
+        sum1 += array[i];
+      } else {
+        sum2 += array[i];
+      }
+    }
+    if (abs(sum1 - sum2) < min) {
+      min = abs(sum1 - sum2);
+    }
+    sum1 = 0;
+    sum2 = 0;
+  }
+
+  cout « min;
+  return 0;
+}
