@@ -157,7 +157,7 @@ static void read_file_tobytes(int descriptor,int number_of_bytes){
     }
 }
 
-static void print_bfiles_options_after(char **names, int file_headers, int number_of_symbols, int argc){
+static void print_bfiles_options_after(char **names, int file_headers, int number_of_symbols, int argc,int plus){
     int descriptor;
     int i;
     if (number_of_symbols==0)
@@ -168,7 +168,7 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
         read_byte_stdin(number_of_symbols);
         exit(0);
     }
-    for (i=2; i<argc; i++) {
+    for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
             if(file_headers)
                 write(STDOUT_FILENO, "==> standard input <==\n", 24);
@@ -182,6 +182,8 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
             print_options_error(names[i],7);
             continue;
         } else {
+            if(i!=2+plus&&errno==NULL)
+                write(STDOUT_FILENO, "\n", 1);
             if (file_headers) {
                 write(STDOUT_FILENO, "======> ", 8);
                 write(STDOUT_FILENO, names[i], strlen(names[i]));
@@ -191,7 +193,7 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
         }
     }
 }
-static void print_files_options_after(char **names, int file_headers, int number_of_strings, int argc){
+static void print_files_options_after(char **names, int file_headers, int number_of_strings, int argc, int plus){
 
     int descriptor;
     int i;
@@ -203,7 +205,7 @@ static void print_files_options_after(char **names, int file_headers, int number
         read_stdin(number_of_strings);
         exit(0);
     }
-    for (i=2; i<argc; i++) {
+    for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
             if (file_headers)
                 write(STDOUT_FILENO, "==> standard input <==\n", 24);
@@ -217,9 +219,9 @@ static void print_files_options_after(char **names, int file_headers, int number
             print_options_error(names[i],7);
             continue;
         } else {
-            if (file_headers) {
-                if(i!=2&&errno==NULL)
+            if(i!=2+plus&&errno==NULL)
                 write(STDOUT_FILENO, "\n", 1);
+            if (file_headers) {
                 write(STDOUT_FILENO, "======> ", 8);
                 write(STDOUT_FILENO, names[i], strlen(names[i]));
                 write(STDOUT_FILENO, " <======\n", 9);
@@ -237,6 +239,7 @@ static void options_procesing(const char* string,char **names,int argc){
     int number_of_smth=strlen(string);
     int number_of_strings;
     int file_headers = 0;
+    int o;
 
     for (i=1; i < number_of_smth; i++){
         if(string[i]>='0'&&string[i]<='9'){
@@ -263,7 +266,7 @@ static void options_procesing(const char* string,char **names,int argc){
                     number_of_strings=atoi(&string[1]);
                     /*GO PRINT -23432cqvqvq
                     GO PRINT -23432c*/
-                    print_bfiles_options_after(names,file_headers,number_of_strings,argc);
+                    print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                     exit(0);
                 }
 
@@ -275,7 +278,7 @@ static void options_procesing(const char* string,char **names,int argc){
                 }
             }
             number_of_strings=atoi(&string[1]);
-            print_files_options_after(names,file_headers,number_of_strings,argc);
+            print_files_options_after(names,file_headers,number_of_strings,argc,0);
             /*GO PRINT -3434 file file file*/
             exit(0);
         }
@@ -295,7 +298,7 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=1;
                     }
                 }
-                print_files_options_after(names,file_headers,number_of_strings,argc);
+                print_files_options_after(names,file_headers,number_of_strings,argc,0);
                 exit(0);
                 /*GO PRINT -v123*/
                 break;
@@ -313,7 +316,7 @@ static void options_procesing(const char* string,char **names,int argc){
                         if (string[i] == 'v')
                             file_headers=1;
                     }
-                    print_files_options_after(names,file_headers,number_of_strings,argc);
+                    print_files_options_after(names,file_headers,number_of_strings,argc,0);
                     exit(0);
                     /*GO PRINT -q123*/
                 }else{
@@ -335,10 +338,29 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=0;
                     }
                     number_of_strings=atoi(&string[2]);
-                    print_bfiles_options_after(names,file_headers,number_of_strings,argc);
+                    print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                     exit(0);
                     /*GO PRINT -c123*/
                 }else{
+                    if(argc>=2&&isdigit(names[2][0])){
+
+                        for(o=0;o<strlen(names[2]);o++) {
+                            if (names[2][o] >= '0' && names[2][o] <= '9')
+                                continue;
+                            print_options_error(string,8);
+                            exit(1);
+                        }
+
+                        number_of_strings=atoi(names[2]);
+
+                        if(argc==3){
+                            read_stdin(number_of_strings);
+                            exit(0);
+                        }
+
+                        print_bfiles_options_after(names,file_headers,number_of_strings,argc,1);
+                        exit(0);
+                    }
                     print_options_error(string,2);
                     exit(1);
                 }
@@ -358,10 +380,29 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=0;
                     }
                     number_of_strings=atoi(&string[2]);
-                    print_files_options_after(names,file_headers,number_of_strings,argc);
+                    print_files_options_after(names,file_headers,number_of_strings,argc,0);
                     /*GO PRINT -n123 */
                     exit(0);
                 }else{
+                    if(argc>=2&&isdigit(names[2][0])){
+
+                        for(o=0;o<strlen(names[2]);o++) {
+                            if (names[2][o] >= '0' && names[2][o] <= '9')
+                                continue;
+                            print_options_error(string,8);
+                            exit(1);
+                        }
+
+                        number_of_strings=atoi(names[2]);
+
+                        if(argc==3){
+                            read_stdin(number_of_strings);
+                            exit(0);
+                        }
+
+                        print_files_options_after(names,file_headers,number_of_strings,argc,1);
+                        exit(0);
+                    }
                     print_options_error(string,4);
                     exit(1);
                 }
@@ -383,7 +424,7 @@ static void options_procesing(const char* string,char **names,int argc){
     }
     /*GO PRINT -q32 -v2*/
     number_of_strings=atoi(&string[2]);
-    print_files_options_after(names,file_headers,number_of_strings,argc);
+    print_files_options_after(names,file_headers,number_of_strings,argc,0);
 }
 
 int main(int argc, char **argv) {
