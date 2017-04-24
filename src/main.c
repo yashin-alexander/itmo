@@ -164,14 +164,14 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
         number_of_symbols=DEFAULT_STRINGSNUM;
     if (argc<=2){
         if (file_headers)
-            write(STDOUT_FILENO, "==> standard input <==\n", 24);
+            write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
         read_byte_stdin(number_of_symbols);
         exit(0);
     }
     for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
             if(file_headers)
-                write(STDOUT_FILENO, "==> standard input <==\n", 24);
+                write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
             read_byte_stdin(number_of_symbols);
             continue;
         }
@@ -298,31 +298,31 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=1;
                         if (string[i] == 'n'){
                             i++;
+
+                            number_of_strings=atoi(&string[i]);
                             for (; i < number_of_smth; i++) {
                                 if (string[i] < '0' && string[i] > '9') {
                                     print_options_error(string + 2 * sizeof(char), 1);
                                     exit(1);
                                 }
                             }
-                            number_of_strings=atoi(&string[i+1]);
                             print_files_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
                         if(string[i] == 'c'){
                             i++;
+                            number_of_strings=atoi(&string[i]);
                             for (; i < number_of_smth; i++) {
                                 if (string[i] < '0' || string[i] > '9') {
                                     print_options_error(string + 2 * sizeof(char), 1);
                                     exit(1);
                                 }
                             }
-                            number_of_strings=atoi(&string[i+1]);
                             print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
                     }
                 }
-                printf("numbir=%d\n",number_of_strings);
                 print_files_options_after(names,file_headers,number_of_strings,argc,0);
                 exit(0);
                 /*GO PRINT -v123*/
