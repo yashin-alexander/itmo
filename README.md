@@ -16,4 +16,8 @@
   ![alt tag](https://pp.vk.me/c636019/v636019076/37c5b/4pP60DmgxmU.jpg)
   ![alt tag](https://pp.vk.me/c636019/v636019076/37c65/cFRE9pKQPRs.jpg)
   ![alt tag](https://pp.vk.me/c636019/v636019076/37c6f/ssIqFp8Ehnw.jpg)
+  
+  
+  
+Также, выкладываю ЛР №5 по вычслительной математике, интерполяция методом Лагранжа, узлы которой определяются как корни полинома Чебышева. Интерфейс аналогичен вышеописанному. Директория "Lagrange+Chebyshev interpolation".
 
