@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: alexander
+  User: yashin alexander
   Date: 29.04.17
   Time: 1:17
   To change this template use File | Settings | File Templates.
@@ -9,13 +9,11 @@
 <html>
 <style>
   body {
-    background: #66608B;
     background-size: cover;
     width: 900px; /* Ширина слоя */
     height: 700px;
     align: center;
-    margin-right: 8%; /* Отступ справа */
-    margin-left: 8%;
+    margin-left: 10%;
     background-image: url("pic.png");
   }
   #x_checks > p {
@@ -33,7 +31,7 @@
     background-color: #4cbaa4;
     color: white;
   }
-  input{
+  input[type="text"],input[type="button"]{
     width: 100px;
     margin: 1px 1px;
     background: #D3D3D3;
@@ -46,34 +44,9 @@
     outline: none;
     font-size: 15px;
   }
-  select{
-    margin: 1px 1px;
-    background: #D3D3D3;
-    border: 2px solid #fff;
-    text-align: center;
-    display: inline-block;
-    text-align: center;
-    padding: 2px;
-    font-weight: bold;
-    border-radius: 12px;
-    outline: none;
-    font-size: 15px;
-  }
-  .button_r {
-    background: #D3D3D3;
-    border: 2px solid #fff;
-    display: inline-block;
-    text-align: center;
-    padding: 2px;
-    font-weight: bold;
-    border-radius: 12px;
-    outline: none;
-    font-size: 15px;
-    transition-duration: 0.4s;
-  }
-  .button_r:hover {
-    background-color: #917d7d;
-    color: white;
+  input[type="radio"]{
+      height: 15px;
+      margin: 5px 5px;
   }
   input.button_pressed{
     margin: 1px 1px;
@@ -88,27 +61,11 @@
     font-size: 15px;
     transition-duration: 0.4s;
   }
-  input.button_r:hover {
-    background-color: #bf808d;
-    border: 2px solid #8dd6d9;
-    color: white;
-  }
-  #labform {
-    padding: 5px;
-    float: left;
-    margin-left: 50px;
-    display: inline-block;
-  }
-  #mainbody {
-    background: white;
-    padding: 3px;
-    height: 900px;
-  }
   [id$="fail"],[id$="text_fail_r"],[id$="text_fail_y"]{
     height: 4px;
     color: #EC1946;
     font-style: italic;
-    font-size: 14px;
+    font-size: 15px;
   }
   table, td, th {
     border: 2px solid black;
@@ -122,7 +79,7 @@
     vertical-align: top;
     text-align: center;
     padding: 3px;
-    height: 17px;
+    height: 20px;
     font-family: "Ubuntu Condensed", cursive ;
   }
   td[rowspan] {
@@ -154,7 +111,13 @@
   #header > p {
     font-family: "Ubuntu Condensed", cursive ;
   }
-
+  input[type="radio"] {
+      display: inline-block;
+      width: 17px;
+      height: 17px;
+      /*margin: 15px 0 0 0;*/
+      border: 10px;
+  }
 
 
 </style>
@@ -244,7 +207,6 @@
             }
         }
     }
-
     function checkRadio(){
         var message = "";
         if(!(document.getElementById("x=-2").checked || document.getElementById("x=-1.5").checked || document.getElementById("x=-1").checked || document.getElementById("x=-0.5").checked || document.getElementById("x=0").checked || document.getElementById("x=0.5").checked || document.getElementById("x=1").checked || document.getElementById("x=1.5").checked || document.getElementById("x=2").checked )){
@@ -301,18 +263,18 @@
   <tr>
     <td>
       <form class="get_form" method="get" action="checkar.php" style='vertical-align:top;' onsubmit="return validateForm(area)">
-        <table id="input"  style='vertical-align:top' style='margin-top:20px'>
+        <table id="input">
           <tr>
-            <p> <b>X =</b>
-                <input id="x=-2" type="radio" name="x" value="-2" onchange="checkRadio()">1</input>
-                <input id="x=-1.5" type="radio" name="x" value="-1.5" onchange="checkRadio()">2</input>
-                <input id="x=-1" type="radio" name="x" value="-1" onchange="checkRadio()">2</input>
-                <input id="x=-0.5" type="radio" name="x" value="-0.5" onchange="checkRadio()">3</input>
-                <input id="x=0" type="radio" name="x" value="0" onchange="checkRadio()">3</input>
-                <input id="x=0.5" type="radio" name="x" value="0.5" onchange="checkRadio()">3</input>
-                <input id="x=1" type="radio" name="x" value="1" onchange="checkRadio()">4</input>
-                <input id="x=1.5" type="radio" name="x" value="1.5" onchange="checkRadio()">4</input>
-                <input id="x=2" type="radio" name="x" value="2" onchange="checkRadio()">5</input>
+            <p> <b>X=</b>
+                <input id="x=-2" type="radio" name="x" value="-2" onchange="checkRadio()">-2 </input>
+                <input id="x=-1.5" type="radio" name="x" value="-1.5" onchange="checkRadio()">-1.5 </input>
+                <input id="x=-1" type="radio" name="x" value="-1" onchange="checkRadio()">-1 </input>
+                <input id="x=-0.5" type="radio" name="x" value="-0.5" onchange="checkRadio()">-0.5 </input>
+                <input id="x=0" type="radio" name="x" value="0" onchange="checkRadio()">0 </input>
+                <input id="x=0.5" type="radio" name="x" value="0.5" onchange="checkRadio()">0.5 </input>
+                <input id="x=1" type="radio" name="x" value="1" onchange="checkRadio()">1 </input>
+                <input id="x=1.5" type="radio" name="x" value="1.5" onchange="checkRadio()">1.5 </input>
+                <input id="x=2" type="radio" name="x" value="2" onchange="checkRadio()">2 </input>
             </p>
               <p id="radio_fail">
           </tr>
