@@ -123,6 +123,7 @@
 </style>
 
 <script type="text/javascript">
+
     var x=false;
     var z=false;
     function imgchange1(obj,imgX,imgY) {
@@ -150,7 +151,7 @@
         setTimeout(imgchange3,500,obj,imgX,imgY);
     }
 
-    function validateForm(obj){
+    function validateForm(){
         var X=findSelectionX();
         var Y=document.getElementById('y').value;
         var R=document.getElementById('r').value;
@@ -159,7 +160,7 @@
         var text_r_result = checkTextR();
         var text_y_result = checkTextY();
         if (radio_result&&text_r_result&&text_y_result){
-            imgchange2(obj,"areas.png","happy.jpg");
+//            imgchange2(obj,"areas.png","happy.jpg");
             var req = new XMLHttpRequest();
             req.onreadystatechange = function() {
                 if(req.readyState == 4 && req.status == 200) {
@@ -170,7 +171,7 @@
             req.send();
             return false;
         }
-        imgchange4(obj,"areas.png","gray.png");
+//        imgchange4(obj,"areas.png","gray.png");
         return false;
     }
     function addErrorMessage(input, message){
@@ -255,14 +256,67 @@
       </div>
     </td>
     <td>
-      <p style='margin-top:0%'>
-        <img name = "area" class="pic" src="areas.png" width="270" title="Область" height="270">
-      </p>
+      <%--<p style='margin-top:0%'>--%>
+        <%--<img name = "area" class="pic" src="areas.png" width="270" title="Область" height="270">--%>
+      <%--</p>--%>
+      <div id="interactive-block">
+        <canvas id="area" height="400px" width="400px"></canvas>
+          <script src="Area.js"></script>
+          <script src="GeomitryUtil.js"></script>
+          <script src="Handlers.js"></script>
+
+          <script type="text/javascript">
+
+
+              var areaz = document.getElementById("area");
+              ctx = areaz.getContext('2d');
+              window.area = new Area(
+                  5,
+                  areaz.getContext("2d"),
+                  areaz.width,
+                  areaz.height
+              );
+//              alert("fef");
+
+              area.drawArea();
+          </script>
+        <%--<script>--%>
+
+            <%--var areaz = document.getElementById("area"),--%>
+            <%--ctx = areaz.getContext('2d');--%>
+
+            <%--ctx.fillStyle = "orange";--%>
+            <%--ctx.fillRect(0, 0, areaz.width, areaz.height);--%>
+
+            <%--var mid_x=200;--%>
+            <%--var mid_y=200;--%>
+
+            <%--ctx.beginPath();--%>
+
+            <%--ctx.moveTo(0, mid_y);--%>
+            <%--ctx.lineTo(areaz.width, mid_y); //absyss--%>
+            <%--ctx.lineTo(areaz.width-5,mid_y-3);--%>
+            <%--ctx.moveTo(areaz.width, mid_y);--%>
+            <%--ctx.lineTo(areaz.width-5,mid_y+3);//streloch'ka--%>
+
+            <%--ctx.moveTo(mid_x,areaz.height);--%>
+            <%--ctx.lineTo(mid_x,0);            //ordinate--%>
+            <%--ctx.lineTo(mid_x-3,5);--%>
+            <%--ctx.lineTo(mid_x,0);--%>
+            <%--ctx.lineTo(mid_x+3,5);  //streloch'ka--%>
+
+            <%--ctx.fillStyle = "blue";--%>
+            <%--ctx.fillRect(mid_x,mid_y,75,150);--%>
+
+
+            <%--ctx.stroke();--%>
+        <%--</script>--%>
+      </div>
     </td>
   </tr>
   <tr>
     <td>
-      <form class="get_form" method="get" action="checkar.php" style='vertical-align:top;' onsubmit="return validateForm(area)">
+      <form class="get_form" method="get" action="checkar.php" style='vertical-align:top;' onsubmit="return validateForm()">
         <table id="input">
           <tr>
             <p> <b>X=</b>
@@ -290,7 +344,7 @@
           </tr>
           <tr>
             <p style='margin-top:20px'>
-              <input class="submit" type="button" id="submit" value="Отправить" onclick=validateForm(area)>
+              <input class="submit" type="button" id="submit" value="Отправить" onclick=validateForm()>
             </p>
           </tr>
         </table>
