@@ -9,11 +9,11 @@ public class Point {
     public String r;
     public String isInside;
 
-    Point(String x, Double y, Double r, boolean isInside) {
+    Point(String x, Double y, Double r, String isInside) {
         this.x = x;
         this.y = y.toString();
         this.r = r.toString();
-        this.isInside = Boolean.toString(isInside);
+        this.isInside = isInside;
     }
 
     public String getX() {

@@ -26,17 +26,11 @@ public class ControllerServlet extends HttpServlet {
         String xValue = req.getParameter("x");
         String yValue = req.getParameter("y");
         String rValue = req.getParameter("r");
-//        out.println("HUI\n");
-//        out.println(xValue);
-//        out.println(yValue);
-//        out.println(rValue);
-//        out.println("HUI\n");
-//
 
         String clicked = req.getParameter("clicked");
         session.setAttribute("clicked", clicked);
         if(this.isNumeric(xValue) && this.isNumeric(yValue) && this.isNumeric(rValue)) {
-            if(Double.parseDouble(xValue) >= -4 && Double.parseDouble(xValue) <= 4 && Double.parseDouble(yValue) >= -5 && Double.parseDouble(yValue) <= 3 && Double.parseDouble(rValue) >= 1 && Double.parseDouble(rValue) <= 4) {
+            if(Double.parseDouble(xValue) >= -4 && Double.parseDouble(xValue) <= 4 && Double.parseDouble(yValue) >= -5 && Double.parseDouble(yValue) <= 3 && Double.parseDouble(rValue) > 1 && Double.parseDouble(rValue) < 4) {
                 String checkRequest = "/area_check_servlet?x=" + xValue + "&y=" + yValue + "&r=" + rValue;
                 RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(checkRequest);
                 dispatcher.include(req, resp);

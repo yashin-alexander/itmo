@@ -21,23 +21,31 @@
         if(radio_result&&text_y_result&&text_r_result){
             var r=Number(document.getElementById('r').value);
             var x = findCoordinate(findSelectionX());
-            var y = findCoordinate(Number(document.getElementById('y').value));
+            var y = findCoordinate(-Number(document.getElementById('y').value));
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4) {
                     resp = xmlhttp.responseText;
+
+                    var parser = new DOMParser();
+                    var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
+                    var rows = tableDOM.getElementsByTagName("tr");
+                    var currentResult = rows[rows.length - 1].getElementsByTagName("td");
+                    //alert(currentResult[3].innerHTML);
+
                     var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
                     C.setAttributeNS(null, "cx", x.toString());
                     C.setAttributeNS(null, "cy", y.toString());
                     C.setAttributeNS(null, "r", "4");
-                    C.setAttributeNS(null, "fill", resp.toString());
+                    C.setAttributeNS(null, "fill", currentResult[3].innerHTML);
                     document.getElementById("svg").appendChild(C);
                     document.getElementById("answer").innerHTML = this.responseText;
                 }
             }
+            //alert(Number(document.getElementById('y').value).toString());
             xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + (findSelectionX()).toString() + "&y="
-                + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString() + "&clicked=1", false);
+                + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString(), false);
             xmlhttp.send();
         }
         return false;
@@ -61,6 +69,19 @@
         }
     }
 
+    function makeOriginalCoordinates(val) {
+        var r=Number(document.getElementById('r').value);
+        if(val<50)
+            return -r-0.5;
+        if(val>350)
+            return r+0.5;
+        if(50<=val&&val<200)
+            return -r*((200-val)/150);
+        if(200<val&&val<=400)
+            return r * ((val - 200) / 150);
+        if(val==200)
+            return 0;
+    }
 
     function click(event){
 
@@ -73,22 +94,34 @@
         var resp = "";
 
         var xmlhttp = new XMLHttpRequest();
+
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 resp = xmlhttp.responseText;
+                //alert(this.responseText);
+                var parser = new DOMParser();
+                var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
+                var rows = tableDOM.getElementsByTagName("tr");
+                var currentResult = rows[rows.length - 1].getElementsByTagName("td");
+
+//                alert(event.clientX);
+//                alert(event.clientY);
+
                 var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
-                C.setAttributeNS(null, "cx", (event.clientX - 861.0).toString());
-                C.setAttributeNS(null, "cy", (event.clientY - 47.0).toString());
+                C.setAttributeNS(null, "cx", (event.clientX - 258.0).toString());
+                C.setAttributeNS(null, "cy", (event.clientY - 45.0).toString());
                 C.setAttributeNS(null, "r", "4");
-                C.setAttributeNS(null, "fill", resp.toString());
+                C.setAttributeNS(null, "fill", currentResult[3].innerHTML);
                 document.getElementById("svg").appendChild(C);
                 document.getElementById("answer").innerHTML = this.responseText;
             }
         }
-        alert(((event.clientX - 861)/400 * 4).toString());
-        alert(((-event.clientY + 45)/400 * 4).toString());
-        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + ((event.clientX - 861.0)/400.0 * 4.0).toString() + "&y="
-            + ((-event.clientY + 45.0)/400.0 * 4.0).toString() + "&r=" + r.toString() + "&clicked=1" + "&set=", false);
+
+        var x = makeOriginalCoordinates( event.clientX - 258);
+        var y = -makeOriginalCoordinates( event.clientY - 45);
+
+        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + x.toString() + "&y="
+            + y.toString() + "&r=" + r.toString() + "&set=", false);
         xmlhttp.send();
     }
 
@@ -165,22 +198,7 @@
   </tr>
 
   <tr style='height:200px; ' >
-    <td  rowspan='3' >
-      <div id="scrollable_table">
-        <table id="answer" style='border-spacing: 50px 0; overflow: scroll;' >
-          <div  id="results-block">
-              <tr>
-              <th>X</th>
-              <th>Y</th>
-              <th>R</th>
-              <th>Is inside?</th>
-              <th>Time</th>
-              <th>Working time</th>
-            </tr>
-          </div>
-        </table>
-      </div>
-    </td>
+
     <td>
       <div id="interactive-block">
             <svg class="svg" id="svg" width="400" height="400" onclick=click(event)>
@@ -202,6 +220,14 @@
 
       </div>
     </td>
+    <td  rowspan='3' >
+      <div id="scrollable_table">
+          <table id="answer" style='border-spacing: 50px 0; overflow: scroll;' >
+
+          </table>
+      </div>
+    </td>
+
   </tr>
   <tr>
     <td>
