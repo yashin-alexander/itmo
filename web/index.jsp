@@ -7,173 +7,91 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<style>
-  body {
-    background-size: cover;
-    width: 900px; /* Ширина слоя */
-    height: 700px;
-    align: center;
-    margin-left: 10%;
-    background-image: url("pic.png");
-  }
-  #x_checks > p {
-    display: inline;
-    font-family: Georgia, "Times New Roman",fantasy;
-  }
-  #r_buttons > p {
-    display: inline;
-    font-family: Georgia, "Times New Roman", fantasy;
-  }
-  .submit{
-    transition-duration: 0.4s;
-  }
-  .submit:hover{
-    background-color: #4cbaa4;
-    color: white;
-  }
-  input[type="text"],input[type="button"]{
-    width: 100px;
-    margin: 1px 1px;
-    background: #D3D3D3;
-    border: 2px solid #fff;
-    text-align: center;
-    display: inline-block;
-    padding: 2px;
-    font-weight: bold;
-    border-radius: 12px;
-    outline: none;
-    font-size: 15px;
-  }
-  input[type="radio"]{
-      height: 15px;
-      margin: 5px 5px;
-  }
-  input.button_pressed{
-    margin: 1px 1px;
-    background: #66608B;
-    border: 2px solid #fff;
-    display: inline-block;
-    text-align: center;
-    padding: 2px;
-    font-weight: bold;
-    border-radius: 12px;
-    outline: none;
-    font-size: 15px;
-    transition-duration: 0.4s;
-  }
-  [id$="fail"],[id$="text_fail_r"],[id$="text_fail_y"]{
-    height: 4px;
-    color: #EC1946;
-    font-style: italic;
-    font-size: 15px;
-  }
-  table, td, th {
-    border: 2px solid black;
-  }
-  table {
-    border-collapse: collapse;
-    width: 600px;
-    background-color: #FDFF9E;
-  }
-  th, td {
-    vertical-align: top;
-    text-align: center;
-    padding: 3px;
-    height: 20px;
-    font-family: "Ubuntu Condensed", cursive ;
-  }
-  td[rowspan] {
-    vertical-align:top;
-  }
+<script language="JavaScript" type="text/javascript">
 
-  td[input] {
-    width: 400px;
-    height: 400px;
-    vertical-align:top;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-    text-align: center;
-  }
-  #answer {
-    border: solid 1px black;
-    overflow: scroll !important;
-    padding: 3px;
-    max-width: 587px;
-    max-height: 300px;
-  }
-  #scrollable_table {
-    padding: 3px;
-    max-width: 650px;
-    max-height: 650px;
-    overflow: auto;
-  }
-  #header > p {
-    font-family: "Ubuntu Condensed", cursive ;
-  }
-  input[type="radio"] {
-      display: inline-block;
-      width: 17px;
-      height: 17px;
-      /*margin: 15px 0 0 0;*/
-      border: 10px;
-  }
+    sessionStorage.r = "";
+    sessionStorage.x = "";
+    sessionStorage.y = "";
 
-
-</style>
-
-<script type="text/javascript">
-
-    var x=false;
-    var z=false;
-    function imgchange1(obj,imgX,imgY) {
-        if  (z){
-            obj.src=imgX;
-        } else {
-            obj.src=imgY;
-        }
-        z=!z;
-    }
-    function imgchange2(obj,imgX,imgY) {
-        imgchange1(obj,imgX,imgY);
-        setTimeout(imgchange1,500,obj,imgX,imgY);
-    }
-    function imgchange3(obj,imgX,imgY) {
-        if  (x){
-            obj.src=imgX;
-        } else {
-            obj.src=imgY;
-        }
-        x=!x;
-    }
-    function imgchange4(obj,imgX,imgY) {
-        imgchange3(obj,imgX,imgY);
-        setTimeout(imgchange3,500,obj,imgX,imgY);
-    }
-
-    function validateForm(){
-        var X=findSelectionX();
-        var Y=document.getElementById('y').value;
-        var R=document.getElementById('r').value;
-
+    function send(){
         var radio_result = checkRadio();
         var text_r_result = checkTextR();
         var text_y_result = checkTextY();
-        if (radio_result&&text_r_result&&text_y_result){
-//            imgchange2(obj,"areas.png","happy.jpg");
-            var req = new XMLHttpRequest();
-            req.onreadystatechange = function() {
-                if(req.readyState == 4 && req.status == 200) {
-                    document.getElementById("answer").innerHTML += this.responseText;
+
+        if(radio_result&&text_y_result&&text_r_result){
+            var r=Number(document.getElementById('r').value);
+            var x = findCoordinate(findSelectionX());
+            var y = findCoordinate(Number(document.getElementById('y').value));
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4) {
+                    resp = xmlhttp.responseText;
+                    var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
+                    C.setAttributeNS(null, "cx", x.toString());
+                    C.setAttributeNS(null, "cy", y.toString());
+                    C.setAttributeNS(null, "r", "4");
+                    C.setAttributeNS(null, "fill", resp.toString());
+                    document.getElementById("svg").appendChild(C);
+                    document.getElementById("answer").innerHTML = this.responseText;
                 }
             }
-            req.open("GET", "checkar.php?X="+ X + "&Y=" + Y + "&R=" + R, true);
-            req.send();
-            return false;
+            xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + (findSelectionX()).toString() + "&y="
+                + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString() + "&clicked=1", false);
+            xmlhttp.send();
         }
-//        imgchange4(obj,"areas.png","gray.png");
         return false;
     }
+
+    function findCoordinate(val){
+        var r=Number(document.getElementById('r').value);
+
+        if(r<Math.abs(val)){
+            if(val<0)
+                return 25;
+            if(val>0)
+                return 375;
+        }else{
+            if(val<0)
+                return (200-((Math.abs(val)/r)*150));
+            if(val>0)
+                return 200+((val/r)*150);
+            if(val==0)
+                return 200;
+        }
+    }
+
+
+    function click(event){
+
+        if (checkTextR() == 0){
+            return ;
+        }
+
+
+        var r = document.getElementById("r").value;
+        var resp = "";
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+                resp = xmlhttp.responseText;
+                var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
+                C.setAttributeNS(null, "cx", (event.clientX - 861.0).toString());
+                C.setAttributeNS(null, "cy", (event.clientY - 47.0).toString());
+                C.setAttributeNS(null, "r", "4");
+                C.setAttributeNS(null, "fill", resp.toString());
+                document.getElementById("svg").appendChild(C);
+                document.getElementById("answer").innerHTML = this.responseText;
+            }
+        }
+        alert(((event.clientX - 861)/400 * 4).toString());
+        alert(((-event.clientY + 45)/400 * 4).toString());
+        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + ((event.clientX - 861.0)/400.0 * 4.0).toString() + "&y="
+            + ((-event.clientY + 45.0)/400.0 * 4.0).toString() + "&r=" + r.toString() + "&clicked=1" + "&set=", false);
+        xmlhttp.send();
+    }
+
     function addErrorMessage(input, message){
         input.innerHTML = message;
     }
@@ -185,7 +103,7 @@
         var message = "";
         if(y_text.length == 0)
             message = "Заполните это поле!";
-        else if(!isNumeric(y_text) || y_text<=-3 || y_text>=3)
+        else if(!isNumeric(y_text) || y_text<=-5 || y_text>=3)
             message = "Введено некорректное значение у!";
         addErrorMessage(document.getElementById("text_fail_y"), message);
         return (message.length == 0);
@@ -195,7 +113,7 @@
         var message = "";
         if(r_text.length == 0)
             message = "Заполните это поле!";
-        else if(!isNumeric(r_text) || r_text<=-3 || r_text>=3)
+        else if(!isNumeric(r_text) || r_text<=1 || r_text>=4)
             message = "Введено некорректное значение r!";
         addErrorMessage(document.getElementById("text_fail_r"), message);
         return (message.length == 0);
@@ -204,13 +122,17 @@
         var radios = document.getElementsByName('x');
         for (var i = 0, length = radios.length; i < length; i++) {
             if (radios[i].checked) {
-                return (radios[i].value);
+                return (Number(radios[i].value));
             }
         }
     }
     function checkRadio(){
         var message = "";
-        if(!(document.getElementById("x=-2").checked || document.getElementById("x=-1.5").checked || document.getElementById("x=-1").checked || document.getElementById("x=-0.5").checked || document.getElementById("x=0").checked || document.getElementById("x=0.5").checked || document.getElementById("x=1").checked || document.getElementById("x=1.5").checked || document.getElementById("x=2").checked )){
+        if(!(document.getElementById("x=-4").checked || document.getElementById("x=-3").checked ||
+            document.getElementById("x=-2").checked || document.getElementById("x=-1").checked ||
+            document.getElementById("x=0").checked || document.getElementById("x=1").checked ||
+            document.getElementById("x=2").checked || document.getElementById("x=3").checked ||
+            document.getElementById("x=4").checked )){
             message = "Значение X не выбрано!";
         }
         addErrorMessage(document.getElementById("radio_fail"), message);
@@ -218,22 +140,26 @@
 
     }
 
+    function deletePoints(){
+
+    }
+
 </script>
 
 <head>
-  <meta charset="utf-8">
-  <title>Лабораторная 7 Яшин</title>
+    <title>Лабораторная 7 Яшин</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 <body>
 <table id='main' >
   <tr id="header" >
     <td colspan='2'>
       <div style="font-size: 20px">
-        <!--<p><img src="wojak.png" width="50" height="50" onclick=imgchange(this,"wojak.png","wojac.jpeg")>-->
         <p>Яшин А.П.
           P3202
           Вариант 41900</p>
-        <!--<img src="wojac1.png" width="50" height="50" onclick=imgchange1(this,"wojac1.png","pepe.jpg")></p>-->
       </div>
     </td>
   </tr>
@@ -242,8 +168,8 @@
     <td  rowspan='3' >
       <div id="scrollable_table">
         <table id="answer" style='border-spacing: 50px 0; overflow: scroll;' >
-          <div >
-            <tr>
+          <div  id="results-block">
+              <tr>
               <th>X</th>
               <th>Y</th>
               <th>R</th>
@@ -256,79 +182,42 @@
       </div>
     </td>
     <td>
-      <%--<p style='margin-top:0%'>--%>
-        <%--<img name = "area" class="pic" src="areas.png" width="270" title="Область" height="270">--%>
-      <%--</p>--%>
       <div id="interactive-block">
-        <canvas id="area" height="400px" width="400px"></canvas>
-          <script src="Area.js"></script>
-          <script src="GeomitryUtil.js"></script>
-          <script src="Handlers.js"></script>
+            <svg class="svg" id="svg" width="400" height="400" onclick=click(event)>
+                <symbol id="s-crown">
+                    <polygon points="197 8, 200 0, 203 8" stroke="black" fill="transparent" stroke-width="2"/>
+                    <polygon points="392 197, 400 200, 392 203" stroke="black" fill="transparent" stroke-width="2"/>
 
-          <script type="text/javascript">
+                    <path d="M125 200
+                     A 75, 75, 0, 0, 0, 200 275
+                     L 200 350 L 275 350 L 275 200 L 200 50 L 200 200 L 125 200 Z"
+                          fill="skyblue" stroke="#1d1e1e" stroke-dasharray="1" stroke-width="3"/>
+                    <line x1="200" y1="400" x2="200" y2="0" stroke="black" stroke-width="2"/>
+                    <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2"/>
 
+              </symbol>
 
-              var areaz = document.getElementById("area");
-              ctx = areaz.getContext('2d');
-              window.area = new Area(
-                  5,
-                  areaz.getContext("2d"),
-                  areaz.width,
-                  areaz.height
-              );
-//              alert("fef");
+              <use xlink:href="#s-crown" x="0" y="0"/>
+          </svg>
 
-              area.drawArea();
-          </script>
-        <%--<script>--%>
-
-            <%--var areaz = document.getElementById("area"),--%>
-            <%--ctx = areaz.getContext('2d');--%>
-
-            <%--ctx.fillStyle = "orange";--%>
-            <%--ctx.fillRect(0, 0, areaz.width, areaz.height);--%>
-
-            <%--var mid_x=200;--%>
-            <%--var mid_y=200;--%>
-
-            <%--ctx.beginPath();--%>
-
-            <%--ctx.moveTo(0, mid_y);--%>
-            <%--ctx.lineTo(areaz.width, mid_y); //absyss--%>
-            <%--ctx.lineTo(areaz.width-5,mid_y-3);--%>
-            <%--ctx.moveTo(areaz.width, mid_y);--%>
-            <%--ctx.lineTo(areaz.width-5,mid_y+3);//streloch'ka--%>
-
-            <%--ctx.moveTo(mid_x,areaz.height);--%>
-            <%--ctx.lineTo(mid_x,0);            //ordinate--%>
-            <%--ctx.lineTo(mid_x-3,5);--%>
-            <%--ctx.lineTo(mid_x,0);--%>
-            <%--ctx.lineTo(mid_x+3,5);  //streloch'ka--%>
-
-            <%--ctx.fillStyle = "blue";--%>
-            <%--ctx.fillRect(mid_x,mid_y,75,150);--%>
-
-
-            <%--ctx.stroke();--%>
-        <%--</script>--%>
       </div>
     </td>
   </tr>
   <tr>
     <td>
-      <form class="get_form" method="get" action="checkar.php" style='vertical-align:top;' onsubmit="return validateForm()">
+      <form class="get_form" method="get" action="controller_servlet" style='vertical-align:top;'>
         <table id="input">
           <tr>
             <p> <b>X=</b>
+                <input id="x=-4" type="radio" name="x" value="-4" onchange="checkRadio()">-4 </input>
+                <input id="x=-3" type="radio" name="x" value="-3" onchange="checkRadio()">-3 </input>
                 <input id="x=-2" type="radio" name="x" value="-2" onchange="checkRadio()">-2 </input>
-                <input id="x=-1.5" type="radio" name="x" value="-1.5" onchange="checkRadio()">-1.5 </input>
                 <input id="x=-1" type="radio" name="x" value="-1" onchange="checkRadio()">-1 </input>
-                <input id="x=-0.5" type="radio" name="x" value="-0.5" onchange="checkRadio()">-0.5 </input>
                 <input id="x=0" type="radio" name="x" value="0" onchange="checkRadio()">0 </input>
-                <input id="x=0.5" type="radio" name="x" value="0.5" onchange="checkRadio()">0.5 </input>
                 <input id="x=1" type="radio" name="x" value="1" onchange="checkRadio()">1 </input>
-                <input id="x=1.5" type="radio" name="x" value="1.5" onchange="checkRadio()">1.5 </input>
                 <input id="x=2" type="radio" name="x" value="2" onchange="checkRadio()">2 </input>
+                <input id="x=3" type="radio" name="x" value="3" onchange="checkRadio()">3 </input>
+                <input id="x=4" type="radio" name="x" value="4" onchange="checkRadio()">4 </input>
             </p>
               <p id="radio_fail">
           </tr>
@@ -344,7 +233,8 @@
           </tr>
           <tr>
             <p style='margin-top:20px'>
-              <input class="submit" type="button" id="submit" value="Отправить" onclick=validateForm()>
+                <input class="submit" type="button" id="submit" value="Отправить" onclick=send()>
+                <input class="submit" type="button" id="clear" value="Очистить" onclick=deletePoints()>
             </p>
           </tr>
         </table>

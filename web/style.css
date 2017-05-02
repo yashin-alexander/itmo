@@ -1,0 +1,119 @@
+body {
+    background-size: cover;
+    width: 900px; /* Ширина слоя */
+    height: 700px;
+    align: center;
+    margin-left: 10%;
+    background-image: url("content/pic.png");
+}
+#x_checks > p {
+    display: inline;
+    font-family: Georgia, "Times New Roman",fantasy;
+}
+#r_buttons > p {
+    display: inline;
+    font-family: Georgia, "Times New Roman", fantasy;
+}
+.submit{
+    transition-duration: 0.4s;
+}
+clear{
+    transition-duration: 0.4s;
+}
+.submit:hover{
+    background-color: #4cbaa4;
+    color: white;
+}
+.clear:hover{
+    background-color: #4cbaa4;
+    color: white;
+}
+
+input[type="text"],input[type="button"]{
+    width: 100px;
+    margin: 1px 1px;
+    background: #D3D3D3;
+    border: 2px solid #fff;
+    text-align: center;
+    display: inline-block;
+    padding: 2px;
+    font-weight: bold;
+    border-radius: 12px;
+    outline: none;
+    font-size: 15px;
+}
+input[type="radio"]{
+    height: 15px;
+    margin: 5px 5px;
+}
+input.button_pressed{
+    margin: 1px 1px;
+    background: #66608B;
+    border: 2px solid #fff;
+    display: inline-block;
+    text-align: center;
+    padding: 2px;
+    font-weight: bold;
+    border-radius: 12px;
+    outline: none;
+    font-size: 15px;
+    transition-duration: 0.4s;
+}
+[id$="fail"],[id$="text_fail_r"],[id$="text_fail_y"]{
+    height: 4px;
+    color: #EC1946;
+    font-style: italic;
+    font-size: 15px;
+}
+table, td, th {
+    border: 2px solid black;
+}
+table {
+    border-collapse: collapse;
+    width: 600px;
+    background-color: #FDFF9E;
+}
+th, td {
+    vertical-align: top;
+    text-align: center;
+    padding: 3px;
+    height: 20px;
+    font-family: "Ubuntu Condensed", cursive ;
+}
+td[rowspan] {
+    vertical-align:top;
+}
+
+td[input] {
+    width: 400px;
+    height: 400px;
+    vertical-align:top;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+#answer {
+    border: solid 1px black;
+    overflow: scroll !important;
+    padding: 3px;
+    max-width: 587px;
+    max-height: 300px;
+}
+#scrollable_table {
+    padding: 3px;
+    max-width: 650px;
+    max-height: 650px;
+    overflow: auto;
+}
+#header > p {
+    font-family: "Ubuntu Condensed", cursive ;
+}
+input[type="radio"] {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    /*margin: 15px 0 0 0;*/
+    border: 10px;
+}
+
