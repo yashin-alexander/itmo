@@ -26,26 +26,19 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4) {
-//                    resp = xmlhttp.responseText;
 
                     var parser = new DOMParser();
                     var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
                     var rows = tableDOM.getElementsByTagName("tr");
                     var currentResult = rows[rows.length - 1].getElementsByTagName("td");
-                    //alert(currentResult[3].innerHTML);
 
-                    var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
-                    C.setAttributeNS(null, "cx", x.toString());
-                    C.setAttributeNS(null, "cy", y.toString());
-                    C.setAttributeNS(null, "r", "4");
-                    C.setAttributeNS(null, "fill", currentResult[3].innerHTML);
-                    document.getElementById("svg").appendChild(C);
+                    window.interactiveArea.drawPoint(
+                        findCoordinate(currentResult[0].innerText),
+                        400-findCoordinate(currentResult[1].innerText),
+                        (currentResult[3].innerText));
                     document.getElementById("answer").innerHTML = this.responseText;
-
-
                 }
             }
-            //alert(Number(document.getElementById('y').value).toString());
             xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" +  "false" + "&changer=" + "false" + "&x=" + (findSelectionX()).toString() + "&y="
                 + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString(), false);
             xmlhttp.send();
@@ -92,13 +85,6 @@
                 var rows = tableDOM.getElementsByTagName("tr");
                 var currentResult = rows[rows.length - 1].getElementsByTagName("td");
 
-
-
-//                alert(currentResult[0].innerText);
-//                alert(findCoordinate(currentResult[0].innerText));
-
-                var step = InteractiveArea.DEFAULT_STEP;
-
                 window.interactiveArea.drawPoint(
                     findCoordinate(currentResult[0].innerText),
                     400-findCoordinate(currentResult[1].innerText),
@@ -118,9 +104,11 @@
     function addErrorMessage(input, message){
         input.innerHTML = message;
     }
+
     function isNumeric(val) {
         return /^[-+]?[0-9]+(\.[0-9]+)?$/.test(val);
     }
+
     function checkTextY(){
         var y_text = document.getElementById("y").value;
         var message = "";
@@ -131,16 +119,18 @@
         addErrorMessage(document.getElementById("text_fail_y"), message);
         return (message.length == 0);
     }
+
     function checkTextR(){
         var r_text = document.getElementById("r").value;
         var message = "";
         if(r_text.length == 0)
             message = "Заполните это поле!";
-        else if(!isNumeric(r_text) || r_text<1 || r_text>4)
+        else if(!isNumeric(r_text) || r_text<=1 || r_text>=4)
             message = "Введено некорректное значение r!";
         addErrorMessage(document.getElementById("text_fail_r"), message);
         return (message.length == 0);
     }
+
     function findSelectionX() {
         var radios = document.getElementsByName('x');
         for (var i = 0, length = radios.length; i < length; i++) {
@@ -149,6 +139,7 @@
             }
         }
     }
+
     function checkRadio(){
         var message = "";
         if(!(document.getElementById("x=-4").checked || document.getElementById("x=-3").checked ||
@@ -167,20 +158,16 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
-                alert(this.responseText);
                 resp = xmlhttp.responseText;
-                document.getElementById("answer").innerHTML = this.responseText;
-                //alert(this.responseText);
-                //el.parentNode.removeChild(i);
-                //location.reload(true);
+                document.getElementById("answer").innerHTML = this.responseText
             }
         }
         xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "", false);
         xmlhttp.send();
+        radiusChangedHandler();
     }
 
     function radiusChangedHandler() {
-
 
         if (!checkTextR()){
             return;
@@ -195,8 +182,6 @@
 
         xhr.onreadystatechange = function() {
             if ( xhr.readyState == 4 ) {
-
-                alert(this.responseText);
                 var parser = new DOMParser();
                 var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
 
@@ -206,27 +191,19 @@
                 for( var i = 1; i < rows.length ; i++ ) {
                     currentRow = rows[i];
                     var currentResult = currentRow.getElementsByTagName("td");
-
-                    alert(currentResult[3].innerText);
-                    alert(currentResult[4].innerText);
                     window.interactiveArea.drawPoint(
                         findCoordinate(currentResult[0].innerText),
                         400-findCoordinate(currentResult[1].innerText),
                         (currentResult[3].innerText));
+                    document.getElementById("answer").innerHTML = this.responseText;
                 }
             }
         };
 
         var r = document.getElementById("r").value;
-
-//        alert("alarm");
         xhr.open("GET", "/7lab_war_exploded/controller_servlet?&changer=" + "" + "&clear=" + "false" + "&r=" + r.toString() , false);
-//        alert("sosi");
         xhr.send();
     }
-
-
-
 
 </script>
 

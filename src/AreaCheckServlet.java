@@ -70,7 +70,6 @@ public class AreaCheckServlet extends HttpServlet {
         table.printTableHeader();
         for(int i = 0; i<list.size(); i++){
             table.printRowWithResult(list.get(i));
-
         }
         table.closeTable();
     }
