@@ -3,7 +3,9 @@ body {
     width: 1500px; /* Ширина слоя */
     height: 700px;
     align: center;
-    margin-right: 50px;
+    margin-left: 152px;
+    /*margin-right: 8%; !* Отступ справа *!*/
+    /*margin-left: 8%;*/
     background-image: url("content/pic.png");
 }
 #x_checks > p {
@@ -70,8 +72,7 @@ table, td, th {
 }
 table {
     border-collapse: collapse;
-    width: 570px;
-    table-layout: fixed !important;
+    width: 600px;
     background-color: #FDFF9E;
 }
 th, td {
@@ -86,7 +87,6 @@ td[rowspan] {
 }
 
 td[input] {
-    table-layout: fixed;
     width: 400px;
     height: 400px;
     vertical-align:top;

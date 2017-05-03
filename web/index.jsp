@@ -41,10 +41,12 @@
                     C.setAttributeNS(null, "fill", currentResult[3].innerHTML);
                     document.getElementById("svg").appendChild(C);
                     document.getElementById("answer").innerHTML = this.responseText;
+
+
                 }
             }
             //alert(Number(document.getElementById('y').value).toString());
-            xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + (findSelectionX()).toString() + "&y="
+            xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "false2" + "&x=" + (findSelectionX()).toString() + "&y="
                 + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString(), false);
             xmlhttp.send();
         }
@@ -120,8 +122,8 @@
         var x = makeOriginalCoordinates( event.clientX - 258);
         var y = -makeOriginalCoordinates( event.clientY - 45);
 
-        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?x=" + x.toString() + "&y="
-            + y.toString() + "&r=" + r.toString() + "&set=", false);
+        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "false1" +"&x=" + x.toString() + "&y="
+            + y.toString() + "&r=" + r.toString() , false);
         xmlhttp.send();
     }
 
@@ -174,7 +176,30 @@
     }
 
     function deletePoints(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+                resp = xmlhttp.responseText;
+                document.getElementById("answer").innerHTML = this.responseText;
 
+
+                alert(this.responseText);
+
+               // for(var i = 0; i<this.responseText; i++){
+                    var el = document.getElementById('svg');
+                    el.parentNode.removeChild(i);
+                    //location.reload(true);
+
+                //}
+            }
+        }
+
+
+        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "", false);
+        xmlhttp.send();
+//        for(var i=0;i<rows.length;i++){
+//            document.getElementById("svg").removeChild(document.body.children[i]);
+//        }
     }
 
 </script>
