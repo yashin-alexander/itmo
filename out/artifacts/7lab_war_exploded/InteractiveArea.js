@@ -29,13 +29,6 @@ class InteractiveArea {
         this.drawArea();
     }
 
-    getCoordinatesByCurrentLayout( x, y ) {
-        return {
-            x: x - this.width / 2.0,
-            y: y - this.height / 2.0
-        };
-    }
-
     drawArea() {
         this._drawRectPart();
         this._drawArcPart();

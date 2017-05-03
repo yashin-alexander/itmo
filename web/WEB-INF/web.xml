@@ -33,4 +33,14 @@
         <servlet-name>ChangeRadiusControllerServlet</servlet-name>
         <url-pattern>/change_radius_servlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RemoveTableServlet</servlet-name>
+        <servlet-class>RemoveTableServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RemoveTableServlet</servlet-name>
+        <url-pattern>/remove_servlet</url-pattern>
+    </servlet-mapping>
 </web-app>
