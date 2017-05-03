@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import templates.CheckResult;
+//import templates.CheckResult;
 
 
 import javax.servlet.RequestDispatcher;
@@ -34,10 +34,6 @@ public class AreaCheckServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession currentSession = req.getSession(true);
-        if ( currentSession.getAttribute("prev_results") == null ) {
-            currentSession.setAttribute("prev_results", new ArrayList<CheckResult>() );
-        }
-
         PrintWriter out = resp.getWriter();
         String xValue = req.getParameter("x");
         String yValue = req.getParameter("y");
@@ -47,13 +43,18 @@ public class AreaCheckServlet extends HttpServlet {
         Double y = Double.valueOf(Double.parseDouble(yValue));
         Double r = Double.valueOf(Double.parseDouble(rValue));
         String isInside;
+        String color;
 
-        if(this.checkArea(x, y, r))
-             isInside = "green";
-        else
-            isInside = "red";
+        if(this.checkArea(x, y, r)){
+            isInside = "yes";
+            color = "green";
+        }
+        else{
+            isInside = "no";
+            color = "red";
+        }
 
-        Point point = new Point(xValue, y, r, isInside);
+        Point point = new Point(xValue, y, r, color, isInside);
         ArrayList<Point> list;
 
         if(currentSession.getAttribute("list") == null) {
@@ -69,6 +70,8 @@ public class AreaCheckServlet extends HttpServlet {
         table.printTableHeader();
         for(int i = 0; i<list.size(); i++){
             table.printRowWithResult(list.get(i));
+
         }
+        table.closeTable();
     }
 }

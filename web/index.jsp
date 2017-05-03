@@ -26,7 +26,7 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4) {
-                    resp = xmlhttp.responseText;
+//                    resp = xmlhttp.responseText;
 
                     var parser = new DOMParser();
                     var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
@@ -46,7 +46,7 @@
                 }
             }
             //alert(Number(document.getElementById('y').value).toString());
-            xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "false2" + "&x=" + (findSelectionX()).toString() + "&y="
+            xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" +  "false" + "&changer=" + "false" + "&x=" + (findSelectionX()).toString() + "&y="
                 + (Number(document.getElementById('y').value).toString()) + "&r=" + r.toString(), false);
             xmlhttp.send();
         }
@@ -55,32 +55,20 @@
 
     function findCoordinate(val){
         var r=Number(document.getElementById('r').value);
-
-        if(r<Math.abs(val)){
             if(val<0)
-                return 25;
+                return 200-40*Math.abs(val);
             if(val>0)
-                return 375;
-        }else{
-            if(val<0)
-                return (200-((Math.abs(val)/r)*150));
-            if(val>0)
-                return 200+((val/r)*150);
+                return 200+40*val;
             if(val==0)
                 return 200;
-        }
     }
 
     function makeOriginalCoordinates(val) {
         var r=Number(document.getElementById('r').value);
-        if(val<50)
-            return -r-0.5;
-        if(val>350)
-            return r+0.5;
-        if(50<=val&&val<200)
-            return -r*((200-val)/150);
+        if(0<=val&&val<200)
+            return -r*((200-val)/ (r*40));
         if(200<val&&val<=400)
-            return r * ((val - 200) / 150);
+            return r * ((val - 200) /(r*40));
         if(val==200)
             return 0;
     }
@@ -91,7 +79,6 @@
             return ;
         }
 
-
         var r = document.getElementById("r").value;
         var resp = "";
 
@@ -100,21 +87,22 @@
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 resp = xmlhttp.responseText;
-                //alert(this.responseText);
                 var parser = new DOMParser();
                 var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
                 var rows = tableDOM.getElementsByTagName("tr");
                 var currentResult = rows[rows.length - 1].getElementsByTagName("td");
 
-//                alert(event.clientX);
-//                alert(event.clientY);
 
-                var C = document.createElementNS("http://www.w3.org/2000/svg","circle");
-                C.setAttributeNS(null, "cx", (event.clientX - 258.0).toString());
-                C.setAttributeNS(null, "cy", (event.clientY - 45.0).toString());
-                C.setAttributeNS(null, "r", "4");
-                C.setAttributeNS(null, "fill", currentResult[3].innerHTML);
-                document.getElementById("svg").appendChild(C);
+
+//                alert(currentResult[0].innerText);
+//                alert(findCoordinate(currentResult[0].innerText));
+
+                var step = InteractiveArea.DEFAULT_STEP;
+
+                window.interactiveArea.drawPoint(
+                    findCoordinate(currentResult[0].innerText),
+                    400-findCoordinate(currentResult[1].innerText),
+                    (currentResult[3].innerText));
                 document.getElementById("answer").innerHTML = this.responseText;
             }
         }
@@ -122,7 +110,7 @@
         var x = makeOriginalCoordinates( event.clientX - 258);
         var y = -makeOriginalCoordinates( event.clientY - 45);
 
-        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "false1" +"&x=" + x.toString() + "&y="
+        xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "false"+ "&changer=" + "false" +"&x=" + x.toString() + "&y="
             + y.toString() + "&r=" + r.toString() , false);
         xmlhttp.send();
     }
@@ -148,7 +136,7 @@
         var message = "";
         if(r_text.length == 0)
             message = "Заполните это поле!";
-        else if(!isNumeric(r_text) || r_text<=1 || r_text>=4)
+        else if(!isNumeric(r_text) || r_text<1 || r_text>4)
             message = "Введено некорректное значение r!";
         addErrorMessage(document.getElementById("text_fail_r"), message);
         return (message.length == 0);
@@ -179,28 +167,66 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
+                alert(this.responseText);
                 resp = xmlhttp.responseText;
                 document.getElementById("answer").innerHTML = this.responseText;
-
-
-                alert(this.responseText);
-
-               // for(var i = 0; i<this.responseText; i++){
-                    var el = document.getElementById('svg');
-                    el.parentNode.removeChild(i);
-                    //location.reload(true);
-
-                //}
+                //alert(this.responseText);
+                //el.parentNode.removeChild(i);
+                //location.reload(true);
             }
         }
-
-
         xmlhttp.open("GET", "/7lab_war_exploded/controller_servlet?&clear=" + "", false);
         xmlhttp.send();
-//        for(var i=0;i<rows.length;i++){
-//            document.getElementById("svg").removeChild(document.body.children[i]);
-//        }
     }
+
+    function radiusChangedHandler() {
+
+
+        if (!checkTextR()){
+            return;
+        }
+
+        var currentRadius = document.getElementById("r").value;
+
+        window.interactiveArea.clearArea();
+        window.interactiveArea.setRadius( currentRadius );
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            if ( xhr.readyState == 4 ) {
+
+                alert(this.responseText);
+                var parser = new DOMParser();
+                var tableDOM = parser.parseFromString("<html><body>" + this.responseText + "</body></html>", "text/html");
+
+                var rows = tableDOM.getElementsByTagName("tr");
+
+                var currentRow;
+                for( var i = 1; i < rows.length ; i++ ) {
+                    currentRow = rows[i];
+                    var currentResult = currentRow.getElementsByTagName("td");
+
+                    alert(currentResult[3].innerText);
+                    alert(currentResult[4].innerText);
+                    window.interactiveArea.drawPoint(
+                        findCoordinate(currentResult[0].innerText),
+                        400-findCoordinate(currentResult[1].innerText),
+                        (currentResult[3].innerText));
+                }
+            }
+        };
+
+        var r = document.getElementById("r").value;
+
+//        alert("alarm");
+        xhr.open("GET", "/7lab_war_exploded/controller_servlet?&changer=" + "" + "&clear=" + "false" + "&r=" + r.toString() , false);
+//        alert("sosi");
+        xhr.send();
+    }
+
+
+
 
 </script>
 
@@ -226,23 +252,25 @@
 
     <td>
       <div id="interactive-block">
-            <svg class="svg" id="svg" width="400" height="400" onclick=click(event)>
-                <symbol id="s-crown">
-                    <polygon points="197 8, 200 0, 203 8" stroke="black" fill="transparent" stroke-width="2"/>
-                    <polygon points="392 197, 400 200, 392 203" stroke="black" fill="transparent" stroke-width="2"/>
+          <canvas id="interactive-area" height="400px" width="400px"></canvas>
+          <script src="InteractiveArea.js"></script>
+          <script src="GeometryUtil.js"></script>
+          <script src="Handlers.js"></script>
+          <script>
+              var canvas = document.getElementById("interactive-area");
+              //replaceOriginOfCoordinatesToCenter( canvas.getContext("2d"), canvas.width, canvas.height );
+              window.interactiveArea = new InteractiveArea(
+                  0,
+                  canvas.getContext("2d"),
+                  canvas.width,
+                  canvas.height
+              );
 
-                    <path d="M125 200
-                     A 75, 75, 0, 0, 0, 200 275
-                     L 200 350 L 275 350 L 275 200 L 200 50 L 200 200 L 125 200 Z"
-                          fill="skyblue" stroke="#1d1e1e" stroke-dasharray="1" stroke-width="3"/>
-                    <line x1="200" y1="400" x2="200" y2="0" stroke="black" stroke-width="2"/>
-                    <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2"/>
+              interactiveArea.drawArea();
+              canvas.addEventListener("click", click );
+              document.getElementById("r").addEventListener("change", radiusChangedHandler);
 
-              </symbol>
-
-              <use xlink:href="#s-crown" x="0" y="0"/>
-          </svg>
-
+          </script>
       </div>
     </td>
     <td  rowspan='3' >
@@ -279,7 +307,7 @@
           </tr>
           <tr>
             <p>Выберите значение R:</p>
-              <p><input id="r" name="r" placeholder="1<r<4" type="text" style='vertical-align:top'  tabindex="11" oninput="checkTextR();"></p>
+              <p><input id="r" name="r" placeholder="1<r<4" type="text" style='vertical-align:top'  tabindex="11" oninput="radiusChangedHandler();"></p>
               <p id="text_fail_r"><p>
           </tr>
           <tr>

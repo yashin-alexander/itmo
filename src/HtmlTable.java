@@ -17,6 +17,7 @@ public class HtmlTable {
         printColumnWith( String.valueOf(result.getX()) );
         printColumnWith( String.valueOf(result.getY()) );
         printColumnWith( String.valueOf(result.getR()) );
+        printColumnWith( result.getColor());
         printColumnWith( result.getIsInside());
         toClientStream.println("</tr>");
     }
@@ -27,7 +28,8 @@ public class HtmlTable {
         printHeadColumnWith( "X");
         printHeadColumnWith( "Y");
         printHeadColumnWith( "R");
-        printHeadColumnWith( "Result");
+        printHeadColumnWith( "Color");
+        printHeadColumnWith( "Is Inside?");
         toClientStream.println("</tr>");
     }
 

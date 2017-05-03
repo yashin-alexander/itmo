@@ -22,4 +22,15 @@
         <servlet-name>AreaCheckServlet</servlet-name>
         <url-pattern>/area_check_servlet</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ChangeRadiusControllerServlet</servlet-name>
+        <servlet-class>ChangeRadiusControllerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ChangeRadiusControllerServlet</servlet-name>
+        <url-pattern>/change_radius_servlet</url-pattern>
+    </servlet-mapping>
 </web-app>

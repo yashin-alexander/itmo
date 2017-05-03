@@ -25,16 +25,25 @@ public class ControllerServlet extends HttpServlet {
 
 
         String clear = req.getParameter("clear");
+        String changer = req.getParameter("changer");
+//
+//        qout.println("HqqqqqUI\n");
 
-        PrintWriter fout = resp.getWriter();
-        fout.print(clear.toString());
         if (clear.toString() == "") {
+            PrintWriter fout = resp.getWriter();
             HttpSession session = req.getSession(true);
             ArrayList<Point> list = (ArrayList)session.getAttribute("list");
-            fout.print("<td>" + Integer.valueOf(list.size()) + "</td>");
+//            fout.print("<td>" + Integer.valueOf(list.size()) + "</td>");
             list.clear();
             session.setAttribute("list", list);
-        } else {
+        }
+        else if(changer.toString() == ""){
+            String rValue = req.getParameter("r");
+            String checkRequest = "/change_radius_servlet?r=" + rValue;
+            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(checkRequest);
+            dispatcher.include(req, resp);
+        }
+        else {
             PrintWriter out = resp.getWriter();
             HttpSession session = req.getSession(true);
             String xValue = req.getParameter("x");
