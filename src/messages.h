@@ -14,6 +14,6 @@ static const char* const MSG_PERMISSION_DENIED = ": Permission denied";
 static const char* const MSG_WRONG_OPTION = "head: unrecognized option '";
 static const char* const MSG_WRONG_OPTION2 = "'";
 static const char* const MSG_BAD_WRITE = "Error writing file";
-
+static const char* const MSG_LONG_NAME = "head: File name too long";
 
 #endif

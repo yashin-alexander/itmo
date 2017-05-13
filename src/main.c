@@ -14,53 +14,78 @@
 
 
 static void print_options_error(const char* string, int err_number){
+    char message[1000] = "";
     if(err_number==1){
-        write(STDERR_FILENO, MSG_BYTESNUM, strlen(MSG_BYTESNUM));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_BYTESNUM, strlen(MSG_BYTESNUM));
+        strncat(message, string, strlen(string));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==2){
-        write(STDERR_FILENO, MSG_NO_BNUMBER, strlen(MSG_NO_BNUMBER));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_NO_BNUMBER, strlen(MSG_NO_BNUMBER));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==3){
-        write(STDERR_FILENO, MSG_STRSNUM, strlen(MSG_STRSNUM));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_STRSNUM, strlen(MSG_STRSNUM));
+        strncat(message, string, strlen(string));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==4){
-        write(STDERR_FILENO, MSG_NO_SNUMBER, strlen(MSG_NO_SNUMBER));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_NO_SNUMBER, strlen(MSG_NO_SNUMBER));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==5){
-        write(STDERR_FILENO, MSG_INVALID_OPTION, strlen(MSG_INVALID_OPTION));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_INVALID_OPTION, strlen(MSG_INVALID_OPTION));
+        strncat(message, string, strlen(string));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==6){
-        write(STDERR_FILENO, MSG_INVALID_TRAILING, strlen(MSG_INVALID_TRAILING));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message,MSG_INVALID_TRAILING, strlen(MSG_INVALID_TRAILING));
+        strncat(message, string, strlen(string));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==7){
-        write(STDERR_FILENO, MSG_CANNOT_OPEN_FILE, strlen(MSG_CANNOT_OPEN_FILE));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "' ", 2);
-        write(STDERR_FILENO, strerror(errno), strlen(strerror(errno)));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_CANNOT_OPEN_FILE, strlen(MSG_CANNOT_OPEN_FILE));
+        strncat(message, string, strlen(string));
+        strncat(message,"' ",2);
+        strncat(message, strerror(errno), strlen(strerror(errno)));
+        strncat(message, "\n", 1 );
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==8){
-        write(STDERR_FILENO, MSG_WRONG_OPTION, strlen(MSG_WRONG_OPTION));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, MSG_WRONG_OPTION2, strlen(MSG_WRONG_OPTION2));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_WRONG_OPTION, strlen(MSG_WRONG_OPTION));
+        strncat(message, string, strlen(string));
+        strncat(message, MSG_WRONG_OPTION2, strlen(MSG_WRONG_OPTION2));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
     else if(err_number==9){
-        write(STDERR_FILENO, MSG_BAD_WRITE, strlen(MSG_BAD_WRITE));
-        write(STDERR_FILENO, string, strlen(string));
-        write(STDERR_FILENO, "' ", 2);
-        write(STDERR_FILENO, strerror(errno), strlen(strerror(errno)));
-        write(STDERR_FILENO, "\n", 1);
+        strncat(message, MSG_BAD_WRITE, strlen(MSG_BAD_WRITE));
+        strncat(message, string, strlen(string));
+        strncat(message, "' ", 2);
+        strncat(message, strerror(errno), strlen(strerror(errno)));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
+    }
+    else if(err_number==10){
+        strncat(message, MSG_LONG_NAME, strlen(MSG_LONG_NAME));
+        strncat(message, "\n", 1);
+
+        write(STDERR_FILENO, message, strlen(message));
     }
 }
 
@@ -164,15 +189,20 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
         number_of_symbols=DEFAULT_STRINGSNUM;
     if (argc<=2){
         if (file_headers)
-            write(STDOUT_FILENO, "==> standard input <==\n", 24);
+            write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
         read_byte_stdin(number_of_symbols);
         exit(0);
     }
     for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
             if(file_headers)
-                write(STDOUT_FILENO, "==> standard input <==\n", 24);
+                write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
             read_byte_stdin(number_of_symbols);
+            continue;
+        }
+
+        if(strlen(names[i])>255){
+            print_options_error(names[i],10);
             continue;
         }
 
@@ -212,6 +242,11 @@ static void print_files_options_after(char **names, int file_headers, int number
             read_stdin(number_of_strings);
             continue;
         }
+        if(strlen(names[i])>255){
+            print_options_error(names[i],10);
+            continue;
+        }
+
 
         descriptor = open(names[i], O_RDONLY);
 
@@ -288,7 +323,7 @@ static void options_procesing(const char* string,char **names,int argc){
                 file_headers=1;
                 if(i<number_of_smth) {
                     for (; i < number_of_smth; i++) {
-                        if (isdigit(string[i]) != 0 || string[i] == 'n' || string[i] == 'c') {
+                        if (isdigit(string[i]) != 0) {
                             print_options_error(string + 2 * sizeof(char), 5);
                             exit(1);
                         }
@@ -296,18 +331,42 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=0;
                         if (string[i] == 'v')
                             file_headers=1;
+                        if (string[i] == 'n'){
+                            i++;
+
+                            number_of_strings=atoi(&string[i]);
+                            for (; i < number_of_smth; i++) {
+                                if (string[i] < '0' && string[i] > '9') {
+                                    print_options_error(string + 2 * sizeof(char), 1);
+                                    exit(1);
+                                }
+                            }
+                            print_files_options_after(names,file_headers,number_of_strings,argc,0);
+                            exit(0);
+                        }
+                        if(string[i] == 'c'){
+                            i++;
+                            number_of_strings=atoi(&string[i]);
+                            for (; i < number_of_smth; i++) {
+                                if (string[i] < '0' || string[i] > '9') {
+                                    print_options_error(string + 2 * sizeof(char), 1);
+                                    exit(1);
+                                }
+                            }
+                            print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
+                            exit(0);
+                        }
                     }
                 }
                 print_files_options_after(names,file_headers,number_of_strings,argc,0);
                 exit(0);
                 /*GO PRINT -v123*/
-                break;
             case 'q':
                 number_of_strings=atoi(&string[2]);
                 file_headers=0;
                 if(i<number_of_smth) {
                     for (; i < number_of_smth; i++) {
-                        if (isdigit(string[i]) != 0 || string[i] == 'n' || string[i] == 'c') {
+                        if (isdigit(string[i]) != 0 ) {
                             print_options_error(string+2*sizeof(char),5);
                             exit(1);
                         }
@@ -315,6 +374,30 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=0;
                         if (string[i] == 'v')
                             file_headers=1;
+                        if (string[i] == 'n'){
+                            i++;
+                            for (; i < number_of_smth; i++) {
+                                if (string[i] < '0' && string[i] > '9') {
+                                    print_options_error(string + 2 * sizeof(char), 1);
+                                    exit(1);
+                                }
+                            }
+                            number_of_strings=atoi(&string[i+1]);
+                            print_files_options_after(names,file_headers,number_of_strings,argc,0);
+                            exit(0);
+                        }
+                        if(string[i] == 'c'){
+                            i++;
+                            for (; i < number_of_smth; i++) {
+                                if (string[i] < '0' || string[i] > '9') {
+                                    print_options_error(string + 2 * sizeof(char), 1);
+                                    exit(1);
+                                }
+                            }
+                            number_of_strings=atoi(&string[i+1]);
+                            print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
+                            exit(0);
+                        }
                     }
                     print_files_options_after(names,file_headers,number_of_strings,argc,0);
                     exit(0);
