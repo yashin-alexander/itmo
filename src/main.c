@@ -278,6 +278,8 @@ static void options_procesing(const char* string,char **names,int argc){
 
     for (i=1; i < number_of_smth; i++){
         if(string[i]>='0'&&string[i]<='9'){
+            if(argc>3)
+                file_headers=1;
             i++;
             for(;i<number_of_smth;i++){
                 if( string[i]=='v') {
@@ -317,6 +319,8 @@ static void options_procesing(const char* string,char **names,int argc){
             /*GO PRINT -3434 file file file*/
             exit(0);
         }
+        if(argc>3)
+            file_headers=1;
         switch(string[i]){
             case 'v':
                 number_of_strings=atoi(&string[2]);
@@ -376,25 +380,25 @@ static void options_procesing(const char* string,char **names,int argc){
                             file_headers=1;
                         if (string[i] == 'n'){
                             i++;
+                            number_of_strings=atoi(&string[i]);
                             for (; i < number_of_smth; i++) {
                                 if (string[i] < '0' && string[i] > '9') {
                                     print_options_error(string + 2 * sizeof(char), 1);
                                     exit(1);
                                 }
                             }
-                            number_of_strings=atoi(&string[i+1]);
                             print_files_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
                         if(string[i] == 'c'){
                             i++;
+                            number_of_strings=atoi(&string[i]);
                             for (; i < number_of_smth; i++) {
                                 if (string[i] < '0' || string[i] > '9') {
                                     print_options_error(string + 2 * sizeof(char), 1);
                                     exit(1);
                                 }
                             }
-                            number_of_strings=atoi(&string[i+1]);
                             print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
@@ -521,7 +525,7 @@ int main(int argc, char **argv) {
         read_stdin(DEFAULT_STRINGSNUM);
         exit (return_value);
     }
-    for (i = 1; i < argc; i++) {
+    for (i = 1; i < argc; i++){
         if(argv[i][0] == '-' ){
             if (argv[i][1]=='\0'){
                 read_stdin(DEFAULT_STRINGSNUM);
@@ -541,6 +545,11 @@ int main(int argc, char **argv) {
             print_options_error(argv[i],7);
             return_value = 1;
             continue;
+        }
+        if (argc>2) {
+            write(STDOUT_FILENO, "======> ", 8);
+            write(STDOUT_FILENO, argv[i], strlen(argv[i]));
+            write(STDOUT_FILENO, " <======\n", 9);
         }
         read_file_tostrings(descriptor,DEFAULT_STRINGSNUM);
     }
