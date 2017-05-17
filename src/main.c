@@ -12,131 +12,94 @@
 #define DEFAULT_STRINGSNUM 10 /*default number of the processed strings\bytes */
 
 
-
 static void print_options_error(const char* string, int err_number){
     char message[1000] = "";
-    if(err_number==1){
-        strncat(message, MSG_BYTESNUM, strlen(MSG_BYTESNUM));
-        strncat(message, string, strlen(string));
-        strncat(message, "\n", 1);
+    switch (err_number) {
+        case 1: {
+            strncat(message, MSG_BYTESNUM, strlen(MSG_BYTESNUM));
+            strncat(message, string, strlen(string));
+            strncat(message, "\n", 1);
 
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==2){
-        strncat(message, MSG_NO_BNUMBER, strlen(MSG_NO_BNUMBER));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==3){
-        strncat(message, MSG_STRSNUM, strlen(MSG_STRSNUM));
-        strncat(message, string, strlen(string));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==4){
-        strncat(message, MSG_NO_SNUMBER, strlen(MSG_NO_SNUMBER));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==5){
-        strncat(message, MSG_INVALID_OPTION, strlen(MSG_INVALID_OPTION));
-        strncat(message, string, strlen(string));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==6){
-        strncat(message,MSG_INVALID_TRAILING, strlen(MSG_INVALID_TRAILING));
-        strncat(message, string, strlen(string));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==7){
-        strncat(message, MSG_CANNOT_OPEN_FILE, strlen(MSG_CANNOT_OPEN_FILE));
-        strncat(message, string, strlen(string));
-        strncat(message,"' ",2);
-        strncat(message, strerror(errno), strlen(strerror(errno)));
-        strncat(message, "\n", 1 );
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==8){
-        strncat(message, MSG_WRONG_OPTION, strlen(MSG_WRONG_OPTION));
-        strncat(message, string, strlen(string));
-        strncat(message, MSG_WRONG_OPTION2, strlen(MSG_WRONG_OPTION2));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==9){
-        strncat(message, MSG_BAD_WRITE, strlen(MSG_BAD_WRITE));
-        strncat(message, string, strlen(string));
-        strncat(message, "' ", 2);
-        strncat(message, strerror(errno), strlen(strerror(errno)));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-    else if(err_number==10){
-        strncat(message, MSG_LONG_NAME, strlen(MSG_LONG_NAME));
-        strncat(message, "\n", 1);
-
-        write(STDERR_FILENO, message, strlen(message));
-    }
-}
-
-static void read_stdin(int number_of_strings){
-
-    char buffer[BUFSIZ]; /*buffer size initialisation*/
-    size_t chars_read;
-    size_t chars_wrote;
-
-    char message_buffer[BUFSIZ];
-    int i;
-
-    for(i=0;i<number_of_strings;i++) {
-        chars_read = read(STDIN_FILENO, buffer, BUFSIZ);
-        if (chars_read == -1) {
-            print_options_error(message_buffer,7);
-            return;
+            write(STDERR_FILENO, message, strlen(message));
+            break;
         }
-        if (!chars_read)
-            return;
-        chars_wrote = write(STDOUT_FILENO, buffer, chars_read);
-        if (chars_wrote == -1){
-            print_options_error(message_buffer,9);
-            return;
-        }
-    }
-}
-static void read_byte_stdin(int number_of_symbols){
-    size_t chars_read;
-    size_t chars_wrote;
-    char buffer[BUFSIZ]; /*buffer size initialisation*/
+        case 2: {
+            strncat(message, MSG_NO_BNUMBER, strlen(MSG_NO_BNUMBER));
+            strncat(message, "\n", 1);
 
-    int i;
-
-    for(i=0;i<number_of_symbols;i++) {
-        chars_read = read(STDIN_FILENO, buffer, 1);
-        if (chars_read == -1) {
-            print_options_error(buffer,7);
-            return;
+            write(STDERR_FILENO, message, strlen(message));
         }
-        if (!chars_read)
-            return;
-        chars_wrote = write(STDOUT_FILENO, buffer, 1);
-        if (chars_wrote == -1){
-            print_options_error(buffer,9);
-            return;
+        case 3: {
+            strncat(message, MSG_STRSNUM, strlen(MSG_STRSNUM));
+            strncat(message, string, strlen(string));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case  4: {
+            strncat(message, MSG_NO_SNUMBER, strlen(MSG_NO_SNUMBER));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case  5: {
+            strncat(message, MSG_INVALID_OPTION, strlen(MSG_INVALID_OPTION));
+            strncat(message, string, strlen(string));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+            case 6: {
+            strncat(message, MSG_INVALID_TRAILING, strlen(MSG_INVALID_TRAILING));
+            strncat(message, string, strlen(string));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case 7 : {
+            strncat(message, MSG_CANNOT_OPEN_FILE, strlen(MSG_CANNOT_OPEN_FILE));
+            strncat(message, string, strlen(string));
+            strncat(message, "' ", 2);
+            strncat(message, strerror(errno), strlen(strerror(errno)));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case 8: {
+            strncat(message, MSG_WRONG_OPTION, strlen(MSG_WRONG_OPTION));
+            strncat(message, string, strlen(string));
+            strncat(message, MSG_WRONG_OPTION2, strlen(MSG_WRONG_OPTION2));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case 9: {
+            strncat(message, MSG_BAD_WRITE, strlen(MSG_BAD_WRITE));
+            strncat(message, string, strlen(string));
+            strncat(message, "' ", 2);
+            strncat(message, strerror(errno), strlen(strerror(errno)));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
+        }
+        case 10 : {
+            strncat(message, MSG_LONG_NAME, strlen(MSG_LONG_NAME));
+            strncat(message, "\n", 1);
+
+            write(STDERR_FILENO, message, strlen(message));
+            break;
         }
     }
 }
 
-static void read_file_tostrings(int descriptor,int number_of_strings) {
+static void read_file_tostrings(int descriptor,int number_of_strings,char* filename) {
     char buffer[BUFSIZ];
     int i;
     int read_counter;
@@ -144,10 +107,9 @@ static void read_file_tostrings(int descriptor,int number_of_strings) {
     while (number_of_strings) {
         if ((read_counter = read(descriptor, buffer, sizeof(buffer))) == 0)
             break;
-
         if (read_counter < 0) {
-            print_options_error("", 7);
-            exit(0);
+            print_options_error(filename,7);
+            exit(1);
         }
         for (i = 0; i < read_counter; ++i) {
             if (buffer[i] == '\n')
@@ -157,13 +119,14 @@ static void read_file_tostrings(int descriptor,int number_of_strings) {
         }
         if (buffer[i] == '\n')
             i++;
+
         if (write(STDOUT_FILENO, buffer, i) < 0) {
-            print_options_error("", 9);
-            exit(0);
+            print_options_error(filename,9);
+            exit(1);
         }
     }
 }
-static void read_file_tobytes(int descriptor,int number_of_bytes){
+static void read_file_tobytes(int descriptor,int number_of_bytes,char* filename){
     char buffer[BUFSIZ];
     int ctr_ent;
 
@@ -176,7 +139,7 @@ static void read_file_tobytes(int descriptor,int number_of_bytes){
             break;
         }
         if(errno) {
-            print_options_error(buffer,7);
+            print_options_error(filename,sizeof(filename));
             exit (1);
         }
     }
@@ -190,14 +153,14 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
     if (argc<=2){
         if (file_headers)
             write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
-        read_byte_stdin(number_of_symbols);
+        read_file_tobytes(STDIN_FILENO, number_of_symbols, "stdin");
         exit(0);
     }
     for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
-            if(file_headers)
-                write(STDOUT_FILENO, "\n==> standard input <==\n", 24);
-            read_byte_stdin(number_of_symbols);
+            if(file_headers&&argc!=3+plus&&errno==NULL)
+                write(STDOUT_FILENO, "==> standard input <==\n", 24);
+            read_file_tobytes(STDIN_FILENO, number_of_symbols,"stdin");
             continue;
         }
 
@@ -219,9 +182,10 @@ static void print_bfiles_options_after(char **names, int file_headers, int numbe
                 write(STDOUT_FILENO, names[i], strlen(names[i]));
                 write(STDOUT_FILENO, " <======\n", 9);
             }
-            read_file_tobytes(descriptor, number_of_symbols);
+            read_file_tobytes(descriptor, number_of_symbols,names[i]);
         }
     }
+    exit(0);
 }
 static void print_files_options_after(char **names, int file_headers, int number_of_strings, int argc, int plus){
 
@@ -232,14 +196,15 @@ static void print_files_options_after(char **names, int file_headers, int number
     if (argc<=2){
         if (file_headers)
             write(STDOUT_FILENO, "==> standard input <==\n", 24);
-        read_stdin(number_of_strings);
+        read_file_tostrings(STDIN_FILENO, number_of_strings,"stdin");
         exit(0);
     }
     for (i=2+plus; i<argc; i++) {
         if(names[i][0]=='-'&&strlen(names[i])==1){
-            if (file_headers)
-                write(STDOUT_FILENO, "==> standard input <==\n", 24);
-            read_stdin(number_of_strings);
+            if (file_headers&&argc!=3+plus&&errno==NULL)
+                    write(STDOUT_FILENO, "==> standard input <==\n", 24);
+            read_file_tostrings(STDIN_FILENO, number_of_strings,"stdin");
+
             continue;
         }
         if(strlen(names[i])>255){
@@ -261,13 +226,11 @@ static void print_files_options_after(char **names, int file_headers, int number
                 write(STDOUT_FILENO, names[i], strlen(names[i]));
                 write(STDOUT_FILENO, " <======\n", 9);
             }
-            read_file_tostrings(descriptor, number_of_strings);
+            read_file_tostrings(descriptor, number_of_strings,names[i]);
         }
     }
+    exit(0);
 }
-
-
-
 
 static void options_procesing(const char* string,char **names,int argc){
     int i;
@@ -357,7 +320,20 @@ static void options_procesing(const char* string,char **names,int argc){
                                     exit(1);
                                 }
                             }
-                            print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
+
+                            if(argc>=2&&isdigit(names[2][0])) {
+                                for (o = 0; o < strlen(names[2]); o++) {
+                                    if (names[2][o] >= '0' && names[2][o] <= '9')
+                                        continue;
+                                    print_options_error(string, 8);
+                                    exit(1);
+                                }
+                                number_of_strings = atoi(names[2]);
+                                print_bfiles_options_after(names,file_headers,number_of_strings,argc,1);
+                                exit(0);
+                            }
+
+                                print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
                     }
@@ -399,6 +375,20 @@ static void options_procesing(const char* string,char **names,int argc){
                                     exit(1);
                                 }
                             }
+
+                            if(argc>=2&&isdigit(names[2][0])) {
+
+                                for (o = 0; o < strlen(names[2]); o++) {
+                                    if (names[2][o] >= '0' && names[2][o] <= '9')
+                                        continue;
+                                    print_options_error(string, 8);
+                                    exit(1);
+                                }
+                                number_of_strings = atoi(names[2]);
+                                print_bfiles_options_after(names,file_headers,number_of_strings,argc,1);
+                                exit(0);
+                            }
+
                             print_bfiles_options_after(names,file_headers,number_of_strings,argc,0);
                             exit(0);
                         }
@@ -441,7 +431,7 @@ static void options_procesing(const char* string,char **names,int argc){
                         number_of_strings=atoi(names[2]);
 
                         if(argc==3){
-                            read_stdin(number_of_strings);
+                            read_file_tobytes(STDIN_FILENO, number_of_strings,"stdin");
                             exit(0);
                         }
 
@@ -471,8 +461,8 @@ static void options_procesing(const char* string,char **names,int argc){
                     /*GO PRINT -n123 */
                     exit(0);
                 }else{
-                    if(argc>=2&&isdigit(names[2][0])){
 
+                    if(argc>=2&&isdigit(names[2][0])){
                         for(o=0;o<strlen(names[2]);o++) {
                             if (names[2][o] >= '0' && names[2][o] <= '9')
                                 continue;
@@ -483,7 +473,7 @@ static void options_procesing(const char* string,char **names,int argc){
                         number_of_strings=atoi(names[2]);
 
                         if(argc==3){
-                            read_stdin(number_of_strings);
+                            read_file_tostrings(STDIN_FILENO, number_of_strings,"stdin");
                             exit(0);
                         }
 
@@ -496,7 +486,7 @@ static void options_procesing(const char* string,char **names,int argc){
                 break;
             case '-':
                 if(string[i-1]=='-'&&string[i+1]=='\0'){
-                    read_stdin(DEFAULT_STRINGSNUM);
+                    read_file_tostrings(STDIN_FILENO, DEFAULT_STRINGSNUM, "stdin");
                     exit(1);
                 }
                 if(string[i-1]=='-'&&string[i+1]!='\0'&&string[i+1]!='-'){
@@ -520,15 +510,15 @@ int main(int argc, char **argv) {
     int options_status = 0;
     int i;
 
-
     if(argc == 1){
-        read_stdin(DEFAULT_STRINGSNUM);
+        read_file_tostrings(STDIN_FILENO, DEFAULT_STRINGSNUM, "stdin");
+
         exit (return_value);
     }
     for (i = 1; i < argc; i++){
         if(argv[i][0] == '-' ){
             if (argv[i][1]=='\0'){
-                read_stdin(DEFAULT_STRINGSNUM);
+                print_files_options_after(argv,1,DEFAULT_STRINGSNUM,argc,-1);
                 options_status=1;
                 continue;
             }
@@ -547,11 +537,13 @@ int main(int argc, char **argv) {
             continue;
         }
         if (argc>2) {
+            if(i!=1)
+                write(STDOUT_FILENO, "\n", 1);
             write(STDOUT_FILENO, "======> ", 8);
             write(STDOUT_FILENO, argv[i], strlen(argv[i]));
             write(STDOUT_FILENO, " <======\n", 9);
         }
-        read_file_tostrings(descriptor,DEFAULT_STRINGSNUM);
+        read_file_tostrings(descriptor,DEFAULT_STRINGSNUM,"stdin");
     }
     exit (return_value);
 }
