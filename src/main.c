@@ -14,84 +14,117 @@
 
 static void print_options_error(const char* string, int err_number){
     char message[1000] = "";
+    int val = 1000;
     switch (err_number) {
         case 1: {
-            strncat(message, MSG_BYTESNUM, strlen(MSG_BYTESNUM));
-            strncat(message, string, strlen(string));
-            strncat(message, "\n", 1);
+            val -= strlen(MSG_BYTESNUM);
+            strncat(message, MSG_BYTESNUM, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case 2: {
-            strncat(message, MSG_NO_BNUMBER, strlen(MSG_NO_BNUMBER));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_NO_BNUMBER);
+            strncat(message, MSG_NO_BNUMBER, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
         }
         case 3: {
-            strncat(message, MSG_STRSNUM, strlen(MSG_STRSNUM));
-            strncat(message, string, strlen(string));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_STRSNUM);
+            strncat(message, MSG_STRSNUM, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case  4: {
-            strncat(message, MSG_NO_SNUMBER, strlen(MSG_NO_SNUMBER));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_NO_SNUMBER);
+            strncat(message, MSG_NO_SNUMBER, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case  5: {
-            strncat(message, MSG_INVALID_OPTION, strlen(MSG_INVALID_OPTION));
-            strncat(message, string, strlen(string));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_INVALID_OPTION);
+            strncat(message, MSG_INVALID_OPTION, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
-            case 6: {
-            strncat(message, MSG_INVALID_TRAILING, strlen(MSG_INVALID_TRAILING));
-            strncat(message, string, strlen(string));
-            strncat(message, "\n", 1);
+        case 6: {
+            val-=strlen(MSG_INVALID_OPTION);
+            strncat(message, MSG_INVALID_TRAILING, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case 7 : {
-            strncat(message, MSG_CANNOT_OPEN_FILE, strlen(MSG_CANNOT_OPEN_FILE));
-            strncat(message, string, strlen(string));
-            strncat(message, "' ", 2);
-            strncat(message, strerror(errno), strlen(strerror(errno)));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_CANNOT_OPEN_FILE);
+            strncat(message, MSG_CANNOT_OPEN_FILE, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=2;
+            strncat(message, "' ", val);
+            val-=strlen(strerror(errno));
+            strncat(message, strerror(errno), val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case 8: {
-            strncat(message, MSG_WRONG_OPTION, strlen(MSG_WRONG_OPTION));
-            strncat(message, string, strlen(string));
-            strncat(message, MSG_WRONG_OPTION2, strlen(MSG_WRONG_OPTION2));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_WRONG_OPTION);
+            strncat(message, MSG_WRONG_OPTION, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=strlen(MSG_WRONG_OPTION2);
+            strncat(message, MSG_WRONG_OPTION2, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case 9: {
-            strncat(message, MSG_BAD_WRITE, strlen(MSG_BAD_WRITE));
-            strncat(message, string, strlen(string));
-            strncat(message, "' ", 2);
-            strncat(message, strerror(errno), strlen(strerror(errno)));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_BAD_WRITE);
+            strncat(message, MSG_BAD_WRITE, val);
+            val-=strlen(string);
+            strncat(message, string, val);
+            val-=2;
+            strncat(message, "' ", val);
+            val-=strlen(strerror(errno));
+            strncat(message, strerror(errno), val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
         }
         case 10 : {
-            strncat(message, MSG_LONG_NAME, strlen(MSG_LONG_NAME));
-            strncat(message, "\n", 1);
+            val-=strlen(MSG_LONG_NAME);
+            strncat(message, MSG_LONG_NAME, val);
+            val-=1;
+            strncat(message, "\n", val);
 
             write(STDERR_FILENO, message, strlen(message));
             break;
@@ -108,8 +141,8 @@ static void read_file_tostrings(int descriptor,int number_of_strings,char* filen
         if ((read_counter = read(descriptor, buffer, sizeof(buffer))) == 0)
             break;
         if (read_counter < 0) {
-            print_options_error(filename,7);
-            exit(1);
+            /*print_options_error(filename,7);*/
+            exit(0);
         }
         for (i = 0; i < read_counter; ++i) {
             if (buffer[i] == '\n')
@@ -139,7 +172,7 @@ static void read_file_tobytes(int descriptor,int number_of_bytes,char* filename)
             break;
         }
         if(errno) {
-            print_options_error(filename,sizeof(filename));
+            /*print_options_error(filename,sizeof(filename));*/
             exit (1);
         }
     }
@@ -486,8 +519,14 @@ static void options_procesing(const char* string,char **names,int argc){
                 break;
             case '-':
                 if(string[i-1]=='-'&&string[i+1]=='\0'){
+					if(argc>2){
+                       number_of_strings=atoi(names[2]);
+                       print_files_options_after(names,1,number_of_strings,argc,0);
+                       exit(0);
+                    }
+
                     read_file_tostrings(STDIN_FILENO, DEFAULT_STRINGSNUM, "stdin");
-                    exit(1);
+                    exit(0);
                 }
                 if(string[i-1]=='-'&&string[i+1]!='\0'&&string[i+1]!='-'){
                     print_options_error(string,8);
