@@ -1,0 +1,8 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/routes,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/routes)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/META-INF,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/META-INF)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/application.conf,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/evolutions,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/evolutions)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/META-INF/persistence.xml,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/META-INF/persistence.xml)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/evolutions/default,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/evolutions/default)[0m
+[0m[[0mdebug[0m] [0m	(/home/alexander/Documents/pip/9lab/conf/evolutions/default/1.sql,/home/alexander/Documents/pip/9lab/target/scala-2.11/classes/evolutions/default/1.sql)[0m

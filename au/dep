@@ -1,0 +1,18 @@
+au build --env prod
+cp index.html scripts/
+cd scripts
+
+cp index.html Index.scala.html
+cat Index.scala.html | grep 'scripts/vendor-bundle.js' -P -R -I -l | xargs sed -i 's/scripts\/vendor-bundle.js/@routes.Assets.at(\"javascripts\/scripts\/vendor-bundle.js\")/g'
+cat Index.scala.html | grep 'styles/aurelia.css' -P -R -I -l | xargs sed -i 's/styles\/aurelia.css/@routes.Assets.at(\"stylesheets\/aurelia.css\")/g'
+cat vendor-bundle.js | grep '../scripts/app-bundle' -P -R -I -l | xargs sed -i 's/..\/scripts\/app-bundle/..\/assets\/javascripts\/scripts\/app-bundle/g'
+
+cp Index.scala.html ~/Documents/pip/9lab/app/views/
+rm -r Ind*
+
+cd ../styles
+
+cp aurelia.css ~/Documents/pip/9lab/public/stylesheets
+cd ..
+
+cp -r scripts ~/Documents/pip/9lab/public/javascripts

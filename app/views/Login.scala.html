@@ -1,0 +1,12 @@
+@(page: String, isLoggedIn: Boolean, userInfo: User, loginForm: Form[views.formdata.LoginFormData])
+
+@import forms._
+
+@PageView(page, isLoggedIn, userInfo) {
+    <div>
+        @loginform(routes.Application.postLogin(), loginForm("name"), loginForm("password"))
+    </div>
+    <div class="info" style="font-family: Ubuntu Condensed; font-size: 15px ; margin-top: 35%;text-align: center">
+        Yashin Alexander, gr.P3202 var.102
+    </div>
+}

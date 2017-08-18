@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+GET     /                           controllers.Application.login
+GET     /main                       controllers.Application.main
+GET     /add_point                  controllers.Application.AddPoint(x:String, y:String, r:String)
+GET     /change_r                   controllers.Application.ChangeRadius(r:String)
+GET     /remove_points              controllers.Application.RemovePoints()
+
+GET     /login                      controllers.Application.login()
+POST    /login                      controllers.Application.postLogin()
+
+GET     /register                   controllers.Application.register()
+POST    /register                   controllers.Application.postRegister()
+
+GET     /logout                     controllers.Application.logout()
+
+GET     /index                         controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#GET     /assets/*file               controllers.Assets.versioned(path="/scripts", file: Asset)
