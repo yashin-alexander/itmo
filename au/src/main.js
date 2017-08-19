@@ -1,4 +1,5 @@
 import environment from './environment';
+import {HttpClient} from 'aurelia-fetch-client';
 
 export function configure(aurelia) {
   aurelia.use
