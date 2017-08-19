@@ -7,13 +7,11 @@
   }
 
   canvas{
-    width: 400px;
-    height: 400px;
     display: block;
     margin-left: 10%;
     margin-top: 10px;
 
-    background-color: aqua;
+    /*background-color: aqua;*/
   }
 }
 
@@ -25,13 +23,11 @@
   }
 
   canvas{
-    width: 400px;
-    height: 400px;
     display: block;
     margin-left: 5%;
     margin-top: 10px;
 
-    background-color: aqua;
+    /*background-color: aqua;*/
   }
 }
 
@@ -43,13 +39,11 @@
   }
 
   canvas{
-    width: 400px;
-    height: 400px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 23px;
     display: block;
 
-    background-color: aqua;
+    /*background-color: aqua;*/
   }
 }

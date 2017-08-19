@@ -1,3 +1,49 @@
-h2 {
-  text-align: center;
+/* desktop */
+@media (min-width: 1280px) {
+  h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 2px;
+  }
+
+  canvas{
+    display: block;
+    margin-left: 10%;
+    margin-top: 10px;
+
+    /*background-color: aqua;*/
+  }
+}
+
+/* tablet */
+@media (min-width: 690px) and (max-width: 1280px) {
+  h2 {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  canvas{
+    display: block;
+    margin-left: 5%;
+    margin-top: 10px;
+
+    /*background-color: aqua;*/
+  }
+}
+
+/* mobile */
+@media (max-width: 690px) {
+  h2 {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  canvas{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 23px;
+    display: block;
+
+    /*background-color: aqua;*/
+  }
 }
