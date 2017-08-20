@@ -22,15 +22,13 @@ public class ArrayOfPointsOperations {
 
         pointList = pointImpl.findByOwner(owner);
 
-
         content.put("fields", pointList.size());
         List<Double> X = new ArrayList<>();
         List<Double> Y = new ArrayList<>();
         List<Double> R = new ArrayList<>();
         List<Boolean> isInside = new ArrayList<>();
         List<Boolean> color = new ArrayList<>();
-
-
+        
         for(int i=0; i<pointList.size(); i++){
 
             Point tmp = pointList.get(i);
@@ -46,11 +44,31 @@ public class ArrayOfPointsOperations {
                 color.add(false);
 
         }
+//        Double X1 = new Double(1);
+//        Double Y1 = new Double(2);
+//        Double R1 = new Double(3);
+//        Boolean isInside1 = new Boolean(true);
+//        Boolean color1 = new Boolean(true);
+//
+//        List<Double> X = new ArrayList<>();
+//        List<Double> Y = new ArrayList<>();
+//        List<Double> R = new ArrayList<>();
+//        List<Boolean> isInside = new ArrayList<>();
+//        List<Boolean> color = new ArrayList<>();
+//
+//        X.add(X1);
+//        Y.add(Y1);
+//        R.add(R1);
+//        isInside.add(isInside1);
+//        color.add(color1);
+
+
         content.put("X", X.toString());
         content.put("Y", Y.toString());
         content.put("R", R.toString());
         content.put("isInside", isInside.toString());
         content.put("color", color.toString());
+
 //        content.put("color", "black");
         return content;
     }

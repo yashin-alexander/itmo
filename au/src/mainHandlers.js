@@ -3,6 +3,7 @@
  */
 
 import {SupportingHandlers} from './supportingHandlers'
+import {Table} from './table'
 
 import * as $ from 'jquery';
 import 'jquery-ui-dist';
@@ -43,6 +44,7 @@ export class MainHandlers {
   radiusChangedHandler() {
 
     window.supportingHadlers = new SupportingHandlers;
+    window.table = new Table;
 
     if (!window.supportingHadlers.checkButtonsR())
       return;
@@ -58,29 +60,33 @@ export class MainHandlers {
         r: currentRadius
       },
       success: function (response) {
-        alert(response);
         var X = JSON.parse(response.X);
+        alert(X);
         var Y = JSON.parse(response.Y);
+        alert(Y);
         var R = JSON.parse(response.R);
+        alert(R);
         var isInside = JSON.parse(response.isInside);
+        alert(isInside);
         var color = JSON.parse(response.color);
+        alert(color);
         var color_palette;
+        alert(color_palette);
 
-        document.getElementById("answer").innerHTML = tablePrintHeader();
+        document.getElementById("answer").innerHTML = window.table.tablePrintHeader();
 
         for (var i = 0; i < X.length; i++) {
-
-
           if (color[i])
             color_palette = "green"
           else
             color_palette = "red"
 
           window.interactiveArea.drawPoint
-          (findCoordinate(X[i]), 400 - findCoordinate(Y[i]), color_palette);
+          (window.supportingHadlers.findCoordinate(X[i]),
+            400 - window.supportingHadlers.findCoordinate(Y[i]), color_palette);
 
           document.getElementById("answer").innerHTML
-            += tableAddRow(X[i], Y[i], R[i], isInside[i], color_palette);
+            += window.table.tableAddRow(X[i], Y[i], R[i], isInside[i], color_palette);
         }
       }
     });

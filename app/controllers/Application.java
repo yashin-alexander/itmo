@@ -114,7 +114,7 @@ public class Application extends Controller {
         return ok(SinglePointOperations.PointAsJson(Double.valueOf(x), Double.valueOf(y), Double.valueOf(r), user.getName()));
     }
 
-    @Security.Authenticated(Secured.class)
+//    @Security.Authenticated(Secured.class)
     public Result ChangeRadius(String r){
 
         Secured secured = new Secured();
