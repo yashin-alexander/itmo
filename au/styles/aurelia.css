@@ -10,9 +10,20 @@
     display: block;
     margin-left: 10%;
     margin-top: 10px;
-
-    /*background-color: aqua;*/
   }
+
+  .container{width:100%}
+  .box{white-space:nowrap}
+  .box div{
+    width:50%;
+    display:inline-block;
+    border:1px solid black;
+    margin-left: 3%;
+    position: absolute;
+    top: 14.5%
+  }
+  .box canvas{display:inline-block;border:1px solid black}
+
 }
 
 /* tablet */
@@ -25,10 +36,21 @@
   canvas{
     display: block;
     margin-left: 5%;
-    margin-top: 10px;
-
-    /*background-color: aqua;*/
+    margin-top: 1%;
   }
+
+  .container{width:100%}
+  .box{white-space:nowrap}
+  .box div{
+    display:inline-block;
+    border: 1px solid black;
+    margin-left: 3%;
+    margin-right: 5%;
+    position: absolute;
+    top: 13.3%;
+    overflow: auto;
+  }
+  .box canvas{display:inline-block;border:1px solid black}
 }
 
 /* mobile */
@@ -43,7 +65,39 @@
     margin-right: auto;
     margin-top: 23px;
     display: block;
+  }
 
-    /*background-color: aqua;*/
+  .box div{
+    max-width: 90%;
+    display: inline-block;
+    border: 1px solid black;
+    margin-left: 3%;
+    margin-right: 5%;
+    position: absolute;
+    overflow: auto;
   }
 }
+
+input.button_pressed_r{
+  width: 30px;
+  margin: 1px 1px;
+  background: #66608B;
+  border: 2px solid #fff;
+  display: inline-block;
+  text-align: center;
+  padding: 2px;
+  font-weight: bold;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+  transition-duration: 0.4s;
+}
+button_r:hover {
+  background-color: #bf808d;
+  border: 2px solid #8dd6d9;
+  color: white;
+}
+
+input.button_r{
+
+  width: 30px;}

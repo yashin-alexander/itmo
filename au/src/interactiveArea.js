@@ -1,3 +1,7 @@
+/**
+ * Created by alexander on 20.08.17.
+ */
+
 export class InteractiveArea {
   static get DEFAULT_STEP() {
     return 40;

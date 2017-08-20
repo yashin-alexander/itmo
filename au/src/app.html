@@ -2,8 +2,23 @@
 
   <h2>${mainInfo}</h2>
 
-  <!--<canvas id="interactive-area"  onloadstart="draw()"></canvas>-->
-  <canvas id="interactive-area" width="400px" height="400px"></canvas>
+  <p align="center"> <b>R=</b>
+    <input id="r=1" class="button_r" type="button" name="r" value="1" click.trigger="pressedR(1)">
+    <input id="r=2" class="button_r" type="button" name="r" value="2" click.trigger="pressedR(2)">
+    <input id="r=3" class="button_r" type="button" name="r" value="3" click.trigger="pressedR(3)">
+    <input type="hidden" id="hidden_r" name="r" value="" >
+  </p>
+  <p id="r_fail">
+
+  <div class="container">
+    <div class="box">
+      <canvas id="interactive-area" width="400px" height="400px"></canvas>
+      <div id="scrollable_tarble">
+        <table id="answer" style='border-spacing: 50px 0; overflow: scroll;'> h</table>
+      </div>
+    </div>
+  </div>
+
 
 
   <!--<button type="submit" click.trigger="draw()">opa</button>-->
