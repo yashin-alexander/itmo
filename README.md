@@ -1,6 +1,4 @@
-# Проверка попадания точки в область.
-
-Приложение, которое осуществляет проверку попадания точки в заданную область на координатной плоскости.
+# Checking the hit point in the area.
 
 - Developed with Play framework, Jquery, Postgresql.
 - Simple registration added.
