@@ -2,10 +2,14 @@
 
 Приложение, которое осуществляет проверку попадания точки в заданную область на координатной плоскости.
 
-- Разработано с использованием Play framework, Jquery, Postgresql.
-- Реализована система регистрации пользователей.
-- Доступ неавторизованных пользователей к части бизнес-логики запрещен.
-- Хранение данных, в том числе информации о попадании точки в область, осуществляется на удаленном сервере с использованием базы данных Postgresql.
-- Пароли пользователей сохраняются в базе данных в виде хэш-суммы.
-- Взаимодействие между уровнями back-end и front-end организовано посредством REST API.
-- 
+- Developed with Play framework, Jquery, Postgresql.
+- Simple registration added.
+- Postgresql as a database.
+- All password saved as a checksum.
+- REST API.
+
+
+screens:
+  ![alt tag](https://github.com/yashin-alexander/Play-Jquery-Postgresql-project/blob/master/Screenshot%20from%202017-08-21%2014-32-41.png?raw=true)
+  
+  ![alt tag](https://github.com/yashin-alexander/Play-Jquery-Postgresql-project/blob/master/Screenshot%20from%202017-08-21%2014-38-51.png?raw=true)
