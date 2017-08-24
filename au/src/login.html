@@ -1,0 +1,28 @@
+<template>
+
+  <div id="header">
+    ${bio}, Группа ${group} <br />
+    Вариант ${var} <br />
+  </div>
+
+  <div id="form-login">
+    <h3 id="app-name">Checker app</h3>
+    <form submit.delegate="process()">
+      <span id="wrong" style="color:red"></span><br />
+      <label for="name">Name</label> <span style="color:red" id="name_error"></span><br />
+      <input id="name" type="text" value.bind="name" /><br />
+
+      <label for="pass">Pass</label> <span style="color:red" id="pass_error"></span><br />
+      <input id="pass" type="password" value.bind="pass" /><br />
+
+      <input type="submit" name="action" value="Register" click.trigger="signup()" />
+      <input type="submit" name="action" value="Login" click.trigger="signin()" />
+
+
+    </form>
+  </div>
+
+  <router-view>
+  </router-view>
+
+</template>

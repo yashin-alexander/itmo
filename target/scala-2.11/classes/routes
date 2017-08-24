@@ -4,21 +4,14 @@
 
 # Home page
 
-GET     /                           controllers.Application.login
-GET     /main                       controllers.Application.main
-GET     /add_point                  controllers.Application.AddPoint(x:String, y:String, r:String)
-GET     /change_r                   controllers.Application.ChangeRadius(r:String)
-GET     /remove_points              controllers.Application.RemovePoints()
+#GET     /add_point                  controllers.Application.AddPoint(x:String, y:String, r:String)
+GET      /change_r                   controllers.Application.ChangeRadius(r:String, user:String)
+#GET     /remove_points              controllers.Application.RemovePoints()
 
-GET     /login                      controllers.Application.login()
-POST    /login                      controllers.Application.postLogin()
+GET      /login                      controllers.Application.login(username:String, password: String)
+GET      /register                   controllers.Application.register(username:String, password: String)
 
-GET     /register                   controllers.Application.register()
-POST    /register                   controllers.Application.postRegister()
-
-GET     /logout                     controllers.Application.logout()
-
-GET     /index                         controllers.Application.index()
+GET      /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

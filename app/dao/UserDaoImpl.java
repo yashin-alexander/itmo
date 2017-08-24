@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public User getUser(String name){
-        System.out.println(name + " NAme");
+        System.out.println(name + "= Name");
 
         List <User> list = JPA.em().createQuery("SELECT user FROM User user WHERE user.name=:name")
             .setParameter("name", name).getResultList();
@@ -50,12 +50,11 @@ public class UserDaoImpl implements UserDao{
 
         System.out.println("SIZE = " + list.size());
         User user ;
-	try{
-        	user = list.get(0);
-	}catch(Exception e){
-		user = new User("a", "a");	
-	}
-        return user;
-
+        try{
+                user = list.get(0);
+        }catch(Exception e){
+            user = new User("a", "a");
+        }
+            return user;
     }
 }

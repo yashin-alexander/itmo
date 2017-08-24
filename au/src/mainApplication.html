@@ -1,0 +1,46 @@
+<template>
+
+  <h2>${mainInfo}</h2>
+
+  <p><input id="y" name="y" placeholder="-5<y<3" align="center" type="text" input.trigger="checkTextY()"></p>
+  <p id="text_fail_y"><p>
+
+  <p align="center"> <b>X=</b>
+    <input id="x=-5" class="button_x" type="button" name="x" value="-5" click.trigger="pressedX(-5)">
+    <input id="x=-4" class="button_x" type="button" name="x" value="-4" click.trigger="pressedX(-4)">
+    <input id="x=-3" class="button_x" type="button" name="x" value="-3" click.trigger="pressedX(-3)">
+    <input id="x=-2" class="button_x" type="button" name="x" value="-2" click.trigger="pressedX(-2)">
+    <input id="x=-1" class="button_x" type="button" name="x" value="-1" click.trigger="pressedX(-1)">
+    <input id="x=0" class="button_x" type="button" name="x" value="0" click.trigger="pressedX(0)">
+    <input id="x=1" class="button_x" type="button" name="x" value="1" click.trigger="pressedX(1)">
+    <input id="x=2" class="button_x" type="button" name="x" value="2" click.trigger="pressedX(2)">
+    <input id="x=3" class="button_x" type="button" name="x" value="3" click.trigger="pressedX(3)">
+    <input type="hidden" id="hidden_x" name="x" value="" >
+  </p>
+  <p id="x_fail">
+
+  <p align="center"> <b>R=</b>
+    <input id="r=1" class="button_r" type="button" name="r" value="1" click.trigger="pressedR(1)">
+    <input id="r=2" class="button_r" type="button" name="r" value="2" click.trigger="pressedR(2)">
+    <input id="r=3" class="button_r" type="button" name="r" value="3" click.trigger="pressedR(3)">
+    <input type="hidden" id="hidden_r" name="r" value="" >
+  </p>
+  <p id="r_fail">
+
+  <div class="container">
+    <div class="box">
+      <canvas id="interactive-area" width="400px" height="400px"></canvas>
+      <div id="scrollable_tarble">
+        <table id="answer" style='border-spacing: 50px 0; overflow: scroll;'></table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!--<button type="submit" click.trigger="draw()">opa</button>-->
+
+
+</template>

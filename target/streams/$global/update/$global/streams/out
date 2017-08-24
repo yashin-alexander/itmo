@@ -7,7 +7,7 @@
 [0m[[0mdebug[0m] [0m== resolving dependencies for 9lab#9lab_2.11;1.0-SNAPSHOT [compile][0m
 [0m[[0mdebug[0m] [0m== resolving dependencies 9lab#9lab_2.11;1.0-SNAPSHOT->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.7 ...[0m
-[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@3f308a9e[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@1afc1e74[0m
 [0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang#scala-library;2.11.7[0m
 [0m[[0mdebug[0m] [0m	found org.scala-lang#scala-library;2.11.7 in sbt-chain[0m
 [0m[[0mdebug[0m] [0m	[2.11.7] org.scala-lang#scala-library;2.11.7[0m
@@ -9577,7 +9577,7 @@
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] com.typesafe.akka#akka-actor_2.11;2.3.8!akka-actor_2.11.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] com.typesafe.akka#akka-testkit_2.11;2.3.8!akka-testkit_2.11.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] com.typesafe#config;1.2.1!config.jar(bundle)[0m
-[0m[[0mdebug[0m] [0m:: resolution report :: resolve 12496ms :: artifacts dl 204ms[0m
+[0m[[0mdebug[0m] [0m:: resolution report :: resolve 9266ms :: artifacts dl 274ms[0m
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT compile produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-compile.xml[0m
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT runtime produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-runtime.xml[0m
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT test produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-test.xml[0m
@@ -9592,5 +9592,5 @@
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT pom produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-pom.xml[0m
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT scala-tool produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-scala-tool.xml[0m
 [0m[[0mdebug[0m] [0m	report for 9lab#9lab_2.11;1.0-SNAPSHOT fork-run produced in /home/alexander/Documents/pip/9lab/target/resolution-cache/reports/9lab-9lab_2.11-fork-run.xml[0m
-[0m[[0mdebug[0m] [0m	resolve done (12496ms resolve - 204ms download)[0m
+[0m[[0mdebug[0m] [0m	resolve done (9266ms resolve - 274ms download)[0m
 [0m[[0minfo[0m] [0mDone updating.[0m

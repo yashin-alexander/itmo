@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/home/alexander/Documents/pip/9lab/conf/routes
-// @DATE:Fri Aug 18 03:31:35 MSK 2017
+// @DATE:Thu Aug 24 04:07:39 MSK 2017
 
 
 package router {

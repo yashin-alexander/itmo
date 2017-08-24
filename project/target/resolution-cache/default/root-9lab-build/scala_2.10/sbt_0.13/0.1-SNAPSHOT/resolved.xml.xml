@@ -4,7 +4,7 @@
 		module="root-9lab-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20170818033104"
+		publication="20170821144945"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>

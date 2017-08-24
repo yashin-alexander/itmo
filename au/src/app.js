@@ -1,38 +1,33 @@
-import {HttpClient, json} from 'aurelia-fetch-client';
-import {InteractiveArea} from './interactiveArea';
-import {MainHandlers} from './mainHandlers';
-import {SupportingHandlers} from './supportingHandlers';
+import {Router} from "aurelia-router";
+import {activationStrategy} from 'aurelia-router';
+import {Cookies} from 'aurelia-plugins-cookies';
+
+
 
 export class App {
-  constructor() {
-    this.mainInfo = 'This page is for authenticated users only. Welcome!';
-    this.todoDescription = '';
-    this.rvalues = [];
+  static inject() {return [Router];}
+
+  constructor(router) {
+    this.router = router;
+    this.router.configure(config => {
+      config.title = 'Aurelia';
+      config.map([
+        {
+          route: ["", "login"], name: 'login',
+          moduleId: './login', nav: true, title: 'login'
+        },
+        {
+          route: "mainApplication", name: 'mainApplication',
+          moduleId: './mainApplication', nav: true, title: 'mainApplication'
+        },
+        {
+          route: "logout", name: 'logout',
+          moduleId: './logout', nav: true, title: 'logout'
+        }
+      ]);
+    })
   }
-
-  attached() {
-    var canvas = document.getElementById("interactive-area");
-    window.interactiveArea = new InteractiveArea(
-      0,
-      canvas.getContext("2d"),
-      canvas.width,
-      canvas.height
-    );
-    interactiveArea.drawArea();
-    interactiveArea.setRadius(2);
-    interactiveArea.drawArea();
-  }
-
-  pressedR(button){
-
-    // alert(button);
-
-    window.supportingHadlers = new SupportingHandlers;
-    window.mainHadlers = new MainHandlers;
-
-    supportingHadlers.setR(button);
-    supportingHadlers.checkButtonsR();
-    mainHadlers.radiusChangedHandler();
+    determineActivationStrategy() {
+      return activationStrategy.replace;
   }
 }
-

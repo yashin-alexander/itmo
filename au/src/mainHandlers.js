@@ -4,6 +4,7 @@
 
 import {SupportingHandlers} from './supportingHandlers'
 import {Table} from './table'
+import {Cookies} from 'aurelia-plugins-cookies';
 
 import * as $ from 'jquery';
 import 'jquery-ui-dist';
@@ -57,21 +58,16 @@ export class MainHandlers {
       url: "/change_r",
       type: "GET",
       data: {
-        r: currentRadius
+        r: currentRadius,
+        user: Cookies.get("login")
       },
       success: function (response) {
         var X = JSON.parse(response.X);
-        alert(X);
         var Y = JSON.parse(response.Y);
-        alert(Y);
         var R = JSON.parse(response.R);
-        alert(R);
         var isInside = JSON.parse(response.isInside);
-        alert(isInside);
         var color = JSON.parse(response.color);
-        alert(color);
         var color_palette;
-        alert(color_palette);
 
         document.getElementById("answer").innerHTML = window.table.tablePrintHeader();
 

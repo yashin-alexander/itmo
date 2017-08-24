@@ -78,7 +78,7 @@
   }
 }
 
-input.button_pressed_r{
+input.button_pressed_r, input.button_pressed_x{
   width: 30px;
   margin: 1px 1px;
   background: #66608B;
@@ -92,12 +92,12 @@ input.button_pressed_r{
   font-size: 15px;
   transition-duration: 0.4s;
 }
-button_r:hover {
+button_r:hover, button_x:hover{
   background-color: #bf808d;
   border: 2px solid #8dd6d9;
   color: white;
 }
 
-input.button_r{
-
-  width: 30px;}
+input.button_r, input.button_x{
+  width: 30px;
+}

@@ -48,11 +48,10 @@ export class SupportingHandlers {
 
   setX(pressed_button) {
     var button_array = document.getElementsByClassName("button_pressed_x");
-    document.getElementById("hidden_x").value = pressed_button.value;
-    for (var i = 0; i < button_array.length; ++i)
+    document.getElementById("hidden_x").value = pressed_button;
+    for(var i = 0; i < button_array.length; ++i)
       button_array[i].className = "button_x";
-    pressed_button.className = "button_pressed_x";
-    pressed_button.blur();
+    document.getElementById("x="+pressed_button).className = "button_pressed_x";
   }
 
   checkButtonsX() {
@@ -60,7 +59,7 @@ export class SupportingHandlers {
     if (document.getElementById("hidden_x").value == "") {
       message = "Значение X не выбрано!";
     }
-    addErrorMessage(document.getElementById("x_fail"), message);
+    document.getElementById("x_fail").innerHTML = message;
     return (message.length == 0);
   }
 
@@ -70,7 +69,6 @@ export class SupportingHandlers {
     for(var i = 0; i < button_array.length; ++i)
         button_array[i].className = "button_r";
     document.getElementById("r="+pressed_button).className = "button_pressed_r";
-    // pressed_button.blur();
   }
 
   checkButtonsR() {
