@@ -9,7 +9,6 @@ export class Logout{
   constructor(){}
 
   attached() {
-    alert("login = " + Cookies.get("login"));
     Cookies.removeAll();
     document.location.href = "/";
   }

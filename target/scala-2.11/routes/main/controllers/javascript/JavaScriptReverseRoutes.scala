@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/home/alexander/Documents/pip/9lab/conf/routes
-// @DATE:Thu Aug 24 04:07:39 MSK 2017
+// @DATE:Sun Aug 27 01:56:08 MSK 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -11,7 +11,7 @@ import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamic
 import _root_.controllers.Assets.Asset
 import _root_.play.libs.F
 
-// @LINE:8
+// @LINE:7
 package controllers.javascript {
   import ReverseRouteContext.empty
 
@@ -35,7 +35,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:8
+  // @LINE:7
   class ReverseApplication(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -43,12 +43,12 @@ package controllers.javascript {
     }
 
   
-    // @LINE:12
-    def register: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Application.register",
+    // @LINE:11
+    def login: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.login",
       """
         function(username0,password1) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "register" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password1)])})
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "login" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password1)])})
         }
       """
     )
@@ -63,22 +63,32 @@ package controllers.javascript {
       """
     )
   
+    // @LINE:7
+    def AddPoint: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.AddPoint",
+      """
+        function(x0,y1,r2,username3,password4) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "add_point" + _qS([(""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("x", x0), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("y", y1), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("r", r2), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username3), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password4)])})
+        }
+      """
+    )
+  
+    // @LINE:12
+    def register: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.register",
+      """
+        function(username0,password1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "register" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password1)])})
+        }
+      """
+    )
+  
     // @LINE:14
     def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.index",
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + """"})
-        }
-      """
-    )
-  
-    // @LINE:11
-    def login: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Application.login",
-      """
-        function(username0,password1) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "login" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password1)])})
         }
       """
     )

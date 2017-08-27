@@ -9,6 +9,7 @@ export class SupportingHandlers {
 
   findCoordinate(val) {
     var r = Number(document.getElementById('hidden_r').value);
+
     if (val < 0)
       return 200 - 40 * Math.abs(val);
     if (val > 0)

@@ -1,6 +1,8 @@
 package controllers;
 
+import dao.PointJpaDaoImpl;
 import dao.UserDaoImpl;
+import models.Point;
 import models.User;
 import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -74,9 +76,21 @@ public class Application extends Controller {
         }
     }
 
-//    public Result AddPoint(String x, String y, String r) {
-//    }
-//
+    @Transactional
+    public Result AddPoint(Double x, Double y, Double r, String username, String password) {
+        UserDaoImpl userDao = new UserDaoImpl();
+        PointJpaDaoImpl pointJpaDao = new PointJpaDaoImpl();
+
+        ObjectNode content = Json.newObject();
+
+        if(!userDao.isUserValid(username, password)){
+            content.put("status", 1);
+            return ok(content);
+        }
+
+        return ok(SinglePointOperations.PointAsJson(x,y,r, username));
+    }
+
     @Transactional
     public Result ChangeRadius(String r, String user){
         return ok(ArrayOfPointsOperations.ArrayByOwnerAsJson(Double.valueOf(r), user));

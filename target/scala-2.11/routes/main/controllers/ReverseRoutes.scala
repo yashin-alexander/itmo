@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/home/alexander/Documents/pip/9lab/conf/routes
-// @DATE:Thu Aug 24 04:07:39 MSK 2017
+// @DATE:Sun Aug 27 01:56:08 MSK 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -10,7 +10,7 @@ import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamic
 import _root_.controllers.Assets.Asset
 import _root_.play.libs.F
 
-// @LINE:8
+// @LINE:7
 package controllers {
 
   // @LINE:17
@@ -28,17 +28,17 @@ package controllers {
   
   }
 
-  // @LINE:8
+  // @LINE:7
   class ReverseApplication(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:12
-    def register(username:String, password:String): Call = {
+    // @LINE:11
+    def login(username:String, password:String): Call = {
       import ReverseRouteContext.empty
-      Call("GET", _prefix + { _defaultPrefix } + "register" + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("username", username)), Some(implicitly[QueryStringBindable[String]].unbind("password", password)))))
+      Call("GET", _prefix + { _defaultPrefix } + "login" + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("username", username)), Some(implicitly[QueryStringBindable[String]].unbind("password", password)))))
     }
   
     // @LINE:8
@@ -47,16 +47,22 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "change_r" + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("r", r)), Some(implicitly[QueryStringBindable[String]].unbind("user", user)))))
     }
   
+    // @LINE:7
+    def AddPoint(x:Double, y:Double, r:Double, username:String, password:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "add_point" + queryString(List(Some(implicitly[QueryStringBindable[Double]].unbind("x", x)), Some(implicitly[QueryStringBindable[Double]].unbind("y", y)), Some(implicitly[QueryStringBindable[Double]].unbind("r", r)), Some(implicitly[QueryStringBindable[String]].unbind("username", username)), Some(implicitly[QueryStringBindable[String]].unbind("password", password)))))
+    }
+  
+    // @LINE:12
+    def register(username:String, password:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "register" + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("username", username)), Some(implicitly[QueryStringBindable[String]].unbind("password", password)))))
+    }
+  
     // @LINE:14
     def index(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix)
-    }
-  
-    // @LINE:11
-    def login(username:String, password:String): Call = {
-      import ReverseRouteContext.empty
-      Call("GET", _prefix + { _defaultPrefix } + "login" + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("username", username)), Some(implicitly[QueryStringBindable[String]].unbind("password", password)))))
     }
   
   }

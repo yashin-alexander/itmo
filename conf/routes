@@ -4,7 +4,7 @@
 
 # Home page
 
-#GET     /add_point                  controllers.Application.AddPoint(x:String, y:String, r:String)
+GET      /add_point                  controllers.Application.AddPoint(x:Double, y:Double, r:Double, username:String, password: String)
 GET      /change_r                   controllers.Application.ChangeRadius(r:String, user:String)
 #GET     /remove_points              controllers.Application.RemovePoints()
 

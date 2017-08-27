@@ -32,14 +32,20 @@ export class MainHandlers {
   }
 
   click(event) {
-    if (checkButtonsR() == 0)
+    window.supportingHadlers = new SupportingHandlers;
+
+    if (supportingHadlers.checkButtonsR() == 0)
       return;
 
-    var r = Number(document.getElementById('hidden_r').value);
-    var x = makeOriginalCoordinates(event.clientX - 258);
-    var y = -makeOriginalCoordinates(event.clientY - 105);
 
-    sendSinglePoint(x, y, r);
+    var left = document.getElementById("interactive-area").getBoundingClientRect().left;
+    var top = document.getElementById("interactive-area").getBoundingClientRect().top;
+
+    var r = Number(document.getElementById('hidden_r').value);
+    var x = supportingHadlers.makeOriginalCoordinates(event.clientX - left);
+    var y = -supportingHadlers.makeOriginalCoordinates(event.clientY - top);
+
+    this.sendSinglePoint(x, y, r);
   }
 
   radiusChangedHandler() {
@@ -96,14 +102,19 @@ export class MainHandlers {
       data: {
         x: x,
         y: y,
-        r: r
+        r: r,
+        username: Cookies.get("login"),
+        password: Cookies.get("password")
       },
       success: function (response) {
-        if (response.Owner == "access deny") {
+        if (response.status == 1) {
           alert("access deny");
           document.location.replace("/");
           return;
         }
+
+        window.table = new Table;
+        window.supportingHadlers = new SupportingHandlers;
 
         var color_palette;
         if (response.color)
@@ -112,10 +123,11 @@ export class MainHandlers {
           color_palette = "red";
 
         document.getElementById("answer").innerHTML +=
-          tableAddRow(response.X, response.Y, response.R, response.color, color_palette)
+          window.table.tableAddRow(response.X, response.Y, response.R, response.color, color_palette)
 
         window.interactiveArea.drawPoint
-        (findCoordinate(response.X), 400 - findCoordinate(response.Y), color_palette);
+        (window.supportingHadlers.findCoordinate(response.X),
+          400 - window.supportingHadlers.findCoordinate(response.Y), color_palette);
       }
     });
 

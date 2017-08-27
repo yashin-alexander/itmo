@@ -20,3 +20,7 @@ cd ..
 cp -r scripts ~/Documents/pip/9lab/public/javascripts
 cp vendor scripts/vendor-bundle.js
 rm vendor
+
+printf '\a'
+sleep 0.5
+printf '\a'

@@ -10,7 +10,6 @@ import {Cookies} from 'aurelia-plugins-cookies';
 export class mainApplication {
   constructor() {
     this.userId = Cookies.get('login');
-    alert(this.userId);
 
     if (this.userId == null) {
       document.location.href = "/";
@@ -20,6 +19,15 @@ export class mainApplication {
     this.todoDescription = '';
     this.rvalues = [];
 
+    this.clickOnCanvas = e =>{
+      window.mainHadlers = new MainHandlers;
+      mainHadlers.click(e);
+    }
+
+    this.radiusChange = e =>{
+      window.mainHadlers = new MainHandlers;
+      mainHadlers.radiusChangedHandler(e);
+    }
   }
 
   attached() {
@@ -31,8 +39,8 @@ export class mainApplication {
       canvas.height
     );
     interactiveArea.drawArea();
-    interactiveArea.setRadius(2);
-    interactiveArea.drawArea();
+    document.getElementById("interactive-area").addEventListener("click", this.clickOnCanvas );
+    document.getElementById("hidden_r").addEventListener("change", this.radiusChange);
   }
 
   pressedR(button){
@@ -52,5 +60,6 @@ export class mainApplication {
     supportingHadlers.setX(button);
     supportingHadlers.checkButtonsX();
   }
+
 }
 
