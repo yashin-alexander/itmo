@@ -16,13 +16,14 @@ import play.mvc.Security;
 import controllers.main.ArrayOfPointsOperations;
 import controllers.main.SinglePointOperations;
 
+
+@Transactional
 public class Application extends Controller {
 
     public Result index(){
         return ok(Index.render());
     }
 
-    @Transactional
     public Result register(String username, String password) {
 
         UserDaoImpl userDao = new UserDaoImpl();
@@ -50,12 +51,14 @@ public class Application extends Controller {
             content.put("status", 0);
             content.put("login", username);
 
+
+
+            session("name", username);
+
             System.out.println(username);
             return ok(content);
         }
 
-
-    @Transactional
     public Result login(String username, String password) {
         UserDaoImpl userDao = new UserDaoImpl();
         ObjectNode content = Json.newObject();
@@ -76,26 +79,29 @@ public class Application extends Controller {
         }
     }
 
-    @Transactional
-    public Result AddPoint(Double x, Double y, Double r, String username, String password) {
-        UserDaoImpl userDao = new UserDaoImpl();
-        PointJpaDaoImpl pointJpaDao = new PointJpaDaoImpl();
 
-        ObjectNode content = Json.newObject();
+    @Security.Authenticated(Secured.class)
+    public Result AddPoint(Double x, Double y, Double r) {
+        Secured secured = new Secured();
+        User user = secured.getUserInfo(ctx());
 
-        if(!userDao.isUserValid(username, password)){
-            content.put("status", 1);
-            return ok(content);
-        }
-
-        return ok(SinglePointOperations.PointAsJson(x,y,r, username));
+        return ok(SinglePointOperations.PointAsJson(x,y,r, user.getName()));
     }
 
-    @Transactional
-    public Result ChangeRadius(String r, String user){
-        return ok(ArrayOfPointsOperations.ArrayByOwnerAsJson(Double.valueOf(r), user));
+
+    @Security.Authenticated(Secured.class)
+    public Result ChangeRadius(String r){
+        Secured secured = new Secured();
+        User user = secured.getUserInfo(ctx());
+
+        return ok(ArrayOfPointsOperations.ArrayByOwnerAsJson(Double.valueOf(r), user.getName()));
     }
-//
-//    public Result RemovePoints(){
-//    }
+
+    @Security.Authenticated(Secured.class)
+    public Result RemovePoints(){
+        Secured secured = new Secured();
+        User user = secured.getUserInfo(ctx());
+        ArrayOfPointsOperations.ArrayRemove(user.getName());
+        return ok();
+    }
 }

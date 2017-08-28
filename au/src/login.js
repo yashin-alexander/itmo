@@ -58,7 +58,6 @@ export class LoginApplication {
             document.getElementById("wrong").innerHTML = "Incorrect Password, 4 symbols at least";
         else {
           Cookies.put('login', response.login);
-          Cookies.put('password', pass);
           window.location.replace("#/mainApplication");
           window.location.reload(false);
         }
@@ -90,7 +89,6 @@ export class LoginApplication {
           document.getElementById("wrong").innerHTML = "Incorrect Password";
         else {
           Cookies.put('login', response.login);
-          Cookies.put('password', pass);
           window.location.replace("#/mainApplication");
           window.location.reload(false);
         }

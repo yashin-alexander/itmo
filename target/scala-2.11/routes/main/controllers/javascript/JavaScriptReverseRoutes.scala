@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/home/alexander/Documents/pip/9lab/conf/routes
-// @DATE:Sun Aug 27 01:56:08 MSK 2017
+// @DATE:Mon Aug 28 14:22:16 MSK 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -43,6 +43,16 @@ package controllers.javascript {
     }
 
   
+    // @LINE:8
+    def ChangeRadius: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.ChangeRadius",
+      """
+        function(r0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "change_r" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("r", r0)])})
+        }
+      """
+    )
+  
     // @LINE:11
     def login: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Application.login",
@@ -53,22 +63,12 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:8
-    def ChangeRadius: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Application.ChangeRadius",
+    // @LINE:9
+    def RemovePoints: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.RemovePoints",
       """
-        function(r0,user1) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "change_r" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("r", r0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("user", user1)])})
-        }
-      """
-    )
-  
-    // @LINE:7
-    def AddPoint: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Application.AddPoint",
-      """
-        function(x0,y1,r2,username3,password4) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "add_point" + _qS([(""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("x", x0), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("y", y1), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("r", r2), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username3), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password4)])})
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "remove_points"})
         }
       """
     )
@@ -79,6 +79,16 @@ package controllers.javascript {
       """
         function(username0,password1) {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "register" + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("username", username0), (""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("password", password1)])})
+        }
+      """
+    )
+  
+    // @LINE:7
+    def AddPoint: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.Application.AddPoint",
+      """
+        function(x0,y1,r2) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "add_point" + _qS([(""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("x", x0), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("y", y1), (""" + implicitly[QueryStringBindable[Double]].javascriptUnbind + """)("r", r2)])})
         }
       """
     )

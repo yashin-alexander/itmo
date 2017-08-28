@@ -15,18 +15,20 @@ export class MainHandlers {
   }
 
   submitClick() {
-    var text_x_result = checkButtonsX();
-    var text_r_result = checkButtonsR();
-    var text_y_result = checkTextY();
+    window.supportingHadlers = new SupportingHandlers;
+
+    var text_x_result = window.supportingHadlers.checkButtonsX();
+    var text_r_result = window.supportingHadlers.checkButtonsR();
+    var text_y_result = window.supportingHadlers.checkTextY();
     if (text_x_result && text_y_result && text_r_result) {
 
       var r = Number(document.getElementById('hidden_r').value);
       var x = Number(document.getElementById('hidden_x').value);
-      var y = findCoordinate(Number(document.getElementById('y').value));
+      var y = window.supportingHadlers.findCoordinate(Number(document.getElementById('y').value));
 
-      y = makeOriginalCoordinates(y);
+      y = window.supportingHadlers.makeOriginalCoordinates(y);
 
-      sendSinglePoint(x, y, r);
+      this.sendSinglePoint(x, y, r);
     }
     return;
   }
@@ -64,8 +66,7 @@ export class MainHandlers {
       url: "/change_r",
       type: "GET",
       data: {
-        r: currentRadius,
-        user: Cookies.get("login")
+        r: currentRadius
       },
       success: function (response) {
         var X = JSON.parse(response.X);
@@ -102,16 +103,9 @@ export class MainHandlers {
       data: {
         x: x,
         y: y,
-        r: r,
-        username: Cookies.get("login"),
-        password: Cookies.get("password")
+        r: r
       },
       success: function (response) {
-        if (response.status == 1) {
-          alert("access deny");
-          document.location.replace("/");
-          return;
-        }
 
         window.table = new Table;
         window.supportingHadlers = new SupportingHandlers;
@@ -136,14 +130,16 @@ export class MainHandlers {
 
   deletePoints() {
 
-    document.getElementById("answer").innerHTML = tablePrintHeader();
+    window.table = new Table;
+    document.getElementById("answer").innerHTML = window.table.tablePrintHeader();
 
     $.ajax({
       url: "/remove_points",
       type: "GET",
       data: {},
       success: function (response) {
-        radiusChangedHandler();
+        window.mainHadlers = new MainHandlers();
+        window.mainHadlers.radiusChangedHandler();
       }
     });
   }

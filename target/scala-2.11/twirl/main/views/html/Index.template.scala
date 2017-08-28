@@ -62,7 +62,7 @@ Seq[Any](format.raw/*1.1*/("""<!DOCTYPE html>
 object Index extends Index_Scope0.Index
               /*
                   -- GENERATED --
-                  DATE: Sun Aug 27 22:29:25 MSK 2017
+                  DATE: Mon Aug 28 14:22:16 MSK 2017
                   SOURCE: /home/alexander/Documents/pip/9lab/app/views/Index.scala.html
                   HASH: 7c60aa78b62bf0b8b69f8bc01aa7fcdf2b290d5d
                   MATRIX: 827->0|1064->211|1078->217|1135->254|1222->314|1237->320|1308->370

@@ -28,10 +28,6 @@ export class SupportingHandlers {
       return 0;
   }
 
-  addErrorMessage(input, message) {
-    input.innerHTML = message;
-  }
-
   isNumeric(val) {
     return /^[-+]?[0-9]+(\.[0-9]+)?$/.test(val);
   }
@@ -41,9 +37,9 @@ export class SupportingHandlers {
     var message = "";
     if (y_text.length == 0)
       message = "Заполните это поле!";
-    else if (!isNumeric(y_text) || y_text <= -5 || y_text >= 3)
+    else if (!this.isNumeric(y_text) || y_text <= -5 || y_text >= 3)
       message = "Введено некорректное значение у!";
-    addErrorMessage(document.getElementById("text_fail_y"), message);
+    document.getElementById("text_fail_y").innerHTML = message;
     return (message.length == 0);
   }
 

@@ -2,8 +2,9 @@
 
   <h2>${mainInfo}</h2>
 
-  <p><input id="y" name="y" placeholder="-5<y<3" align="center" type="text" input.trigger="checkTextY()"></p>
-  <p id="text_fail_y"><p>
+
+  <input type="button" id="submit" value="Отправить" click.trigger=submitClick()>
+  <input type="button" id="clear" value="Очистить" click.trigger=deletePoints()>
 
   <p align="center"> <b>X=</b>
     <input id="x=-5" class="button_x" type="button" name="x" value="-5" click.trigger="pressedX(-5)">
@@ -18,6 +19,9 @@
     <input type="hidden" id="hidden_x" name="x" value="" >
   </p>
   <p id="x_fail">
+
+  <p><input id="y" name="y" placeholder="-5<y<3" align="center" type="text" input.trigger="checkText()"></p>
+  <p id="text_fail_y"><p>
 
   <p align="center"> <b>R=</b>
     <input id="r=1" class="button_r" type="button" name="r" value="1" click.trigger="pressedR(1)">

@@ -60,6 +60,17 @@ export class mainApplication {
     supportingHadlers.setX(button);
     supportingHadlers.checkButtonsX();
   }
-
+  checkText(){
+    window.supportingHadlers = new SupportingHandlers;
+    window.supportingHadlers.checkTextY();
+  }
+  submitClick(){
+    window.mainHadlers = new MainHandlers;
+    window.mainHadlers.submitClick();
+  }
+  deletePoints(){
+    window.mainHadlers = new MainHandlers;
+    window.mainHadlers.deletePoints();
+  }
 }
 
