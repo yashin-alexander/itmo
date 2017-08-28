@@ -1,3 +1,7 @@
+/**
+ * Created by alexander on 28.08.17.
+ */
+
 import {Cookies} from 'aurelia-plugins-cookies';
 import {HttpClient, json} from 'aurelia-fetch-client';
 import {Router} from "aurelia-router";
@@ -23,6 +27,7 @@ export class LoginApplication {
     this.API = "http://localhost:9000";
     this.router = router;
 
+
   }
 
   determineActivationStrategy() {
@@ -31,7 +36,7 @@ export class LoginApplication {
 
   process() {}
 
-  signin() {
+  signup() {
     var name = this.getName();
     var pass = this.getPass();
 
@@ -40,7 +45,7 @@ export class LoginApplication {
     }
 
     $.ajax({
-      url: "/login",
+      url: "/register",
       type: "GET",
       data: {
         username: name,
@@ -49,10 +54,12 @@ export class LoginApplication {
       success: function (response) {
         var status = JSON.parse(response.status);
 
-        if(status==2)
+        if(status==1)
+          document.getElementById("wrong").innerHTML = "User already exist";
+        else if(status==2)
           document.getElementById("wrong").innerHTML = "Incorrect Login";
         else if(status==3)
-          document.getElementById("wrong").innerHTML = "Incorrect Password";
+          document.getElementById("wrong").innerHTML = "Incorrect Password, 4 symbols at least";
         else {
           Cookies.put('login', response.login);
           window.location.replace("#/mainApplication");

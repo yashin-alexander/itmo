@@ -4,6 +4,7 @@ import {HttpClient} from 'aurelia-fetch-client';
 export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
+    .plugin('aurelia-bootstrap')
     .feature('resources');
 
   if (environment.debug) {

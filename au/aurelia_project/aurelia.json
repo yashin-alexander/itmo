@@ -147,6 +147,16 @@
 		  "resources": [
 			  "jquery-ui.css"
 		  ]
+	  },
+	  "velocity-animate",
+	  "tether",
+	  {
+		   "name": "aurelia-bootstrap",
+		   "path": "../node_modules/aurelia-bootstrap/dist/amd",
+		   "main": "index",
+		   "resources": [
+		   "**/*.html"
+		   ]
 	  }
         ]
       }

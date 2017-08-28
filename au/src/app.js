@@ -17,6 +17,10 @@ export class App {
           moduleId: './login', nav: true, title: 'login'
         },
         {
+          route: "register", name: 'register',
+          moduleId: './register', nav: true, title: 'register'
+        },
+        {
           route: "mainApplication", name: 'mainApplication',
           moduleId: './mainApplication', nav: true, title: 'mainApplication'
         },
