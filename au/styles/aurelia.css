@@ -1,10 +1,10 @@
+body{
+  /*background-image: url("https://raw.githubusercontent.com/yashin-alexander/PIP_6labwork/master/pic.png");*/
+}
+
+
 /* desktop */
 @media (min-width: 1280px) {
-  h2 {
-    text-align: center;
-    font-size: 30px;
-    margin-top: 2px;
-  }
 
   canvas{
     display: block;
@@ -15,7 +15,6 @@
   .container{width:100%}
   .box{white-space:nowrap}
   .box div{
-    width:50%;
     display:inline-block;
     border:1px solid black;
     margin-left: 3%;
@@ -24,14 +23,15 @@
   }
   .box canvas{display:inline-block;border:1px solid black}
 
+  table {
+    border-collapse: collapse;
+    width: 600px;
+    background-color: #FDFF9E;
+  }
 }
 
 /* tablet */
 @media (min-width: 690px) and (max-width: 1280px) {
-  h2 {
-    text-align: center;
-    font-size: 20px;
-  }
 
   canvas{
     display: block;
@@ -51,14 +51,17 @@
     overflow: auto;
   }
   .box canvas{display:inline-block;border:1px solid black}
+
+  table {
+    margin-top: 60px;
+    border-collapse: collapse;
+    width: 400px;
+    background-color: #FDFF9E;
+  }
 }
 
 /* mobile */
 @media (max-width: 690px) {
-  h2 {
-    text-align: center;
-    font-size: 10px;
-  }
 
   canvas{
     margin-left: auto;
@@ -76,6 +79,26 @@
     position: absolute;
     overflow: auto;
   }
+  .box canvas{display:inline-block;border:1px solid black}
+}
+
+
+
+
+
+
+
+.button_r {
+  background: #D3D3D3;
+  border: 2px solid #fff;
+  display: inline-block;
+  text-align: center;
+  padding: 2px;
+  font-weight: bold;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+  transition-duration: 0.4s;
 }
 
 input.button_pressed_r, input.button_pressed_x{
@@ -100,4 +123,39 @@ button_r:hover, button_x:hover{
 
 input.button_r, input.button_x{
   width: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+table, td, th {
+  border: 2px solid black;
+}
+table {
+  border-collapse: collapse;
+  background-color: #FDFF9E;
+}
+th, td {
+  vertical-align: top;
+  text-align: center;
+  padding: 3px;
+  height: 20px;
+  font-family: "Ubuntu Condensed", cursive ;
+}
+td[rowspan] {
+  vertical-align:top;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+  text-align: center;
 }
