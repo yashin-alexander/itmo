@@ -72,6 +72,7 @@ export class LoginApplication {
   getName() {
     if (this.name.length == 0) {
       document.getElementById("wrong").innerHTML = "Please enter your login and password";
+      document.getElementById("wrong").style.color="red";
       return null;
     }
     document.getElementById("wrong").innerHTML = "";
@@ -82,6 +83,7 @@ export class LoginApplication {
   getPass() {
     if (this.pass.length == 0) {
       document.getElementById("wrong").innerHTML = "Please enter your login and password";
+      document.getElementById("wrong").style.color="red";
       return null;
     }
     document.getElementById("wrong").innerHTML = "";

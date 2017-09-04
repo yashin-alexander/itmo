@@ -15,7 +15,6 @@ export class mainApplication {
       document.location.href = "/";
     }
 
-    this.mainInfo = 'This page is for authenticated users only. Welcome!';
     this.todoDescription = '';
     this.rvalues = [];
 
@@ -35,8 +34,8 @@ export class mainApplication {
     window.interactiveArea = new InteractiveArea(
       0,
       canvas.getContext("2d"),
-      canvas.width,
-      canvas.height
+      400,
+      400
     );
     interactiveArea.drawArea();
     document.getElementById("interactive-area").addEventListener("click", this.clickOnCanvas );
@@ -71,6 +70,9 @@ export class mainApplication {
   deletePoints(){
     window.mainHadlers = new MainHandlers;
     window.mainHadlers.deletePoints();
+  }
+  logout(){
+    location.href = '#/logout';
   }
 }
 
