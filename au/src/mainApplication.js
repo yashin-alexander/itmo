@@ -4,6 +4,7 @@
 import {HttpClient, json} from 'aurelia-fetch-client';
 import {InteractiveArea} from './interactiveArea';
 import {MainHandlers} from './mainHandlers';
+import {Table} from './table';
 import {SupportingHandlers} from './supportingHandlers';
 import {Cookies} from 'aurelia-plugins-cookies';
 
@@ -31,6 +32,7 @@ export class mainApplication {
 
   attached() {
     var canvas = document.getElementById("interactive-area");
+    window.table = new Table;
     window.interactiveArea = new InteractiveArea(
       0,
       canvas.getContext("2d"),
@@ -40,6 +42,8 @@ export class mainApplication {
     interactiveArea.drawArea();
     document.getElementById("interactive-area").addEventListener("click", this.clickOnCanvas );
     document.getElementById("hidden_r").addEventListener("change", this.radiusChange);
+
+    document.getElementById("answer").innerHTML += window.table.tablePrintHeader();
   }
 
   pressedR(button){

@@ -18,7 +18,7 @@ export class LoginApplication {
       location.reload();
     }
 
-    this.bio = "Sashcha";
+    this.bio = "Yashin Alexander";
     this.group = "3202";
     this.var = "102";
 

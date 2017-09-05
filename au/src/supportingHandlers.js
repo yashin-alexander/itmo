@@ -36,7 +36,7 @@ export class SupportingHandlers {
     var y_text = document.getElementById("y").value;
     var message = "";
     if (y_text.length == 0)
-      message = "Заполните это поле!";
+      message = "Заполните поле Y!";
     else if (!this.isNumeric(y_text) || y_text <= -5 || y_text >= 3)
       message = "Введено некорректное значение у!";
     document.getElementById("text_fail_y").innerHTML = message;

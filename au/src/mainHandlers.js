@@ -89,7 +89,7 @@ export class MainHandlers {
             400 - window.supportingHadlers.findCoordinate(Y[i]), color_palette);
 
           document.getElementById("answer").innerHTML
-            += window.table.tableAddRow(X[i], Y[i], R[i], isInside[i], color_palette);
+            += window.table.tableAddRow(X[i].toFixed(2), Y[i].toFixed(2), R[i].toFixed(2), isInside[i], color_palette);
         }
       }
     });
@@ -117,7 +117,7 @@ export class MainHandlers {
           color_palette = "red";
 
         document.getElementById("answer").innerHTML +=
-          window.table.tableAddRow(response.X, response.Y, response.R, response.color, color_palette)
+          window.table.tableAddRow(response.X.toFixed(2), response.Y.toFixed(2), response.R.toFixed(2), response.color, color_palette)
 
         window.interactiveArea.drawPoint
         (window.supportingHadlers.findCoordinate(response.X),
