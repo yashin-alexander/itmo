@@ -1,7 +1,6 @@
 /**
  * Created by alexander on 20.08.17.
  */
-import {HttpClient, json} from 'aurelia-fetch-client';
 import {InteractiveArea} from './interactiveArea';
 import {MainHandlers} from './mainHandlers';
 import {Table} from './table';
