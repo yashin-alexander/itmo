@@ -20,3 +20,10 @@ file paths(in vendor-bundle.js) to correct (which is used by play)
 	- connect is used for connect to the port, which your database used
 - 6)activator run
 - 7)compile -> run the app -> go to localhost:9000
+
+Register page:
+
+  ![alt tag](https://github.com/yashin-alexander/Play-Aurelia-Postgresql-project/blob/master/screens/Screenshot%20from%202017-09-06%2012-38-07.png?raw=true)
+  
+Main page:
+  ![alt tag](https://github.com/yashin-alexander/Play-Aurelia-Postgresql-project/blob/master/screens/Screenshot%20from%202017-09-07%2000-39-48.png?raw=true)
