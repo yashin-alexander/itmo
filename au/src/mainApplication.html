@@ -13,13 +13,15 @@
         <button type="button"  style="color: white" id="clear" click.trigger=deletePoints() class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           Clean
         </button>
-        <a class="navbar-brand">^_^</a>
+	<button type="button" style="display: none;" class="navbar-toogle"  data-toogle="collapse" data-target="navbar-brand">
+	</button>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-left">
-        </ul>
+		<li><a class="navbar-brand">${login}</a></li>
+  	</ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a click.trigger=deletePoints()>Clean</a></li>
+       	  <li><a click.trigger=deletePoints()>Clean</a></li>
           <li><a href="#/logout">Logout</a></li>
         </ul>
       </div>
@@ -72,6 +74,5 @@
     <p id="r_fail">
     <p id="x_fail">
   <div>
-
 
 </template>

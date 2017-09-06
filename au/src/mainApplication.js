@@ -10,6 +10,7 @@ import {Cookies} from 'aurelia-plugins-cookies';
 export class mainApplication {
   constructor() {
     this.userId = Cookies.get('login');
+    this.login = Cookies.get('login');
 
     if (this.userId == null) {
       document.location.href = "/";
@@ -42,7 +43,8 @@ export class mainApplication {
     document.getElementById("interactive-area").addEventListener("click", this.clickOnCanvas );
     document.getElementById("hidden_r").addEventListener("change", this.radiusChange);
 
-    document.getElementById("answer").innerHTML += window.table.tablePrintHeader();
+	  this.radiusCha();
+    //document.getElementById("answer").innerHTML += window.table.tablePrintHeader();
   }
 
   pressedR(button){
@@ -77,5 +79,39 @@ export class mainApplication {
   logout(){
     location.href = '#/logout';
   }
+
+	 radiusCha() { 
+		var currentRadius = 1;
+		     window.supportingHadlers = new SupportingHandlers;
+		     window.table = new Table;
+
+		     window.interactiveArea.setRadius(currentRadius);
+
+		     $.ajax({
+			           url: "/change_r",
+			           type: "GET",
+			           data: {
+					           r: currentRadius
+					         },
+			           success: function (response) {
+					           var X = JSON.parse(response.X);
+					           var Y = JSON.parse(response.Y);
+					           var R = JSON.parse(response.R);
+					           var isInside = JSON.parse(response.isInside);
+					           var color = JSON.parse(response.color);
+					           var color_palette;
+
+					           document.getElementById("answer").innerHTML = window.table.tablePrintHeader();
+
+					           for (var i = 0; i < X.length; i++) {
+								color_palette = "-"
+
+							             document.getElementById("answer").innerHTML
+							               += window.table.tableAddRow(X[i].toFixed(2), Y[i].toFixed(2), R[i].toFixed(2), isInside[i], color_palette);
+							           }
+					         }
+			         });
+		   }
+
 }
 
