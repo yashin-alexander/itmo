@@ -49,10 +49,12 @@ export class LoginApplication {
       success: function (response) {
         var status = JSON.parse(response.status);
 
-        if(status==2)
+        if(status==2){
           document.getElementById("wrong").innerHTML = "Incorrect Login";
-        else if(status==3)
+      	  document.getElementById("wrong").style.color="red";}
+        else if(status==3){
           document.getElementById("wrong").innerHTML = "Incorrect Password";
+      	  document.getElementById("wrong").style.color="red";}
         else {
           Cookies.put('login', response.login);
           window.location.replace("#/mainApplication");

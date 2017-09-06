@@ -36,9 +36,9 @@ export class SupportingHandlers {
     var y_text = document.getElementById("y").value;
     var message = "";
     if (y_text.length == 0)
-      message = "Заполните поле Y!";
+      message = "Please fill the Y-field";
     else if (!this.isNumeric(y_text) || y_text <= -5 || y_text >= 3)
-      message = "Введено некорректное значение у!";
+      message = "Incorrect y-value format!";
     document.getElementById("text_fail_y").innerHTML = message;
     return (message.length == 0);
   }
@@ -54,7 +54,7 @@ export class SupportingHandlers {
   checkButtonsX() {
     var message = "";
     if (document.getElementById("hidden_x").value == "") {
-      message = "Значение X не выбрано!";
+      message = "Please choose x-value!";
     }
     document.getElementById("x_fail").innerHTML = message;
     return (message.length == 0);
@@ -71,7 +71,7 @@ export class SupportingHandlers {
   checkButtonsR() {
     var message = "";
     if (document.getElementById("hidden_r").value == "") {
-      message = "Значение R не выбрано!";
+      message = "Please choose r-value!";
     }
     document.getElementById("r_fail").innerHTML = message;
     return (message.length == 0);

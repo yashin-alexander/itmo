@@ -54,10 +54,14 @@ export class LoginApplication {
       success: function (response) {
         var status = JSON.parse(response.status);
 
-        if(status==1)
+        if(status==1){
           document.getElementById("wrong").innerHTML = "User already exist";
-        else if(status==2)
+      	  document.getElementById("wrong").style.color="red";
+	}
+        else if(status==2){
           document.getElementById("wrong").innerHTML = "Incorrect Login";
+          document.getElementById("wrong").style.color="red";
+	}
         else if(status==3)
           document.getElementById("wrong").innerHTML = "Incorrect Password, 4 symbols at least";
         else {
