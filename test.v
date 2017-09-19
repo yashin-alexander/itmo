@@ -2,25 +2,25 @@
 
 module test;
 
-	reg CLOCK;
+	reg SCLK;
 	reg [1:0] SW;
 	wire [15:0] LD;
 	wire mode_clock;
 
 	controller uut (
-		.CLOCK(CLOCK), 
+		.SCLK(SCLK), 
 		.SW(SW), 
 		.LD(LD),
 		.mode_clock(mode_clock)
 	);
 
 	initial begin
-		CLOCK = 0;
+		SCLK = 0;
 		SW = 0;
 	end
 	
 	always begin
-		# 1 CLOCK = ~CLOCK;
+		# 1 SCLK = ~SCLK;
 	end
 	
 	always begin

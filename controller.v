@@ -4,9 +4,9 @@
 `define MOD2 500
 `define MOD3 200
 
-module controller( CLOCK, SW, LD, mode_clock);
+module controller( SCLK, SW, LD, mode_clock);
 
-input CLOCK;
+input SCLK;
 input [1:0] SW;
 output [15:0] LD;
 output mode_clock;
@@ -18,7 +18,7 @@ LED_logic led (
 	.LD(LD)
 );
 
-always @(posedge CLOCK) begin
+always @(posedge SCLK) begin
 	case(SW)
 		1:
 			begin
