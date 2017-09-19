@@ -1,44 +1,22 @@
 `timescale 1ns / 1ps
 
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   00:15:41 09/19/2017
-// Design Name:   controller
-// Module Name:   /home/sonya/Documents/ise/14.7/ISE_DS/lab1/test.v
-// Project Name:  lab1
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: controller
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-
 module test;
 
 	reg CLOCK;
-	reg [1:0] MOD;
-	wire [15:0] LEDs_strip;
-	wire ok;
+	reg [1:0] SW;
+	wire [15:0] LD;
+	wire mode_clock;
 
 	controller uut (
 		.CLOCK(CLOCK), 
-		.MOD(MOD), 
-		.LEDs_strip(LEDs_strip),
-		.ok(ok)
+		.SW(SW), 
+		.LD(LD),
+		.mode_clock(mode_clock)
 	);
 
 	initial begin
 		CLOCK = 0;
-		MOD = 3;
+		SW = 0;
 	end
 	
 	always begin
@@ -46,7 +24,13 @@ module test;
 	end
 	
 	always begin
-		# 250 MOD = MOD + 1;
+		# 1000 SW = SW + 1; //nothing
+		# 64000 SW = SW + 1;	//1000 frequency
+		# 32000 SW = SW + 1;	//500
+		# 12800 SW = SW ;	//200
+		# 5000 SW = SW;	//200 and stop
+		# 2000;	//stop for 2000 
+		
 	end
       
 endmodule

@@ -1,36 +1,44 @@
 `timescale 1ns / 1ps
+`define MOD0 0
+`define MOD1 1000
+`define MOD2 500
+`define MOD3 200
 
-module controller( CLOCK, MOD, LEDs_strip, ok);
+module controller( CLOCK, SW, LD, mode_clock);
 
 input CLOCK;
-input [1:0] MOD;
-output [15:0] LEDs_strip;
-output ok;
+input [1:0] SW;
+output [15:0] LD;
+output mode_clock;
 
-reg ok = 0;
+reg mode_clock = 0;
 
 LED_logic led (
-	.ok(ok),
-	.LEDs_strip(LEDs_strip)
+	.mode_clock(mode_clock),
+	.LD(LD)
 );
 
 always @(posedge CLOCK) begin
-	case(MOD)
+	case(SW)
 		1:
 			begin
-				# 100 ok = ~ok;
+				# `MOD1;
+				mode_clock = ~mode_clock;
 			end
 		2:
 			begin
-				# 50 ok = ~ok;
+				# `MOD2; 
+				mode_clock = ~mode_clock;
 			end
 		3:
 			begin
-				# 10 ok = ~ok;
+				# `MOD3; 
+				mode_clock = ~mode_clock;
 			end
 		0:
 			begin
-				ok = 0;
+				# `MOD0; 
+				mode_clock = 0;
 			end
 	endcase
 end

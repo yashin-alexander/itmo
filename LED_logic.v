@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
-module LED_logic(ok, LEDs_strip);
-	input ok;
-	output [15:0] LEDs_strip;
+module LED_logic(mode_clock, LD);
+	input mode_clock;
+	output [15:0] LD;
 	reg signed [16:0] LED = 17'sb1_0000_0000_0000_0000;
 	reg direction = 0;
 	
-	always @(posedge ok) begin
+	always @(posedge mode_clock) begin
 		if(LED[15] == LED[0])
 			direction = ~direction;
 		if(direction)
@@ -13,5 +13,5 @@ module LED_logic(ok, LEDs_strip);
 		else
 			LED = LED << 1;
 		end
-		assign LEDs_strip = LED;
+		assign LD = LED;
 endmodule
