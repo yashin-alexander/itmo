@@ -4,12 +4,11 @@
 `define MOD2 250
 `define MOD3 100
 
-module controller( SCLK, SW, LD, mode_clock);
+module controller( SCLK, SW, LD);
 
 input SCLK;
 input [1:0] SW;
 output [15:0] LD;
-output mode_clock;
 
 reg [9:0] counter = 0;
 reg [1:0] SW_OLD;
@@ -23,7 +22,7 @@ LED_logic led (
 always @(posedge SCLK) begin
 	if (SW_OLD != SW) begin 
 		counter = 0;
-		assign SW_OLD = SW;
+		SW_OLD = SW;
 	end 
 		
 	case(SW)

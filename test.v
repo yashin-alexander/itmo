@@ -5,13 +5,11 @@ module test;
 	reg SCLK;
 	reg [1:0] SW;
 	wire [15:0] LD;
-	wire mode_clock;
 
 	controller uut (
 		.SCLK(SCLK), 
 		.SW(SW), 
-		.LD(LD),
-		.mode_clock(mode_clock)
+		.LD(LD)
 	);
 
 	initial begin
