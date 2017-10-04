@@ -1,7 +1,28 @@
-a = 40
-b = 41
-v = 64000
-g = 64000/5 = 12800
-d = 115200
-e = 12800
-yo = 3+4 = 7 
+import math
+
+SEED_1 = 40  # A
+SEED_2 = 41  # B
+EXPECTED_VALUE = 64000  # V
+LEFT_BORDER = 12800  # G
+RIGHT_BORDER = 115200  # D
+E = 12800
+SHAPE = 7  # YO
+
+NUMBER_OF_STEPS = 1000
+STEP = round(((RIGHT_BORDER - LEFT_BORDER) / 1000), 1)
+
+NUMBER_OF_VARIABLES = [10, 100, 1000, 5000, 10000, 20000]
+
+EVEN_SKO = (RIGHT_BORDER - LEFT_BORDER) / (2 * math.sqrt(3))
+EVEN_VARCOEF = EVEN_SKO/EXPECTED_VALUE
+
+EXP_SKO = EXPECTED_VALUE
+
+# ERLANG_SKO_7 = (math.sqrt(7)*EXPECTED_VALUE)/7
+# ERLANG_SKO_8 = (math.sqrt(8)*EXPECTED_VALUE)/8
+#
+# ERLANG_VARCOEF_7 = math.sqrt(7)/7
+# ERLANG_VARCOEF_8 = math.sqrt(8)/8
+
+
+CSS_FILE = "<link rel='stylesheet' href='style.css'>"
