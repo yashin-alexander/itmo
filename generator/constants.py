@@ -25,4 +25,5 @@ EXP_SKO = EXPECTED_VALUE
 # ERLANG_VARCOEF_8 = math.sqrt(8)/8
 
 
-CSS_FILE = "<link rel='stylesheet' href='style.css'>"
+CSS_FILE = "<link rel='stylesheet' href='../styles/style.css'>"
+

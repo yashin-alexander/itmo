@@ -188,5 +188,3 @@ def make_exp_table(results, columns_number, description):
 
 if __name__ == "__main__":
     main()
-
-

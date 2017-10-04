@@ -1,0 +1,49 @@
+body {
+    background-size: cover;
+    align: center;
+    margin-left: 152px;
+}
+table, td, th {
+    border: 2px solid black;
+}
+table {
+    border-collapse: collapse;
+    width: 600px;
+    background-color: #FDFF9E;
+}
+th, td {
+    vertical-align: top;
+    text-align: center;
+    padding: 3px;
+    height: 20px;
+    font-family: "Ubuntu Condensed", cursive ;
+}
+td[rowspan] {
+    vertical-align:top;
+}
+
+td[input] {
+    width: 400px;
+    height: 400px;
+    vertical-align:top;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+#answer {
+    border: solid 1px black;
+    overflow: scroll !important;
+    padding: 3px;
+    max-width: 587px;
+    max-height: 300px;
+}
+#scrollable_table {
+    padding: 3px;
+    max-width: 650px;
+    max-height: 650px;
+    overflow: auto;
+}
+#header > p {
+    font-family: "Ubuntu Condensed", cursive ;
+}
