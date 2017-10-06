@@ -4,13 +4,14 @@ import simpy
 F = len("Яшин")
 I = len("Александр")
 K = 2 + (F % 7)
+# K = 1
 MB = F
 LAMBDA = (K*0.9/F)
 Q = round(F/(F+I), 3)
 E2 = 3 + (F % 5)
 E3 = 9 - E2
 
-TRANSACTIONS_NUMBER = 100
+TRANSACTIONS_NUMBER = 10
 
 env = simpy.Environment()
 system_1 = simpy.Resource(env, capacity=K)

@@ -36,7 +36,6 @@ service_duration_3 = []
 global_time = [0]
 
 
-
 class Transaction(object):
     def __init__(self, env, name, system):
         self.name = name
@@ -46,6 +45,7 @@ class Transaction(object):
     def run(self):
 
         queue_1_len[0] += 1
+
         creation_time = self.env.now
 
         with self.system.request() as request_1:
@@ -55,7 +55,7 @@ class Transaction(object):
 
             wait = self.env.now - creation_time
             queue_1_waiting_time.append(self.env.now - creation_time)
-            queue_1_lengths.append(queue_1_len)
+            queue_1_lengths.append(queue_1_len[0])
 
             work_1 = numpy.random.exponential(MB)
             service_duration_1.append(work_1)
@@ -65,9 +65,6 @@ class Transaction(object):
 
             # print(u"FIRST - name: {0} - serving: {1} - waiting: {2}".format(
             #     self.name, self.env.now - creation_time, wait))
-
-
-
 
             if numpy.random.randint(1, 1000) > (Q * 1000):
                 #smo3
