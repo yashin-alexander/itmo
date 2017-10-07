@@ -5,8 +5,6 @@ from calculations import *
 from distributions import *
 from histogram import *
 
-plotly.tools.set_credentials_file(username='yashin_alexander', api_key='Fx4bpffs3QI4dT7SXtqR')
-
 
 def make_diagram_columns(even_result_1, even_result_2, exp_result_1, exp_result_2, erlang_result_1, erlang_result_2):
 

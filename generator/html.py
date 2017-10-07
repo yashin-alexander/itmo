@@ -1,6 +1,7 @@
 from constants import *
 import os
 
+
 class Html:
     def __init__(self, description):
         self.text = "<html>" \

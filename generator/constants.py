@@ -1,12 +1,15 @@
 import math
 
-SEED_1 = 40  # A
-SEED_2 = 41  # B
-EXPECTED_VALUE = 64000  # V
-LEFT_BORDER = 12800  # G
-RIGHT_BORDER = 115200  # D
-E = 12800
-K = 7  # YO
+F = len("Kanukova")
+I = len("Sofia")
+O = len("Alanovna")
+
+SEED_1 = F * I  # A
+SEED_2 = SEED_1 + 1  # B
+EXPECTED_VALUE = F * O * 1000  # V
+LEFT_BORDER = round(EXPECTED_VALUE / I)  # G
+RIGHT_BORDER = EXPECTED_VALUE * 2 - LEFT_BORDER  # D
+K = 3 + SEED_1 % 6  # YO
 K_PLUS_1 = K + 1
 
 NUMBER_OF_STEPS = 1000
@@ -26,5 +29,5 @@ ERL_SKO_K_PLUS_1 = math.sqrt(K_PLUS_1) * EXPECTED_VALUE / K_PLUS_1
 ERL_VARCOEF_K = math.sqrt(K) / K
 ERL_VARCOEF_K_PLUS_1 = math.sqrt(K_PLUS_1) / K_PLUS_1
 
-CSS_FILE = "<link rel='stylesheet' href='../styles/style.css'>"
+CSS_FILE = "<link rel='stylesheet' href='../../styles/style.css'>"
 
