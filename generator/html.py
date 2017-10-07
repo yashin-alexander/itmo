@@ -1,5 +1,5 @@
 from constants import *
-
+import os
 
 class Html:
     def __init__(self, description):
@@ -19,8 +19,12 @@ class Html:
         self.text += "</p>"
 
     def create_file(self, name):
+        path = "./htmls/"
+        if not os.path.exists(path):
+            os.mkdir(path)
         self.text += "  </body>" \
                      "</html>"
-        fd = open(name, "w")
+        path += name
+        fd = open(path, "w")
         fd.write(self.text)
         fd.close()

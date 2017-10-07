@@ -3,6 +3,7 @@ import plotly.graph_objs as go
 from table import Table
 from calculations import *
 from distributions import *
+from histogram import *
 
 plotly.tools.set_credentials_file(username='yashin_alexander', api_key='Fx4bpffs3QI4dT7SXtqR')
 
@@ -51,10 +52,12 @@ def main():
         erlang_result_3.append(erlang_distribution(SEED_1, current_variables_number, K + 1))
         erlang_result_4.append(erlang_distribution(SEED_2, current_variables_number, K + 1))
 
-        # make_diagram_columns(even_result_1[i], even_result_2[i],
-        #                      exp_result_1[i], exp_result_2[i],
-        #                      erlang_result_1[i], erlang_result_2[i])
-        # input()
+        histogram_name = "even{}".format(current_variables_number)
+        create_histogram(histogram_name, 20, even_result_1[i], even_result_2[i])
+        histogram_name = "exp{}".format(current_variables_number)
+        create_histogram(histogram_name, 40, exp_result_1[i], exp_result_2[i])
+        histogram_name = "shape{}erl{}".format(K, current_variables_number)
+        create_histogram(histogram_name, 40, erlang_result_1[i], erlang_result_2[i])
 
     even_results = [even_result_1, even_result_2]
     exp_results = [exp_result_1, exp_result_2]
