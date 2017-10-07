@@ -2,18 +2,14 @@ import simpy
 
 F = len("Канукова")
 I = len("Софья")
-# K = (2 + (I % 7))
-K = 15
+K = (2 + (I % 7))
 MB = F
-# MB = 2
 LAMBDA = (K*0.9/F)
-# LAMBDA = 0.1
 Q = round(F/(F+I), 3)
 E2 = 3 + (F % 5)
 E3 = 9 - E2
 
 TRANSACTIONS_NUMBER = 100000
-SEED = 2
 
 env = simpy.Environment()
 system_1 = simpy.Resource(env, capacity=K)

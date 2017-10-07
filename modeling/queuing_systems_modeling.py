@@ -3,6 +3,7 @@ from __future__ import print_function
 import sys
 import simpy
 import time
+import random
 import numpy
 from transaction import *
 
@@ -66,23 +67,17 @@ def calculate_leaves(leaves):
 
 def main():
     transaction_cnt = 0
-    numpy.random.seed(SEED)
 
     while transaction_cnt < TRANSACTIONS_NUMBER:
 
         transaction_cnt += 1
-        beta = 1/LAMBDA
-
-        yield env.timeout(numpy.random.exponential(beta, 1))
+        yield env.timeout(random.expovariate(LAMBDA))
         transaction = Transaction(env, transaction_cnt, system_1)
 
         env.process(transaction.run())
 
 
 if __name__ == "__main__":
-    global SEED
-    SEED = int(sys.argv[1])
-
     env.process(main())
     env.run()
     time.sleep(0.5)
