@@ -6,7 +6,8 @@ EXPECTED_VALUE = 64000  # V
 LEFT_BORDER = 12800  # G
 RIGHT_BORDER = 115200  # D
 E = 12800
-SHAPE = 7  # YO
+K = 7  # YO
+K_PLUS_1 = K + 1
 
 NUMBER_OF_STEPS = 1000
 STEP = round(((RIGHT_BORDER - LEFT_BORDER) / 1000), 1)
@@ -17,13 +18,13 @@ EVEN_SKO = (RIGHT_BORDER - LEFT_BORDER) / (2 * math.sqrt(3))
 EVEN_VARCOEF = EVEN_SKO/EXPECTED_VALUE
 
 EXP_SKO = EXPECTED_VALUE
+EXP_VARCOEF = 1
 
-# ERLANG_SKO_7 = (math.sqrt(7)*EXPECTED_VALUE)/7
-# ERLANG_SKO_8 = (math.sqrt(8)*EXPECTED_VALUE)/8
-#
-# ERLANG_VARCOEF_7 = math.sqrt(7)/7
-# ERLANG_VARCOEF_8 = math.sqrt(8)/8
+ERL_SKO_K = math.sqrt(K) * EXPECTED_VALUE / K
+ERL_SKO_K_PLUS_1 = math.sqrt(K_PLUS_1) * EXPECTED_VALUE / K_PLUS_1
 
+ERL_VARCOEF_K = math.sqrt(K) / K
+ERL_VARCOEF_K_PLUS_1 = math.sqrt(K_PLUS_1) / K_PLUS_1
 
 CSS_FILE = "<link rel='stylesheet' href='../styles/style.css'>"
 
