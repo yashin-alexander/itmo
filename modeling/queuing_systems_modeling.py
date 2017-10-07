@@ -53,7 +53,7 @@ def smo_ave_time(smo_time_list):
 def calculate_varcoef(smo_time_list):
     beta = 1 / LAMBDA
     try:
-        return (numpy.std(smo_time_list)/(numpy.sum(smo_time_list) / len(smo_time_list)))
+        return numpy.std(smo_time_list)/numpy.sum(smo_time_list)*len(smo_time_list)
     except:
         return "none"
 
