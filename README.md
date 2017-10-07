@@ -1,10 +1,25 @@
 # random-variable-generators
-uniform &amp; exponential &amp; erlang generators
+uniform, exponential, erlang distribution generators
 
-start:
+## To install dependencies:
+1)make sure that you have python3 and pip installed
 
-pip install numpy
-pip install plotly
+2)from the project directory run:
+```
+make setup
+```
 
-specify your variant in generator/constants.py and then
-type "python3 random-variable-generator.py"
+## To run:
+1)specify your name in generator/constants.py
+
+2)from the project directory run:
+```
+make generate
+```
+
+3)check results 
+```
+cd htmls
+cd ../pitures
+```
+	

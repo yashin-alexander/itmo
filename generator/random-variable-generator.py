@@ -1,28 +1,7 @@
-import plotly
-import plotly.graph_objs as go
-from table import Table
+from table import *
 from calculations import *
 from distributions import *
 from histogram import *
-
-
-def make_diagram_columns(even_result_1, even_result_2, exp_result_1, exp_result_2, erlang_result_1, erlang_result_2):
-
-    first_even_result = go.Histogram(x=even_result_1)
-    second_even_result = go.Histogram(x=even_result_2)
-
-    first_exp_result = go.Histogram(x=exp_result_1)
-    second_exp_result = go.Histogram(x=exp_result_2)
-
-    first_erlang_result = go.Histogram(x=erlang_result_1)
-    second_erlang_result = go.Histogram(x=erlang_result_2)
-
-    data = [first_even_result, second_even_result,
-            first_exp_result, second_exp_result,
-            first_erlang_result, second_erlang_result]
-
-    fig = go.Figure(data=data)
-    plotly.plotly.plot(fig, filename='overlaid histogram')
 
 
 def main():
@@ -35,7 +14,7 @@ def main():
     erlang_result_3 = []
     erlang_result_4 = []
 
-    for i in range(6):
+    for i in range(EXPERIMENTS_NUMBER):
         current_variables_number = NUMBER_OF_VARIABLES[i]
 
         even_result_1.append(even_distribution(SEED_1, current_variables_number))
@@ -62,19 +41,21 @@ def main():
     erlang_results_shape = [erlang_result_1, erlang_result_2]
     erlang_results_shape_plus_1 = [erlang_result_3, erlang_result_4]
 
-    make_table(even_results, 10, "Even distribution", EVEN_SKO, EVEN_VARCOEF)
-    make_table(exp_results, 15, "Exponential distribution", EXP_SKO, EXP_VARCOEF)
-    make_table(erlang_results_shape, -1, "Erlang distribution shape {}".format(K), ERL_SKO_K, ERL_VARCOEF_K)
-    make_table(erlang_results_shape_plus_1, -1, "Erlang distribution shape {}".format(K_PLUS_1), ERL_SKO_K_PLUS_1, ERL_VARCOEF_K_PLUS_1)
+    make_table(even_results, "Even distribution", EVEN_SKO, EVEN_VARCOEF, 10)
+    make_table(exp_results, "Exponential distribution", EXP_SKO, EXP_VARCOEF, 15)
+    make_table(erlang_results_shape, "Erlang distribution shape {}".format(K), ERL_SKO_K, ERL_VARCOEF_K)
+    make_table(erlang_results_shape_plus_1, "Erlang distribution shape {}".format(K_PLUS_1), ERL_SKO_K_PLUS_1, ERL_VARCOEF_K_PLUS_1)
 
     create_file_with_calculated_values()
 
 
-def make_table(results, intervals_number, description, sko, varcoef):
+def make_table(results, description, sko, varcoef, intervals_number=-1):
     cell_size = (RIGHT_BORDER - LEFT_BORDER)/intervals_number
     html = Html(description)
-    for i in range(2):
-        table = Table(i + SEED_1)
+    for i in range(len(results)):
+        table = Table()
+        table.open_table(i + SEED_1)
+
         table.add_row("mean", calculate_mean(results[i]))
         table.add_row("mean  error", calculate_mean_error(results[i]))
         table.add_row("sko", calculate_std(results[i]))
@@ -82,22 +63,23 @@ def make_table(results, intervals_number, description, sko, varcoef):
         table.add_row("varcoef", calculate_varcoef(results[i]))
         table.add_row("varcoef error", calculate_varcoef_error(results[i], varcoef))
 
-        for l in range(intervals_number):
-            row = []
-            cell_left = LEFT_BORDER+cell_size*l
-            cell_right = LEFT_BORDER+cell_size*(l+1)
+        for c in range(intervals_number):
+            row_content = []
+            cell_left = LEFT_BORDER+cell_size*c
+            cell_right = LEFT_BORDER+cell_size*(c+1)
             row_name = "{0}-{1}".format(round(cell_left), round(cell_right))
-            for j in range(6):
-                counter = 0
+
+            for j in range(SELECTIONS_COUNT):
+                in_cell_numbers_counter = 0
                 for k in range(len(results[i][j])):
                     if cell_left <= results[i][j][k] < cell_right:
-                        counter += 1
-                row.append(counter)
-            table.add_row(row_name, row)
+                        in_cell_numbers_counter += 1
+                row_content.append(in_cell_numbers_counter)
+            table.add_row(row_name, row_content)
 
+        table.close_table()
         html.add_table(table)
-
-    html.create_file(description)
+    html.close_and_create_file(description)
 
 
 if __name__ == "__main__":

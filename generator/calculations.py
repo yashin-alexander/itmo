@@ -1,6 +1,5 @@
 from numpy import mean, std
-from constants import *
-from html import Html
+from html import *
 
 
 # -------------CALCULATING MEAN, SKO, VARCOEF-------------
@@ -8,14 +7,14 @@ from html import Html
 
 def calculate_mean(array):
     result = []
-    for i in range(6):
+    for i in range(SELECTIONS_COUNT):
         result.append(round(mean(array[i]), 4))
     return result
 
 
 def calculate_std(array):
     result = []
-    for i in range(6):
+    for i in range(SELECTIONS_COUNT):
         result.append(round(std(array[i]), 4))
     return result
 
@@ -32,21 +31,21 @@ def calculate_varcoef(array):
 
 def calculate_mean_error(array):
     result = []
-    for i in range(6):
+    for i in range(SELECTIONS_COUNT):
         result.append(abs(round((mean(array[i]) - EXPECTED_VALUE) / EXPECTED_VALUE, 4)))
     return result
 
 
 def calculate_std_error(array, sko):
     result = []
-    for i in range(6):
+    for i in range(SELECTIONS_COUNT):
         result.append(abs(round((std(array[i]) - sko) / sko, 4)))
     return result
 
 
 def calculate_varcoef_error(array, varcoef):
     result = []
-    for i in range(6):
+    for i in range(SELECTIONS_COUNT):
         result.append(abs(round((std(array[i]) / mean(array[i]) - varcoef) / varcoef, 4)))
     return result
 
@@ -74,4 +73,4 @@ def create_file_with_calculated_values():
     html.add_text(row)
     row = "Coefficient of variation for erlang distribution with shape {}: {}".format(K + 1, ERL_VARCOEF_K_PLUS_1)
     html.add_text(row)
-    html.create_file("calculated-values")
+    html.close_and_create_file("calculated-values")
