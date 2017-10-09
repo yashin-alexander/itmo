@@ -1,7 +1,7 @@
 import simpy
 
-F = len("Канукова")
-I = len("Софья")
+F = len("Саффиулин")
+I = len("Ильдар")
 K = (2 + (I % 7))
 MB = F
 LAMBDA = (K*0.9/F)
@@ -16,42 +16,28 @@ system_1 = simpy.Resource(env, capacity=K)
 system_2 = simpy.Resource(env, capacity=1)
 system_3 = simpy.Resource(env, capacity=1)
 
+system_2_enter_time = 0
+system_3_enter_time = 0
 
-queue_1_len = 0
-queue_2_len = 0
-queue_3_len = 0
-
-queue_1_lengths = []
 queue_1_waiting_time = []
-queue_1_service_time = []
-
-queue_2_lengths = []
 queue_2_waiting_time = []
-queue_2_service_time = []
-
-queue_3_lengths = []
 queue_3_waiting_time = []
-queue_3_service_time = []
 
+lost_2 = 0
+lost_3 = 0
 
-leave_2 = []
-leave_3 = []
-leave_2.append(0)
-leave_3.append(0)
+system_1_service_duration = []
+system_2_service_duration = []
+system_3_service_duration = []
 
-queue_1_len = []
-queue_2_len = []
-queue_3_len = []
-queue_1_len.append(0)
-queue_2_len.append(0)
-queue_3_len.append(0)
+queue_2_length = 0
+queue_3_length = 0
 
+global_time = []
 
-service_duration_1 = []
-service_duration_2 = []
-service_duration_3 = []
-
-global_time = [0]
+system_1_transactions_intervals = []
+system_2_transactions_intervals = []
+system_3_transactions_intervals = []
 
 
 def print_values():
