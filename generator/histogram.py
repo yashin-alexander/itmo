@@ -16,4 +16,3 @@ def create_histogram(name, columns, array_1, array_2):
         os.mkdir(path)
     plt.savefig('{}{}.png'.format(path, name))
     plt.close()
-

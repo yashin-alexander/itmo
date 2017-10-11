@@ -4,28 +4,28 @@ import os
 
 class Html:
     def __init__(self, description):
-        self.text = "<html>" \
-                    "   <head>" \
-                    "       {CSS_FILE}" \
-                    "   </head>" \
-                    "   <body>" \
-                    "       {}".format(description, CSS_FILE=CSS_FILE)
+        self.content = "<html>\n"\
+                    "       <head>\n"\
+                    "        {CSS_FILE}\n"\
+                    "       </head>\n" \
+                    "       <body>\n"\
+                    "           {}\n".format(description, CSS_FILE=CSS_FILE)
 
     def add_table(self, table):
-        self.text += table.text
+        self.content += table.content
 
     def add_text(self, text):
-        self.text += "<p>"
-        self.text += text
-        self.text += "</p>"
+        self.content += "<p>"
+        self.content += text
+        self.content += "</p>\n"
 
-    def create_file(self, name):
+    def close_and_create_file(self, name):
+        self.content += "  </body>\n" \
+                     "</html>\n"
         path = "./htmls/"
         if not os.path.exists(path):
             os.mkdir(path)
-        self.text += "  </body>" \
-                     "</html>"
         path += name
         fd = open(path, "w")
-        fd.write(self.text)
+        fd.write(self.content)
         fd.close()
