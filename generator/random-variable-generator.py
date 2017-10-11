@@ -2,6 +2,7 @@ from table import *
 from calculations import *
 from distributions import *
 from histogram import *
+import progressbar
 
 
 def main():
@@ -14,7 +15,10 @@ def main():
     erlang_result_3 = []
     erlang_result_4 = []
 
-    for i in range(EXPERIMENTS_NUMBER):
+    bar = progressbar.ProgressBar()
+
+    print("Creating hystograms...")
+    for i in bar(range(EXPERIMENTS_NUMBER)):
         current_variables_number = NUMBER_OF_VARIABLES[i]
 
         even_result_1.append(even_distribution(SEED_1, current_variables_number))
@@ -45,7 +49,6 @@ def main():
     make_table(exp_results, "Exponential distribution", EXP_SKO, EXP_VARCOEF, 15)
     make_table(erlang_results_shape, "Erlang distribution shape {}".format(K), ERL_SKO_K, ERL_VARCOEF_K)
     make_table(erlang_results_shape_plus_1, "Erlang distribution shape {}".format(K_PLUS_1), ERL_SKO_K_PLUS_1, ERL_VARCOEF_K_PLUS_1)
-
     create_file_with_calculated_values()
 
 
