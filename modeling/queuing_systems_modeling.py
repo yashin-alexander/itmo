@@ -13,7 +13,7 @@ def main():
         interval = numpy.random.exponential(1/LAMBDA)
         system_1_transactions_intervals.append(interval)
         yield env.timeout(interval)
-        transaction = Transaction(env, transaction_cnt, system_1)
+        transaction = Transaction()
 
         env.process(transaction.run())
 
@@ -37,9 +37,9 @@ if __name__ == "__main__":
     print("ozhid2 = ", mean(queue_2_waiting_time))
     print("ozhid3 = ", mean(queue_3_waiting_time))
 
-    print("\ndlina1 = ", calculate_average_lenght(system_1_transactions_intervals, queue_1_waiting_time, 0))
-    print("dlina2 = ", calculate_average_lenght(system_2_transactions_intervals, queue_2_waiting_time, p_lost_2))
-    print("dlina3 = ", calculate_average_lenght(system_3_transactions_intervals, queue_3_waiting_time, p_lost_3))
+    print("\ndlina1 = ", mean(queue_1_length))
+    print("dlina2 = ", mean(queue_2_length))
+    print("dlina3 = ", mean(queue_3_length))
 
     print("\nprebyvanie1 = ", mean(system_1_service_duration)+mean(queue_1_waiting_time))
     print("prebyvanie2 = ", mean(system_2_service_duration)+mean(queue_2_waiting_time))

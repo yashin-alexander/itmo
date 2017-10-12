@@ -23,15 +23,16 @@ queue_1_waiting_time = []
 queue_2_waiting_time = []
 queue_3_waiting_time = []
 
+queue_1_length = []
+queue_2_length = []
+queue_3_length = []
+
 lost_2 = 0
 lost_3 = 0
 
 system_1_service_duration = []
 system_2_service_duration = []
 system_3_service_duration = []
-
-queue_2_length = 0
-queue_3_length = 0
 
 global_time = []
 
