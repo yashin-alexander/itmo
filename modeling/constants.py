@@ -1,7 +1,7 @@
 import simpy
 
-F = len("Саффиулин")
-I = len("Ильдар")
+F = len("Канукова")
+I = len("Софья")
 K = (2 + (I % 7))
 MB = F
 LAMBDA = (K*0.9/F)

@@ -1,15 +1,13 @@
-import simpy
 import numpy
 import random
 
 from constants import *
 import constants
-from transaction import *
 
 
 class Transaction(object):
-
-    def run(self):
+    @staticmethod
+    def run():
         # smo1
         creation_time = env.now
         with system_1.request() as request_1:
