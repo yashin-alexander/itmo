@@ -1,17 +1,19 @@
 import simpy
 
-
-F = len("Яшин")
-I = len("Александр")
-K = 2 + (F % 7)
-# K = 1
+F = len("Канукова")
+I = len("Софья")
+# K = (2 + (I % 7))
+K = 15
 MB = F
+# MB = 2
 LAMBDA = (K*0.9/F)
+# LAMBDA = 0.1
 Q = round(F/(F+I), 3)
 E2 = 3 + (F % 5)
 E3 = 9 - E2
 
-TRANSACTIONS_NUMBER = 10
+TRANSACTIONS_NUMBER = 100000
+SEED = 2
 
 env = simpy.Environment()
 system_1 = simpy.Resource(env, capacity=K)
@@ -22,6 +24,38 @@ system_3 = simpy.Resource(env, capacity=1)
 queue_1_len = 0
 queue_2_len = 0
 queue_3_len = 0
+
+queue_1_lengths = []
+queue_1_waiting_time = []
+queue_1_service_time = []
+
+queue_2_lengths = []
+queue_2_waiting_time = []
+queue_2_service_time = []
+
+queue_3_lengths = []
+queue_3_waiting_time = []
+queue_3_service_time = []
+
+
+leave_2 = []
+leave_3 = []
+leave_2.append(0)
+leave_3.append(0)
+
+queue_1_len = []
+queue_2_len = []
+queue_3_len = []
+queue_1_len.append(0)
+queue_2_len.append(0)
+queue_3_len.append(0)
+
+
+service_duration_1 = []
+service_duration_2 = []
+service_duration_3 = []
+
+global_time = [0]
 
 
 def print_values():
