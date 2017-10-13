@@ -21,7 +21,6 @@ leave_3 = []
 leave_2.append(0)
 leave_3.append(0)
 
-
 queue_1_len = []
 queue_2_len = []
 queue_3_len = []
@@ -30,8 +29,9 @@ queue_2_len.append(0)
 queue_3_len.append(0)
 
 
-service_duration = []
-service_duration = [0, 0, 0, 0]
+service_duration_1 = []
+service_duration_2 = []
+service_duration_3 = []
 
 
 class Transaction(object):
@@ -54,13 +54,17 @@ class Transaction(object):
             queue_1_waiting_time.append(self.env.now - creation_time)
             queue_1_lengths.append(queue_1_len)
 
-            service_duration[1] = numpy.random.exponential(MB)
-            yield self.env.timeout(service_duration[1])
+            work_1 = numpy.random.exponential(MB)
+            service_duration_1.append(work_1)
+            yield self.env.timeout(work_1)
 
             queue_1_service_time.append(self.env.now - creation_time)
 
             # print(u"FIRST - name: {0} - serving: {1} - waiting: {2}".format(
             #     self.name, self.env.now - creation_time, wait))
+
+
+
 
             if numpy.random.randint(1, 1000) > (Q * 1000):
                 #smo3
@@ -80,8 +84,9 @@ class Transaction(object):
                     queue_3_waiting_time.append(self.env.now - queue_3_comes_time)
                     queue_3_lengths.append(queue_3_len[0])
 
-                    service_duration[2] = numpy.random.exponential(MB)
-                    yield self.env.timeout(service_duration[2])
+                    work_3 = numpy.random.exponential(MB)
+                    service_duration_3.append(work_3)
+                    yield self.env.timeout(work_3)
 
                     queue_3_service_time.append(self.env.now - queue_3_comes_time)
                     # print(u"THIRD - name: {0} - serving: {1} - waiting: {2}".format(
@@ -104,8 +109,9 @@ class Transaction(object):
                     queue_2_waiting_time.append(self.env.now - queue_2_comes_time)
                     queue_2_lengths.append(queue_2_len[0])
 
-                    service_duration[3] = numpy.random.exponential(MB)
-                    yield self.env.timeout(service_duration[3])
+                    work_2 = numpy.random.exponential(MB)
+                    service_duration_2.append(work_2)
+                    yield self.env.timeout(work_2)
 
                     queue_2_service_time.append(self.env.now - queue_2_comes_time)
                     # print(u"SECOND - name: {0} - serving: {1} - waiting: {2}".format(
