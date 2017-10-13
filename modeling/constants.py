@@ -10,7 +10,7 @@ Q = round(F/(F+I), 3)
 E2 = 3 + (F % 5)
 E3 = 9 - E2
 
-TRANSACTIONS_NUMBER = 10000
+TRANSACTIONS_NUMBER = 100
 
 env = simpy.Environment()
 system_1 = simpy.Resource(env, capacity=K)
@@ -18,26 +18,9 @@ system_2 = simpy.Resource(env, capacity=1)
 system_3 = simpy.Resource(env, capacity=1)
 
 
-
-#
-# queue_1_lengths = []
-# queue_1_waiting_time = []
-# queue_1_service_time = []
-#
-# queue_2_lengths = []
-# queue_2_waiting_time = []
-# queue_2_service_time = []
-#
-# queue_3_lengths = []
-# queue_3_waiting_time = []
-# queue_3_service_time = []
-
-
 queue_1_len = 0
 queue_2_len = 0
 queue_3_len = 0
-leave_2 = 0
-leave_3 = 0
 
 
 def print_values():

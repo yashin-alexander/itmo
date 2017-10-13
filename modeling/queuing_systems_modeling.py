@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import simpy
+import time
 import numpy
 from transaction import *
 
@@ -8,7 +9,7 @@ from transaction import *
 def main():
     transaction_cnt = 0
 
-    while transaction_cnt < TRANSACTIONS_NUMBER:  # Посетители приходят 10 часов подряд CONSUMER_TIME = 3600*10
+    while transaction_cnt < TRANSACTIONS_NUMBER:
 
         transaction_cnt += 1
         beta = 1/LAMBDA
@@ -17,6 +18,11 @@ def main():
         transaction = Transaction(env, transaction_cnt, system_1)
 
         env.process(transaction.run())
+
+    time.sleep(0.5)
+
+    # print("HERE")
+    # print(leave_2, leave_3)
 
 
 if __name__ == "__main__":
