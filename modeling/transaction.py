@@ -33,6 +33,9 @@ service_duration_1 = []
 service_duration_2 = []
 service_duration_3 = []
 
+global_time = [0]
+
+
 
 class Transaction(object):
     def __init__(self, env, name, system):
@@ -71,7 +74,7 @@ class Transaction(object):
                 if queue_3_len[0] == E3:
                     # print("poka from3 my name is{}".format(self.name))
                     leave_3[0] += 1
-                    return
+                    pass
 
                 queue_3_len[0] += 1
                 queue_3_comes_time = self.env.now
@@ -96,7 +99,7 @@ class Transaction(object):
                 if queue_2_len[0] == E2:
                     # print("poka from2 my name is{}".format(self.name))
                     leave_2[0] += 1
-                    return
+                    pass
 
                 queue_2_len[0] += 1
                 queue_2_comes_time = self.env.now
@@ -117,3 +120,6 @@ class Transaction(object):
                     # print(u"SECOND - name: {0} - serving: {1} - waiting: {2}".format(
                     #     self.name, self.env.now - queue_2_comes_time, wait))
         # print(leave_2[0], leave_3[0])
+
+        # global_time[0] = self.env.now
+        # print(global_time[0], numpy.sum(service_duration_1))
