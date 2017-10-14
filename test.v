@@ -23,11 +23,11 @@ module test;
 	
 	always begin
 		# 1000 SW = SW + 1; //nothing
-		# 64000 SW = SW + 1;	//1000 frequency
-		# 32000 SW = SW + 1;	//500
-		# 12800 SW = SW ;	//200
-		# 5000 SW = SW;	//200 and stop
-		# 2000;	//stop for 2000 
+		# 64000 SW = SW + 1;	//1000
+		# 32000 SW = SW + 1;	//freq = 500
+		# 12800;	// freq = 200
+		# 5000;	// freq = 200 and stop
+		# 2000;	//wait for a 2000 times 
 		
 	end
       
