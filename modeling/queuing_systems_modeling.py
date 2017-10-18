@@ -1,5 +1,7 @@
 from numpy import mean, minimum, std
 from transaction import *
+import time
+import progressbar
 
 
 def calculate():
@@ -70,15 +72,23 @@ def calculate():
 
 
 def generate():
-    transaction_cnt = 0
-    while transaction_cnt < TRANSACTIONS_NUMBER:
-        transaction_cnt += 1
+    bar = progressbar.ProgressBar(widgets=[
+        ' [', progressbar.Timer(), '] ',
+        progressbar.AnimatedMarker(markers='\\'),
+        progressbar.AnimatedMarker(markers='.oO*  '),
+        progressbar.AnimatedMarker(markers='/'),
+        progressbar.Bar(),
+    ])
+
+    for i in range(TRANSACTIONS_NUMBER):
         interval = numpy.random.exponential(1/LAMBDA)
         system_1_transactions_intervals.append(interval)
         yield env.timeout(interval)
 
         env.process(Transaction.run())
 
+        if i % (TRANSACTIONS_NUMBER/100) == 0:
+            bar.update(i/(TRANSACTIONS_NUMBER/100))
 
 def calculate_loading(array_b, array_intervals, max=1, k=1, p=0):
     b = mean(array_b)
