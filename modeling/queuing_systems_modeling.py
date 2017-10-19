@@ -90,6 +90,7 @@ def generate():
         if i % (TRANSACTIONS_NUMBER/100) == 0:
             bar.update(i/(TRANSACTIONS_NUMBER/100))
 
+
 def calculate_loading(array_b, array_intervals, max=1, k=1, p=0):
     b = mean(array_b)
     lyambda = 1 / mean(array_intervals)
