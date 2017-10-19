@@ -11,6 +11,8 @@ E3 = 9 - E2
 
 TRANSACTIONS_NUMBER = 100000
 
+mods = []
+
 env = simpy.Environment()
 system_1 = simpy.Resource(env, capacity=K)
 system_2 = simpy.Resource(env, capacity=1)

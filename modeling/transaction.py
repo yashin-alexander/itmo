@@ -1,6 +1,5 @@
 import numpy
 import random
-import math
 
 from constants import *
 import constants
@@ -16,9 +15,10 @@ class Transaction(object):
             queue_1_length.append(len(system_1.queue))
             yield request_1
             queue_1_waiting_time.append(env.now - creation_time)
-            service = random.expovariate(1/MB)
-            system_1_service_duration.append(service)
-            yield env.timeout(service)
+
+            service_time = get_service_time(constants.mods[0])
+            system_1_service_duration.append(service_time)
+            yield env.timeout(service_time)
 
         if numpy.random.randint(1, 100000) > (Q * 100000):
             #smo3
@@ -37,13 +37,10 @@ class Transaction(object):
 
                 queue_3_waiting_time.append(env.now - queue_3_enter_time)
 
-                # interval = calculate_confidence_interval(calculate_SE(MB * 0.3, 2))  #
-                # service = numpy.random.uniform(MB - interval, MB + interval, 1)      # COMMENT THAT IF U WANT EXP DISTR
-
-                service = random.expovariate(1/MB)
-
-                system_3_service_duration.append(service)
-                yield env.timeout(service)
+                # exp uni det
+                service_time = get_service_time(constants.mods[2])
+                system_3_service_duration.append(service_time)
+                yield env.timeout(service_time)
 
         else:
             # smo2
@@ -60,13 +57,40 @@ class Transaction(object):
                 yield request_2
 
                 queue_2_waiting_time.append(env.now - queue_2_enter_time)
-
-                # service = numpy.random.gamma(2, MB/2, 1)
-
-                service = MB                                # COMMENT THAT IF U WANT EXP DISTR
-
-                # service = random.expovariate(1/MB)
-                system_2_service_duration.append(service)
-                yield env.timeout(service)
+                # erl det exp
+                service_time = get_service_time(constants.mods[1])
+                system_2_service_duration.append(service_time)
+                yield env.timeout(service_time)
 
         global_time.append(env.now - creation_time)
+
+
+def get_expovariative_service_time():
+    return random.expovariate(1 / MB)
+
+
+def get_determined_service_time():
+    return MB
+
+
+def get_erlang_service_time():
+    return numpy.random.gamma(2, MB/2, 1)
+
+
+def get_uniform_service_time():
+    interval = calculate_confidence_interval(calculate_SE(MB * 0.3, 2))
+    service_time = numpy.random.uniform(MB - interval, MB + interval, 1)
+    return service_time
+
+
+def get_service_time(mode):
+    if mode == 'exp':
+        return get_expovariative_service_time()
+    elif mode == 'det':
+        return get_determined_service_time()
+    elif mode == 'erl':
+        return get_erlang_service_time()
+    elif mode == 'uni':
+        return get_uniform_service_time()
+    else:
+        return get_expovariative_service_time()
