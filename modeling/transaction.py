@@ -1,8 +1,10 @@
 import numpy
 import random
+import math
 
 from constants import *
 import constants
+from calculations import *
 
 
 class Transaction(object):
@@ -35,7 +37,11 @@ class Transaction(object):
 
                 queue_3_waiting_time.append(env.now - queue_3_enter_time)
 
+                # interval = calculate_confidence_interval(calculate_SE(MB * 0.3, 2))  #
+                # service = numpy.random.uniform(MB - interval, MB + interval, 1)      # COMMENT THAT IF U WANT EXP DISTR
+
                 service = random.expovariate(1/MB)
+
                 system_3_service_duration.append(service)
                 yield env.timeout(service)
 
@@ -55,8 +61,12 @@ class Transaction(object):
 
                 queue_2_waiting_time.append(env.now - queue_2_enter_time)
 
-                work_2 = random.expovariate(1/MB)
-                system_2_service_duration.append(work_2)
-                yield env.timeout(work_2)
+                # service = numpy.random.gamma(2, MB/2, 1)
+
+                service = MB                                # COMMENT THAT IF U WANT EXP DISTR
+
+                # service = random.expovariate(1/MB)
+                system_2_service_duration.append(service)
+                yield env.timeout(service)
 
         global_time.append(env.now - creation_time)

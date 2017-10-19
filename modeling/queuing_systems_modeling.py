@@ -34,32 +34,6 @@ def calculate():
     lifecycle = mean(global_time)
     varcoef = std(global_time) / mean(global_time)
 
-    # print("\nzagr1 = ", zagr1)
-    # print("zagr2 = ", zagr2)
-    # print("zagr3 = ", zagr3)
-    #
-    # print("\nnagr1 = ", nagr1)
-    # print("nagr2 = ", nagr2)
-    # print("nagr3 = ", nagr3)
-    #
-    # print("\nozhid1 = ", ozhid1)
-    # print("ozhid2 = ", ozhid2)
-    # print("ozhid3 = ", ozhid3)
-    #
-    # print("\ndlina1 = ", dlina1)
-    # print("dlina2 = ", dlina2)
-    # print("dlina3 = ", dlina3)
-    #
-    # print("\nprebyvanie1 = ", prebyvanie1)
-    # print("prebyvanie2 = ", prebyvanie2)
-    # print("prebyvanie3 = ", prebyvanie3)
-    #
-    # print("\nlifecycle = ", lifecycle)
-    # print("varcoef = ", varcoef)
-    #
-    # print("\nlost2 = ", p_lost_2)
-    # print("lost3 = ", p_lost_3)
-
     return (
         zagr1, zagr2, zagr3,
         nagr1, nagr2, nagr3,
@@ -74,9 +48,16 @@ def calculate():
 def generate():
     bar = progressbar.ProgressBar(widgets=[
         ' [', progressbar.Timer(), '] ',
-        progressbar.AnimatedMarker(markers='\\'),
-        progressbar.AnimatedMarker(markers='.oO*  '),
-        progressbar.AnimatedMarker(markers='/'),
+        progressbar.AnimatedMarker(markers='<3 '),
+        progressbar.AnimatedMarker(markers='3 <'),
+        progressbar.AnimatedMarker(markers=' <3'),
+        progressbar.AnimatedMarker(markers='<3 '),
+        progressbar.AnimatedMarker(markers='3 <'),
+        progressbar.AnimatedMarker(markers=' <3'),
+        progressbar.AnimatedMarker(markers='<3 '),
+        progressbar.AnimatedMarker(markers='3 <'),
+        progressbar.AnimatedMarker(markers=' <3'),
+
         progressbar.Bar(),
     ])
 
