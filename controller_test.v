@@ -6,49 +6,34 @@ module controller_test;
 	reg clk;
 	reg rst;
 	reg SW;
-	reg rxd;
-
 	// Outputs
 	wire txd;
 	wire [7:0] word;
-	wire recieve_ready;
+	wire [9:0] counter;
+	wire transmit_ready;
 	
 	// Instantiate the Unit Under Test (UUT)
-	controller uut (
+	message_mode uut (
 		.clk(clk), 
 		.rst(rst), 
 		.SW(SW), 
-		.rxd(rxd), 
 		.txd(txd),
 		.word(word),
-		.recieve_ready(recieve_ready)
+		.counter(counter),
+		.transmit_ready(transmit_ready)
 	);
 
 	initial begin
 
 		clk = 0;
 		rst = 0;
-		SW = 0;
-		rxd = 1;
+		SW = 1;
 
 	end
 	
 	always begin
 		# 1 clk = ~clk;
 	end
-	
-	always begin
-		rxd = 1;
-		# 2 rxd = 0;
-		# 2 rxd = 1;
-		# 2 rxd = 1;
-		# 2 rxd = 1;
-		# 2 rxd = 1;
-		# 2 rxd = 0;
-		# 2 rxd = 1;
-		# 2 rxd = 0;
-		# 2;
-	end
-      
+
 endmodule
 
