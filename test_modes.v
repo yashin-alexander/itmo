@@ -1,19 +1,30 @@
 `timescale 1ns / 1ps
 
 module test_modes;
-
-    // Inputs
-    reg clk;
-    reg rst;
-    reg SW;
-    // Outputs
-    wire txd;
-    wire [7:0] word;
-    wire [9:0] counter;
-    wire transmit_ready;
-    
-    // Instantiate the Unit Under Test (UUT)
-    message_mode uut (
+	// Inputs
+	reg clk;
+	reg rst;
+	reg SW;
+	reg rxd;
+	// Outputs
+	wire txd;
+	wire [7:0] word;
+	wire [9:0] counter;
+	wire recieve_ready;
+	wire transmit_ready;
+	
+	// Instantiate the Unit Under Test (UUT)
+	/*echo_mode uut2 (
+		.clk(clk), 
+		.rst(rst), 
+		.SW(SW), 
+		.rxd(rxd),
+		.txd(txd),
+		.word(word),
+		.recieve_ready(recieve_ready),
+		.transmit_ready(transmit_ready)
+	);*/
+	message_mode uut (
         .clk(clk), 
         .rst(rst), 
         .SW(SW), 
@@ -23,17 +34,22 @@ module test_modes;
         .transmit_ready(transmit_ready)
     );
 
-    initial begin
+	initial begin
 
-        clk = 0;
-        rst = 0;
-        SW = 1;
+		clk = 0;
+		rst = 0;
+		rxd = 1;
+		SW = 1;
 
-    end
-    
-    always begin
-        # 1 clk = ~clk;
-    end
+	end
+	
+	always begin
+		# 1 clk = ~clk;
+	end
+	
+	/*always begin
+        # 16 rxd = 0;
+        # 20 rxd = 1;
+    end*/
 
 endmodule
-

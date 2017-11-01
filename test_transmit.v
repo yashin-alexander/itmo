@@ -5,6 +5,7 @@ module test_transmit;
     reg [7:0] word;
     reg clk;
     reg rst;
+	 reg connection_status;
 
     wire txd;
 
@@ -12,6 +13,7 @@ module test_transmit;
         .word(word), 
         .clk(clk), 
         .rst(rst), 
+		  .connection_status(connection_status),
         .txd(txd)
     );
 
@@ -19,6 +21,7 @@ module test_transmit;
         word = 129;
         clk = 0;
         rst = 0;
+		  connection_status = 1;
     end
     
     always begin

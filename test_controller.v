@@ -6,23 +6,31 @@ module test_controller;
 	reg clk;
 	reg SW;
 	reg rst;
+	reg rxd;
 
 	// Outputs
-	wire [7:0] rxd;
-	wire [7:0] txd;
+	wire txd;
 	wire freq_clk;
 	wire counter;
+	wire [7:0] word;
+
 	
 	controller uut (
 		.clk(clk), 
 		.SW(SW), 
-		.rst(rst)
+		.rst(rst),
+		.rxd(rxd),
+		.txd(txd),
+		.freq_clk(freq_clk),
+		.counter(counter),
+		.word_1(word)
 	);
 
 	initial begin
 		clk = 0;
 		SW = 0;
 		rst = 0;
+		rxd = 1;
 	end
 
 	 always begin
@@ -30,9 +38,14 @@ module test_controller;
     end
 
 	always begin
-		# 100 SW = 1;
-		# 100 SW = 0;
+		# 1000000 SW = 1;
+		# 1000000000 SW = 0;
 	end
+	
+	always begin
+        # 8336 rxd = 0;
+        # 10430 rxd = 1;
+    end
 
 endmodule
 

@@ -6,12 +6,14 @@ module test_recieve;
     reg clk;
     reg rst;
     wire [7:0] word;
+	 wire recieve_ready;
 
     recieve uut (
         .rxd(rxd), 
         .clk(clk), 
         .rst(rst), 
-        .word(word)
+        .word(word),
+		  .recieve_ready(recieve_ready)
     );
 
     initial begin
@@ -34,4 +36,3 @@ module test_recieve;
     end
       
 endmodule
-
