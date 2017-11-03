@@ -1,41 +1,67 @@
-## Сценарий №1
+# Сценарий №1
 
-# 1 опыт
+#### 1 опыт
 720 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/1info.PNG?raw=true)
 
-# 2 опыт 
+#### 2 опыт 
 360 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/2info.PNG?raw=true)
 
-# 3 опыт
+#### 3 опыт
 180 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/3info.PNG?raw=true)
 
-# 4 опыт
+#### 4 опыт
 90 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/4info.PNG?raw=true)
 
+для сценария 1 характерны следующие особенности:
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_1.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_1.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_1.png?raw=true)
 
-## Сценарий №2
-# 5 опыт
+# Сценарий №2
+#### 5 опыт
 720 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
- 
-# 6 опыт
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/5info.PNG?raw=true)
+
+#### 6 опыт
 360 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/6info.PNG?raw=true)
 
-# 7 опыт
+#### 7 опыт
 180 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/7info.PNG?raw=true)
 
-# 8 опыт
+#### 8 опыт
 90 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/8info.PNG?raw=true)
+
+для сценария 2 характерны следующие особенности:
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_2.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_2.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_2.png?raw=true)
 
 
-## Сценарий №3
-# 9 опыт
+# Сценарий №3
+#### 9 опыт
 720 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/9.PNG?raw=true)
 
-# 10 опыт 
+#### 10 опыт 
 360 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/10.PNG?raw=true)
 
-# 11 опыт
+#### 11 опыт
 180 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/11.PNG?raw=true)
 
-# 12 опыт
+#### 12 опыт
 90 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/12.PNG?raw=true)
+
+для сценария 3 характерны следующие особенности:
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_3.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_3.png?raw=true)
+![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_3.png?raw=true)
