@@ -51,4 +51,7 @@
 - [3] - Abdnormal child psychology, second edition. Wadsworth 2003. page 417
 - [4] - (10+18)/2 = 14    0:14:08 (10 с.), 0:14:10 (18 с.) Мультфильм.
 - [5] - 12*60=720         12 монстров в ангаре (monsters_number). Всего 60 ангаров (inc). Мультфильм. 
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/monsters_number.png)
 - [6] - 1/92 = 0.0108     За один рабочий день один монстр испугался (scared_monster). К тому времени было напугано уже 92 ребенка (children_scared). Мультфильм.
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/children_scared.png)
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/inc.png)
