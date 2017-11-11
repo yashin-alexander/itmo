@@ -103,7 +103,7 @@ CREATE TABLE Performance
   	performanceId NUMBER NOT NULL PRIMARY KEY,
   	performanseName VARCHAR2(30),
 	performancePrice NUMBER CHECK(performancePrice>=500 AND performancePrice<=5000),
-	description VARCHAR2(50)
+	description BLOB
 );
 
 CREATE SEQUENCE performance_id_seq

@@ -6,20 +6,22 @@ create or replace package util as
 	PROCEDURE delete_requisite_by_id(req_id NUMBER);
 	PROCEDURE delete_requisite_by_name(req_name VARCHAR2);
 
-
 	FUNCTION create_post(postName VARCHAR2, salary NUMBER, serviceId NUMBER) RETURN NUMBER;
-
 	FUNCTION create_performance(
 		performanseName VARCHAR2,
 		performancePrice NUMBER,
 		description VARCHAR2)
 		RETURN NUMBER;
 
-	FUNCTION calculate_theater_expenses RETURN NUMBER;
+	FUNCTION read_theater_expenses RETURN NUMBER;
 	PROCEDURE print_theater_expenses;
 
 	PROCEDURE delete_performance_by_id(per_id NUMBER);
+	PROCEDURE delete_all_the_theater;
 
+	FUNCTION create_timetable(eventType VARCHAR2, eventDate VARCHAR2, performanceId NUMBER) RETURN NUMBER;
+-- 	PROCEDURE read_timetable;
+-- 	FUNCTION read_table;
 
 end util;
 
@@ -76,7 +78,7 @@ create or replace package body util as
 	END create_post;
 
 
-	FUNCTION calculate_theater_expenses RETURN NUMBER IS
+	FUNCTION read_theater_expenses RETURN NUMBER IS
 		summary NUMBER;
 		BEGIN
 			SELECT SUM(REQUISITEPRICE + SALARY) INTO summary FROM REQUISITE, POST;
@@ -86,7 +88,33 @@ create or replace package body util as
 	PROCEDURE print_theater_expenses as
 		BEGIN
 			DBMS_OUTPUT.PUT_LINE('Theater Expenses:');
-			DBMS_OUTPUT.PUT_LINE( UTIL.calculate_theater_expenses );
+			DBMS_OUTPUT.PUT_LINE( UTIL.read_theater_expenses );
+		END;
+
+	PROCEDURE delete_all_the_theater AS
+		BEGIN
+			DELETE FROM BOOKING;
+			DELETE FROM CAST;
+			DELETE FROM DECORATION;
+			DELETE FROM PERFORMANCE;
+			DELETE FROM PLACE;
+			DELETE FROM POST;
+			DELETE FROM REQUISITE;
+			DELETE FROM SERVICE;
+			DELETE FROM STAFF;
+			DELETE FROM TIMETABLE;
+		END;
+
+	FUNCTION create_timetable(
+		eventType VARCHAR2,
+		eventDate VARCHAR2,
+		performanceId NUMBER) RETURN NUMBER IS
+		timetable_id NUMBER;
+		BEGIN
+			INSERT INTO TIMETABLE(eventType, eventDate, performanceId)
+				VALUES (eventType, TO_DATE(eventDate, 'MM/DD/YYYY'), performanceId) RETURNING TIMETABLE.EVENTID
+			INTO timetable_id;
+			RETURN (timetable_id);
 		END;
 
 END util;
