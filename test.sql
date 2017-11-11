@@ -78,6 +78,6 @@ END;
 declare
    result number;
 BEGIN
-   result := UTIL.create_timetable(4, '11.11.17', 'repetition');
+   result := UTIL.create_timetable('repetition', '11.11.17', 4);
 END;
 SELECT * FROM TIMETABLE;

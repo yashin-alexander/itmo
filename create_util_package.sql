@@ -112,7 +112,7 @@ create or replace package body util as
 		timetable_id NUMBER;
 		BEGIN
 			INSERT INTO TIMETABLE(eventType, eventDate, performanceId)
-				VALUES (eventType, TO_DATE(eventDate, 'MM/DD/YYYY'), performanceId) RETURNING TIMETABLE.EVENTID
+				VALUES (eventType, TO_DATE(eventDate, 'DD/MM/YYYY'), performanceId) RETURNING TIMETABLE.EVENTID
 			INTO timetable_id;
 			RETURN (timetable_id);
 		END;
