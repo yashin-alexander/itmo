@@ -50,11 +50,11 @@ DELETE FROM SERVICE;
 declare
    result number;
 BEGIN
-    result := util.create_post('buffetter', 30000, 13);
-    result := util.create_post('wardrobber', 25000, 14);
-    result := util.create_post('wardrobber', 25000, 14);
-    result := util.create_post('wardrobber', 25000, 14);
-    result := util.create_post('toiletterino', 30000, 15);
+    result := util.create_post('buffetter', 30000, 1);
+    result := util.create_post('wardrobber', 25000, 2);
+    result := util.create_post('wardrobber', 25000, 2);
+    result := util.create_post('wardrobber', 25000, 2);
+    result := util.create_post('toiletterino', 30000, 3);
 END;
 SELECT * FROM POST;
 
@@ -78,6 +78,24 @@ END;
 declare
    result number;
 BEGIN
-   result := UTIL.create_timetable('repetition', '11.11.17', 4);
+    result := UTIL.create_timetable('dress rehearsal', '05.15.2017', 1);
+    result := UTIL.create_timetable('repetition', '06.15.2017', 2);
+    result := UTIL.create_timetable('repetition', '09.15.2017', 1);
+    result := UTIL.create_timetable('performance', '10.15.2017', 1);
 END;
 SELECT * FROM TIMETABLE;
+
+--
+
+
+
+--
+
+BEGIN
+    UTIL.UPDATE_PRICES_FOR_5_PERCENT;
+END;
+SELECT * FROM requisite;
+SELECT * FROM POST;
+SELECT * FROM PERFORMANCE;
+
+--

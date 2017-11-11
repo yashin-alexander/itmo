@@ -20,8 +20,10 @@ create or replace package util as
 	PROCEDURE delete_all_the_theater;
 
 	FUNCTION create_timetable(eventType VARCHAR2, eventDate VARCHAR2, performanceId NUMBER) RETURN NUMBER;
--- 	PROCEDURE read_timetable;
--- 	FUNCTION read_table;
+
+	PROCEDURE read_timetable;
+
+	PROCEDURE update_prices_for_5_percent;
 
 end util;
 
@@ -117,4 +119,22 @@ create or replace package body util as
 			RETURN (timetable_id);
 		END;
 
+	PROCEDURE read_timetable AS
+		begin
+			DBMS_OUTPUT.PUT_LINE('Timetable:');
+			DBMS_OUTPUT.PUT_LINE('EventID | EventType | EventDate | PerformanceId');
+			for time in (select * from TIMETABLE) loop
+			DBMS_OUTPUT.PUT_LINE(time.EVENTID || ' | ' || time.EVENTTYPE || ' | ' || time.EVENTDATE || ' | ' || time.PERFORMANCEID);
+			end loop;
+		end;
+
+	PROCEDURE update_prices_for_5_percent AS
+		BEGIN
+			UPDATE REQUISITE
+				SET REQUISITEPRICE = REQUISITEPRICE * 1.05;
+			UPDATE POST
+				SET SALARY = SALARY * 1.05;
+			UPDATE PERFORMANCE
+				SET PERFORMANCEPRICE = PERFORMANCEPRICE * 1.05;
+		END;
 END util;
