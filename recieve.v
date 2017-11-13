@@ -27,7 +27,13 @@ begin
 			counter = 0;
 			recieve_ready = 1;
 		end
-	else if(rxd == 0 && counter == 0)
+	else if (counter == 9 && rxd == 1) // NO STOP BIT 
+		begin
+			recieved_data = 8'b1111_1111;
+			counter = 0;
+			recieve_ready = 1;
+		end
+	else if(rxd == 0 && counter == 0) 
 		begin
 			recieve_ready = 0;
 			counter = counter + 1;
