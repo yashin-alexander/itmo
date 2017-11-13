@@ -11,7 +11,6 @@ module test_controller;
 	// Outputs
 	wire txd;
 	wire [7:0] word;
-	wire freq_clk;
 	
 	controller uut (
 		.clk(clk), 
@@ -19,8 +18,7 @@ module test_controller;
 		.rst(rst),
 		.rxd(rxd),
 		.txd(txd),
-		.word_1(word),
-		.freq_clk(freq_clk)
+		.LD(word)
 	);
 
 	initial begin
