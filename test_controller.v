@@ -10,10 +10,8 @@ module test_controller;
 
 	// Outputs
 	wire txd;
-	wire freq_clk;
-	wire counter;
 	wire [7:0] word;
-
+	wire freq_clk;
 	
 	controller uut (
 		.clk(clk), 
@@ -21,9 +19,8 @@ module test_controller;
 		.rst(rst),
 		.rxd(rxd),
 		.txd(txd),
-		.freq_clk(freq_clk),
-		.counter(counter),
-		.word_1(word)
+		.word_1(word),
+		.freq_clk(freq_clk)
 	);
 
 	initial begin
@@ -43,8 +40,9 @@ module test_controller;
 	end
 	
 	always begin
-        # 8336 rxd = 0;
-        # 10430 rxd = 1;
+        # 20832 rxd = 0;
+        # 20832 rxd = 1;
+		  # 166656 rxd = 0;
     end
 
 endmodule

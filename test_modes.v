@@ -14,7 +14,7 @@ module test_modes;
 	wire transmit_ready;
 	
 	// Instantiate the Unit Under Test (UUT)
-	/*echo_mode uut2 (
+	echo_mode uut2 (
 		.clk(clk), 
 		.rst(rst), 
 		.SW(SW), 
@@ -23,33 +23,33 @@ module test_modes;
 		.word(word),
 		.recieve_ready(recieve_ready),
 		.transmit_ready(transmit_ready)
-	);*/
-	message_mode uut (
+	);
+	/*message_mode uut (
         .clk(clk), 
         .rst(rst), 
         .SW(SW), 
         .txd(txd),
-        .word(word),
-        .counter(counter),
-        .transmit_ready(transmit_ready)
-    );
+        .word(word)
+    );*/
 
 	initial begin
 
 		clk = 0;
 		rst = 0;
 		rxd = 1;
-		SW = 1;
+		SW = 0;
 
 	end
+	
 	
 	always begin
 		# 1 clk = ~clk;
 	end
 	
-	/*always begin
+	always begin
+        # 2 rxd = 0;
+        # 2 rxd = 1;
         # 16 rxd = 0;
-        # 20 rxd = 1;
-    end*/
+    end
 
 endmodule

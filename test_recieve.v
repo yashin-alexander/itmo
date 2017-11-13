@@ -27,8 +27,9 @@ module test_recieve;
     end
     
     always begin
-        # 16 rxd = 0;
-        # 20 rxd = 1;
+		  # 1 rxd = 0;
+        # 1 rxd = 1;
+        # 8 rxd = 0;
     end
     
     always begin

@@ -24,12 +24,14 @@ module test_transmit;
 		  connection_status = 1;
     end
     
+	 
+	 
     always begin
         # 1 clk = ~clk;
    end
     
     always begin
-        # 100 word = 0;
+        # 9 word = 1;
    end
 endmodule
 

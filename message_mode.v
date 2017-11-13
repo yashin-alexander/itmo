@@ -6,8 +6,7 @@ input clk,
 input rst,
 input SW,
 output txd,
-output [7:0] word,
-output transmit_ready
+output [7:0] word
 );
 
 reg [103:0] string = "Hello world!\n";
