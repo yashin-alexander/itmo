@@ -1,21 +1,3 @@
-/*usertype object FIO (3 fields and 1 method that returns Familia I. O.)*/
-
-CREATE OR REPLACE TYPE FIO AS OBJECT
-(
-	firstName  VARCHAR2(20),
-	secondName VARCHAR2(20),
-	surname    VARCHAR2(20),
-	MEMBER FUNCTION abbreviation
-	RETURN VARCHAR2
-);
-
-CREATE OR REPLACE TYPE BODY FIO AS
-  	MEMBER FUNCTION abbreviation RETURN VARCHAR2 IS
-  	BEGIN
-  	RETURN surname+substr(firstName, 1, 1)+'. '+substr(secondName, 1, 1)+'.';
-  	END;
-END;
-
 /*SERVICES*/
 
 CREATE TABLE Service
@@ -74,7 +56,7 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_post
 CREATE TABLE Staff
 (
   	personId NUMBER NOT NULL PRIMARY KEY,
-	name FIO,
+	name VARCHAR2(70),
   	postId NUMBER,
 	CONSTRAINT fk_staff FOREIGN KEY(postId)
 	REFERENCES POST(postId)
@@ -98,56 +80,55 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_staff
 
 /*PERFORMANCE*/
 
-CREATE TABLE Performance
+CREATE TABLE Staging
 (
-  	performanceId NUMBER NOT NULL PRIMARY KEY,
-  	performanseName VARCHAR2(30),
-	performancePrice NUMBER CHECK(performancePrice>=500 AND performancePrice<=5000),
-	description VARCHAR2(50)
+  	stagingId NUMBER NOT NULL PRIMARY KEY,
+  	stagingName VARCHAR2(30),
+	stagingPrice NUMBER CHECK(stagingPrice>=500 AND stagingPrice<=5000),
+	description VARCHAR2(50),
+	durationTime NUMBER
 );
 
-CREATE SEQUENCE performance_id_seq
+CREATE SEQUENCE staging_id_seq
 	START WITH 1
 	INCREMENT BY 1
 	NOCACHE;
 
-CREATE OR REPLACE TRIGGER autoincrement_tr_performance
+CREATE OR REPLACE TRIGGER autoincrement_tr_staging
 	BEFORE INSERT
-	ON Performance
+	ON Staging
 	REFERENCING NEW AS NEW
 	FOR EACH ROW
 	BEGIN
-		SELECT performance_id_seq.NEXTVAL
-		INTO :NEW.performanceId
+		SELECT staging_id_seq.NEXTVAL
+		INTO :NEW.stagingId
 		FROM DUAL;
 	END;
 
-/*CAST*/
+/*ROLE*/
 
-CREATE TABLE Cast
+CREATE TABLE Role
 (
-  	castId NUMBER NOT NULL PRIMARY KEY,
-  	performanceId NUMBER,
-	personId NUMBER,
-	CONSTRAINT fk_cast_1 FOREIGN KEY(performanceId)
-	REFERENCES PERFORMANCE(performanceId),
-	CONSTRAINT fk_cast_2 FOREIGN KEY(personId)
-	REFERENCES STAFF(personId)
+  	roleId NUMBER NOT NULL PRIMARY KEY,
+	roleName VARCHAR2(20),
+  	stagingId NUMBER,
+	CONSTRAINT fk_role FOREIGN KEY(stagingId)
+	REFERENCES Staging(stagingId)
 );
 
-CREATE SEQUENCE cast_id_seq
+CREATE SEQUENCE role_id_seq
 	START WITH 1
 	INCREMENT BY 1
 	NOCACHE;
 
-CREATE OR REPLACE TRIGGER autoincrement_tr_cast
+CREATE OR REPLACE TRIGGER autoincrement_tr_role
 	BEFORE INSERT
-	ON Cast
+	ON Role
 	REFERENCING NEW AS NEW
 	FOR EACH ROW
 	BEGIN
-		SELECT cast_id_seq.NEXTVAL
-		INTO :NEW.castId
+		SELECT role_id_seq.NEXTVAL
+		INTO :NEW.roleId
 		FROM DUAL;
 	END;
 
@@ -156,8 +137,7 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_cast
 CREATE TABLE Requisite
 (
   	requisiteId NUMBER NOT NULL PRIMARY KEY,
-  	requisiteName VARCHAR2(20),
-	requisitePrice NUMBER CHECK(requisitePrice>=50)
+  	requisiteName VARCHAR2(20)
 );
 
 CREATE SEQUENCE requisite_id_seq
@@ -181,10 +161,10 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_requisite
 CREATE TABLE Decoration
 (
 	decorationId NUMBER NOT NULL PRIMARY KEY,
-  	performanceId NUMBER,
+  	stagingId NUMBER,
 	requisiteId NUMBER,
-	CONSTRAINT fk_decoration_1 FOREIGN KEY(performanceId)
-	REFERENCES PERFORMANCE(performanceId),
+	CONSTRAINT fk_decoration_1 FOREIGN KEY(stagingId)
+	REFERENCES Staging(stagingId),
 	CONSTRAINT fk_decoration_2 FOREIGN KEY(requisiteId)
 	REFERENCES REQUISITE(requisiteId)
 );
@@ -252,9 +232,9 @@ CREATE TABLE Timetable
 	eventId NUMBER NOT NULL PRIMARY KEY,
   	eventType VARCHAR2(20),
 	eventDate DATE,
-	performanceId NUMBER,
-	CONSTRAINT fk_timetable FOREIGN KEY(performanceId)
-	REFERENCES PERFORMANCE(performanceId)
+	stagingId NUMBER,
+	CONSTRAINT fk_timetable FOREIGN KEY(stagingId)
+	REFERENCES Staging(stagingId)
 );
 
 CREATE SEQUENCE timetable_id_seq
@@ -287,6 +267,39 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_timetable
 		WHEN error_event_type THEN RAISE_APPLICATION_ERROR(-20999,
 		'Events can be only of types repetition, dress rehearsal or performance.');
 	END autoincrement_tr_timetable;
+
+/*CAST*/
+
+CREATE TABLE Cast
+(
+  	castId NUMBER NOT NULL PRIMARY KEY,
+  	eventId NUMBER,
+		roleId NUMBER,
+		personId NUMBER,
+		CONSTRAINT fk_cast_1 FOREIGN KEY(eventId)
+		REFERENCES Timetable(eventId),
+		CONSTRAINT fk_cast_2 FOREIGN KEY(personId)
+		REFERENCES STAFF(personId),
+		CONSTRAINT fk_cast_3 FOREIGN KEY(roleId)
+		REFERENCES Role(roleId),
+		CONSTRAINT uniq_cast UNIQUE(eventId, roleId)
+);
+
+CREATE SEQUENCE cast_id_seq
+	START WITH 1
+	INCREMENT BY 1
+	NOCACHE;
+
+CREATE OR REPLACE TRIGGER autoincrement_tr_cast
+	BEFORE INSERT
+	ON Cast
+	REFERENCING NEW AS NEW
+	FOR EACH ROW
+	BEGIN
+		SELECT cast_id_seq.NEXTVAL
+		INTO :NEW.castId
+		FROM DUAL;
+	END;
 
 /*BOOKING*/
 

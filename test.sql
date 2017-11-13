@@ -1,8 +1,8 @@
 declare
    result number;
 BEGIN
-    result := UTIL.CREATE_REQUISITE('palka', 100);
-    result := UTIL.CREATE_REQUISITE('chairs', 600);
+    result := UTIL.CREATE_REQUISITE('palka');
+    result := UTIL.CREATE_REQUISITE('chairs');
 END;
 select * from requisite;
 
@@ -18,19 +18,19 @@ select * from requisite;
 declare
    result number;
 BEGIN
-    result := UTIL.CREATE_PERFORMANCE('Athello', 3000, 'just an example');
-    result := UTIL.CREATE_PERFORMANCE('Snegurochka', 3500, 'with ded moroz');
-    result := UTIL.CREATE_PERFORMANCE('Romario and Dakotta', 4000, 'suicide & redemption');
-    result := UTIL.CREATE_PERFORMANCE('Lady Makbett', 3000, 'just a lady');
+    result := UTIL.CREATE_STAGING('Athello', 3000, 'just an example', 3);
+    result := UTIL.CREATE_STAGING('Snegurochka', 3500, 'with ded moroz', 2.5);
+    result := UTIL.CREATE_STAGING('Romario and Dakotta', 4000, 'suicide & redemption', 2);
+    result := UTIL.CREATE_STAGING('Lady Makbett', 3000, 'just a lady', 3);
 END;
-select * from PERFORMANCE;
+select * from STAGING;
 
 --
 
 BEGIN
-    UTIL.delete_performance_by_id(1);
+    UTIL.delete_STAGING_by_id(1);
 END;
-select * from PERFORMANCE;
+select * from STAGING;
 
 --
 
@@ -57,21 +57,6 @@ BEGIN
     result := util.create_post('toiletterino', 30000, 3);
 END;
 SELECT * FROM POST;
-
---
-
-declare
-   result number;
-BEGIN
-    result := util.read_theater_expenses();
-    SELECT result;
-END;
-
---
-
-BEGIN
-    util.print_theater_expenses;
-END;
 
 --
 
