@@ -30,8 +30,8 @@ plt.close()
 
 plt.xlabel('try number')
 plt.ylabel('roductivity')
-plt.plot([1,2,3,4], [1, 1, 1, 8325/10832],  color='red')
-plt.axis([1, 4, 0, 1.1])
+plt.plot([1,2,3,4], [1/720, 1/360, 1/180, 8325/(10832*90)],  color='red')
+plt.axis([1, 4, 0, 1.1/90])
 
 plt.legend()
 path = "./screens/"
@@ -69,9 +69,9 @@ plt.close()
 
 
 plt.xlabel('try number')
-plt.ylabel('roductivity')
-plt.plot([1,2,3,4], [1, 29995/48300, 15367/48300, 8324/48300],  color='red')
-plt.axis([1, 4, 0, 1.1])
+plt.ylabel('productivity')
+plt.plot([1,2,3,4], [1/720, 29995/(48300*360), 15367/(48300*180), 8324/(48300*90)],  color='red')
+plt.axis([1, 4, 0, 1.1/90])
 
 plt.legend()
 path = "./screens/"
@@ -109,9 +109,9 @@ plt.close()
 
 
 plt.xlabel('try number')
-plt.ylabel('roductivity')
-plt.plot([1,2,3,4], [1, 1, 6134/10630, 3042/48300],  color='red')
-plt.axis([1, 4, 0, 1.1])
+plt.ylabel('productivity')
+plt.plot([1,2,3,4], [1/720, 1/360, 6134/(10630*180), 3042/(48300*90)],  color='red')
+plt.axis([1, 4, 0, 1.1/90])
 
 plt.legend()
 path = "./screens/"
@@ -120,3 +120,29 @@ if not os.path.exists(path):
 plt.savefig('{}{}.png'.format(path, "productivity_3"))
 plt.close()
 
+##
+
+plt.xlabel('try number')
+plt.ylabel('queue size')
+plt.plot([1,2,3,4], [20164, 32562, 38979, 42191],  color='green')
+plt.axis([1, 4, 0, 45000])
+
+plt.legend()
+path = "./screens/"
+if not os.path.exists(path):
+    os.mkdir(path)
+plt.savefig('{}{}.png'.format(path, "queue_size_4"))
+plt.close()
+
+
+plt.xlabel('try number')
+plt.ylabel('productivity')
+plt.plot([1,2,3,4], [1/720, 24426/(48781*360), 12213/(48781*180), 6104/(48781*90)],  color='red')
+plt.axis([1, 4, 0, 1.1/90])
+
+plt.legend()
+path = "./screens/"
+if not os.path.exists(path):
+        os.mkdir(path)
+plt.savefig('{}{}.png'.format(path, "productivity_4"))
+plt.close()
