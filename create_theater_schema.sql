@@ -79,14 +79,13 @@ CREATE OR REPLACE TRIGGER autoincrement_tr_staff
 	END;
 
 /*PERFORMANCE*/
-
 CREATE TABLE Staging
 (
-  	stagingId NUMBER NOT NULL PRIMARY KEY,
-  	stagingName VARCHAR2(30),
-	stagingPrice NUMBER CHECK(stagingPrice>=500 AND stagingPrice<=5000),
-	description VARCHAR2(50),
-	durationTime NUMBER
+  stagingId    NUMBER NOT NULL PRIMARY KEY,
+  stagingName  VARCHAR2(30),
+  stagingPrice NUMBER CHECK (stagingPrice >= 500 AND stagingPrice <= 5000),
+  description  DESCRIPTION,
+  durationTime NUMBER
 );
 
 CREATE SEQUENCE staging_id_seq
