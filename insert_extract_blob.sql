@@ -1,7 +1,12 @@
+----------------------------------------------BLOB TESTS----------------------------------------------
+
+---------------INSERT---------------
+
 DECLARE
   l_blob BLOB;
-  v_src_loc  BFILE := BFILENAME('IMG_DIR', 'exp20000.png');
+  v_src_loc  BFILE := BFILENAME('IMG_DIR', 'owl.jpg');
   v_amount   INTEGER;
+  kek json;
   sonya DESCRIPTION;
 BEGIN
   DBMS_LOB.OPEN(v_src_loc, DBMS_LOB.LOB_READONLY);
@@ -10,10 +15,17 @@ BEGIN
   DBMS_LOB.LOADFROMFILE(l_blob, v_src_loc, v_amount);
   sonya := description('{"a": "kek"}',l_blob, TO_DATE('12.10.04 12:12:30','dd.mm.yy.  hh24:mi:ss'));
   INSERT INTO STAGING (STAGINGID, STAGINGNAME, STAGINGPRICE, DESCRIPTION, DURATIONTIME) VALUES
-  (2, 'test', 2003, sonya, 5);
+  (2, 'eee', 1234, sonya, 2);
+  kek := sonya.getAllInJson;
+  --dbms_output.put_line(kek.to_char);
   DBMS_LOB.CLOSE(v_src_loc);
   COMMIT;
 END;
+
+SELECT * FROM STAGING;
+--DELETE STAGING;
+
+---------------EXTRACT---------------
 
 DECLARE
   t_blob BLOB;
@@ -27,10 +39,10 @@ DECLARE
   t_remain number;
     sonya DESCRIPTION;
 BEGIN
-  SELECT DESCRIPTION INto sonya FROM STAGING WHERE STAGINGID=5;
+  SELECT DESCRIPTION INto sonya FROM STAGING WHERE STAGINGID=1;
   t_blob := sonya.getPicture;
   t_TotalSize := DBMS_LOB.getlength (t_blob);
-  t_file_name := 'kek.png';
+  t_file_name := 'kek.jpg';
   t_remain := t_TotalSize;
   t_output := UTL_FILE.fopen ('IMG_DIR', t_file_name, 'wb', 32760);
   WHILE t_position < t_TotalSize

@@ -1,3 +1,5 @@
+----------------------------------------------TYPE CREATING----------------------------------------------
+
 CREATE OR REPLACE TYPE description AS OBJECT
 (
   summary CLOB,
@@ -18,11 +20,13 @@ CREATE OR REPLACE TYPE BODY description AS
   MEMBER FUNCTION getAllInJson RETURN JSON IS
     result JSON;
     tmp JSON;
+    pic CLOB;
     BEGIN
+      pic := UTIL.CLOBFROMBLOB(SELF.picture);
       result := JSON();
       tmp := JSON(SELF.summary);
       result.put('summary', tmp);
-      result.put('picture', UTL_RAW.CAST_TO_VARCHAR2(SELF.picture));
+      result.put('picture', json_value(pic));
       result.put('presale', SELF.presale);
       RETURN result;
     END getAllInJson;
@@ -42,8 +46,9 @@ CREATE OR REPLACE TYPE BODY description AS
     END setAll;
   END;
 
+----------------------------------------------TYPE TESTS-----------------------------------------------
 
-  DECLARE
+DECLARE
     summary json;
     alldesc json;
     presale DATE;
@@ -52,7 +57,7 @@ CREATE OR REPLACE TYPE BODY description AS
     sonya1 description;
   BEGIN
     sonya := description('{"a": "kek"}', to_blob('123'), TO_DATE('12.10.04 12:12:30','dd.mm.yy.  hh24:mi:ss'));
-
+    DBMS_OUTPUT.PUT_LINE(sonya.SUMMARY);
     alldesc := sonya.getAllInJson;
     DBMS_OUTPUT.PUT_LINE(alldesc.to_char);
 
