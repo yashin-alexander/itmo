@@ -6,12 +6,6 @@ create or replace package util as
 	PROCEDURE delete_requisite_by_name(req_name VARCHAR2);
 
 	FUNCTION create_post(postName VARCHAR2, salary NUMBER, serviceId NUMBER) RETURN NUMBER;
-	FUNCTION create_staging(
-		stagingName VARCHAR2,
-		stagingPrice NUMBER,
-		description VARCHAR2,
-		durationTime NUMBER)
-		RETURN NUMBER;
 
 	PROCEDURE delete_staging_by_id(staging_id NUMBER);
 	PROCEDURE delete_all_the_theater;
@@ -24,6 +18,8 @@ create or replace package util as
 
 	function clobfromblob(p_blob blob) return clob;
 
+  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale DATE, duration NUMBER,
+    event_date DATE, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION;
 
 end util;
 
@@ -49,20 +45,6 @@ create or replace package body util as
 		BEGIN
 			DELETE FROM REQUISITE WHERE REQUISITENAME = req_name;
 		END;
-
-
-	FUNCTION create_staging(
-		stagingName VARCHAR2,
-		stagingPrice NUMBER,
-		description VARCHAR2,
-		durationTime NUMBER)
-		RETURN NUMBER IS new_staging_id NUMBER;
-		BEGIN
-			INSERT INTO STAGING(stagingName, stagingPrice, description, durationTime)
-			VALUES(stagingName, stagingPrice, to_blob(description), durationTime) RETURNING STAGING.stagingId
-			INTO new_staging_id;
-			RETURN(new_staging_id);
-		END create_staging;
 
 
 	PROCEDURE delete_staging_by_id(staging_id NUMBER) AS
@@ -123,7 +105,7 @@ create or replace package body util as
 			UPDATE STAGING
 				SET stagingPRICE = stagingPRICE * 1.05;
 		END;
-	
+
 	function clobfromblob(p_blob blob) return clob is
 	l_clob clob;
 	l_dest_offsset integer := 1;
@@ -152,4 +134,61 @@ create or replace package body util as
 	return l_clob;
 
 	end clobfromblob;
+
+
+
+  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale DATE, duration NUMBER,
+    event_date DATE, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION IS
+    staging_id NUMBER;
+    event_id NUMBER;
+    poster DESCRIPTION;
+    test NUMBER;
+    universal_person NUMBER;
+    BEGIN
+      poster := DESCRIPTION(poster_text, poster_pic, presale);
+
+      INSERT INTO STAGING (STAGINGNAME, STAGINGPRICE, DESCRIPTION, DURATIONTIME) VALUES
+        (name, price, poster, duration) RETURNING STAGING.STAGINGID
+			INTO staging_id;
+
+      INSERT INTO TIMETABLE (EVENTTYPE, EVENTDATE, STAGINGID) VALUES
+        ('performance', event_date, staging_id) RETURNING TIMETABLE.EVENTID INTO event_id;
+
+
+      test := 0;
+      universal_person := person1;
+      SELECT COUNT(*) INTO test FROM STAFF where personid not in (select personid from cast);
+      if test > 0 THEN
+          SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person1;
+          IF test > 0 THEN
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+          END IF;
+        END IF;
+      INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);
+
+      test := 0;
+      universal_person := person2;
+      SELECT COUNT(*) INTO test FROM STAFF where personid not in (select personid from cast);
+      if test > 0 THEN
+          SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person2;
+          IF test > 0 THEN
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+          END IF;
+        END IF;
+      INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);
+
+      test := 0;
+      universal_person := person3;
+      SELECT COUNT(*) INTO test FROM STAFF where personid not in (select personid from cast);
+      if test > 0 THEN
+          SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person3;
+          IF test > 0 THEN
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+          END IF;
+        END IF;
+      INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);
+
+      RETURN poster;
+    End create_staging;
+
 END util;
