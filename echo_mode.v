@@ -6,20 +6,19 @@ input rst,
 input SW,
 input rxd,
 output txd,
-output [7:0] word,
-output recieve_ready,
-output transmit_ready
+output [7:0] word
 );
 
 
 reg connection_status = 0;
+
 
 recieve uut3 (
 		.rxd(rxd), 
 		.clk(clk), 
 		.rst(rst), 
 		.word(word),
-		.recieve_ready(recieve_ready)
+		.word_on_line(word_on_line)
 );
 	
 transmit uut2 (
@@ -34,7 +33,7 @@ transmit uut2 (
 
 always @(posedge clk)
 		if (!SW)
-			if(recieve_ready)
+			if(word_on_line)			  // TRANSMIT 
 				connection_status = 1;
 			else if(transmit_ready)
 				connection_status = 0;

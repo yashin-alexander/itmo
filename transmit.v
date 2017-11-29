@@ -5,20 +5,14 @@ input [7:0] word,
 input clk, 
 input rst, 
 input connection_status,
-output transmit_ready,
+output reg transmit_ready,
 output reg txd);
 
 reg [7:0] transmissive_data;
 reg [3:0] counter = 0;
-reg transmit_ready = 1;
 
 always @(posedge clk)
 begin
-	if (transmit_ready)
-		begin
-			transmissive_data = word;
-			transmit_ready = 0;
-		end
 	if (rst)
 		begin
 			txd = 1;
@@ -28,6 +22,11 @@ begin
 		end
 	else if (connection_status)
 		begin
+			if (transmit_ready)
+				begin
+					transmissive_data = word;
+					transmit_ready = 0;
+				end
 			if (counter == 9)
 				begin
 					txd = 0;
@@ -40,8 +39,10 @@ begin
 						txd = 0;
 					else
 						begin
-							txd = transmissive_data[7];
-							transmissive_data = transmissive_data << 1;
+							//txd = transmissive_data[7];
+							//transmissive_data = transmissive_data << 1;
+							txd = transmissive_data[0];
+							transmissive_data = transmissive_data >> 1;
 						end
 					counter = counter + 1;
 				end

@@ -9,8 +9,9 @@ output txd,
 output [7:0] word
 );
 
-reg [103:0] string = "Hello world!\n";
-reg [9:0] counter = 0;
+//reg [95:0] string = "hello world!";
+reg [7:0] string = "P";
+reg [32:0] counter = 0;
 reg connection_status = 1;
 reg [7:0] char = 0; 
 	
@@ -27,23 +28,35 @@ always @(posedge clk)
 		// message
 		if (SW)
 			begin
-				if (counter > 13)
-					connection_status = 0;
-				if (counter >= 95969)
+				if (rst)
+					begin
+						//string = "hello world!";
+						string = "P";
+						connection_status = 1;
+						counter = 0;
+						char = 0;
+					end
+				if (counter >= 1 && counter < 15000)
+					begin 
+						connection_status = 0;
+						counter = counter + 1;
+					end
+				else if (counter >= 15000)
 					begin
 						counter = 0;
 						connection_status = 1;
-						string = "Hello world!\n";
+						//string = "hello world!";
+						string = "P";
 					end
 				else
 					if (transmit_ready)
 						begin
-							char = string[103:96];
-							string = string << 8;
+							//char = string[95:88];
+							//string = string << 8;
 							counter = counter + 1;
 						end
 				end
 
-assign word = char;
-		
+//assign word = char;
+assign word = string;	
 endmodule
