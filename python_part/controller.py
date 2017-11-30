@@ -11,74 +11,76 @@ from constants import (MONSTERS_NUMBER,
                        DURATION_OF_FRIGHT)
 
 queue_length = 0
+monsters_stuck = 0
+doors_stuck = 0
+processed_doors = 0
+
+bar = progressbar.ProgressBar(widgets=[
+    progressbar.Timer(), ' ',
+    progressbar.AnimatedMarker(markers='<3 '),
+    progressbar.AnimatedMarker(markers='3 <'),
+    progressbar.AnimatedMarker(markers=' <3'),
+    progressbar.AnimatedMarker(markers='<3 '),
+    progressbar.AnimatedMarker(markers='3 <'),
+    progressbar.AnimatedMarker(markers=' <3'),
+    progressbar.AnimatedMarker(markers='<3 '),
+    progressbar.AnimatedMarker(markers='3 <'),
+    progressbar.AnimatedMarker(markers=' <3'),
+
+    progressbar.Bar(),
+    progressbar.ETA()
+])
 
 
 class ChildDoor(object):
     @staticmethod
     def run():
-        time = env.now
-        with scenario_one.request() as request:
-                yield request
-                # service_time = numpy.random.uniform(DURATION_OF_FRIGHT[0], DURATION_OF_FRIGHT[1])
-                yield env.timeout(14)
-                wait = env.now
-                print("There {} door processed, time = {}".format(queue_length, wait - time))
+        global queue_length, monsters_stuck, doors_stuck, processed_doors
+        queue_length += 1
+        with scenario_one.request() as request:  # SMO 1
+            yield request
+            queue_length -= 1
+
+            if (processed_doors % round((sum/100), 0)) == 0:
+                bar.update(round(processed_doors/sum*100), 0)
+
+            brave = (numpy.random.randint(0, high=100) > TIMID_CHILDREN)
+
+            if not brave:
+                service_time = numpy.random.uniform(DURATION_OF_FRIGHT[0], DURATION_OF_FRIGHT[1])
+                processed_doors += 1
+                yield env.timeout(service_time)
+            else:
+                with brave_child.request() as brave_child_request:  # SMO 2
+                    doors_stuck += 1
+                    yield brave_child_request
+                    doors_stuck -= 1
+                    monsters_stuck += 1
+                    service_time = HOUR*VISITING_HOURS[0][0]
+                    yield env.timeout(service_time)
 
 
 def source_doors(env):
     ind = 0
     while env.now < (HOUR*VISITING_HOURS[0][0]):
         ind += 1
-        # doors_number = TIMEZONES_POPULATION[env.now/HOUR]
-        doors_number = 20
-        print("{} HOUR is now running".format(env.now/HOUR+1))
+        doors_number = TIMEZONES_POPULATION[int(env.now/HOUR)]
 
-        global queue_length
-        queue_length += doors_number
-        print(queue_length)
-        while queue_length > 0:
+        for _ in range(doors_number):
             env.process(ChildDoor.run())
-            queue_length -= 1
         yield env.timeout(HOUR)
 
 
+sum = 0
+for i in range(TIMEZONES_NUMBER[0][0]):
+    sum += TIMEZONES_POPULATION[i]
+print(sum)
+
 env = simpy.Environment()
-scenario_one = simpy.Resource(env, capacity=2)
+scenario_one = simpy.Resource(env, capacity=MONSTERS_NUMBER[0][0])
+brave_child = simpy.Resource(env, capacity=MONSTERS_NUMBER[0][0])
+
 env.process(source_doors(env))
 env.run(until=HOUR*VISITING_HOURS[0][0])
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def generate():
-#     bar = progressbar.ProgressBar(widgets=[
-#         ' [', progressbar.Timer(), '] ',
-#         progressbar.AnimatedMarker(markers='<3 '),
-#         progressbar.AnimatedMarker(markers='3 <'),
-#         progressbar.AnimatedMarker(markers=' <3'),
-#         progressbar.AnimatedMarker(markers='<3 '),
-#         progressbar.AnimatedMarker(markers='3 <'),
-#         progressbar.AnimatedMarker(markers=' <3'),
-#         progressbar.AnimatedMarker(markers='<3 '),
-#         progressbar.AnimatedMarker(markers='3 <'),
-#         progressbar.AnimatedMarker(markers=' <3'),
-#
-#         progressbar.Bar(),
-#     ])
-#
-#     for i in range(TIMEZONES_POPULATION["0"]):
-#         interval = HOUR
-#         yield env.timeout(interval)
-#         env.process(Transaction.run())
-#
-#         if i % round((TIMEZONES_POPULATION["0"]/100), 0) == 0:
-#             bar.update(i/(TIMEZONES_POPULATION["0"]/100))
+print("\nNot processed doors {}. Monsters stuck {}. Processed doors {}"
+      .format(queue_length + doors_stuck, monsters_stuck, processed_doors))

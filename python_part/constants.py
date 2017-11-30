@@ -1,5 +1,5 @@
 # scenario variants
-MONSTERS_NUMBER =   ((720, 360, 180, 90), (720, 360, 180, 90), (720, 360, 180, 90), (720, 360, 180, 90))
+MONSTERS_NUMBER =   ((72000, 360, 180, 90), (720, 360, 180, 90), (720, 360, 180, 90), (720, 360, 180, 90))
 TIMEZONES_NUMBER =  ((8, ),               (10, ),              (8, ),               (8, )              )
 VISITING_HOURS =    ((8, ),               (10, ),              (8, ),               (3, )              )
 TIMID_CHILDREN =    ((98.92, ),           (98.92, ),           (97, ),              (98.92, )          )
@@ -37,4 +37,5 @@ DURATION_OF_FRIGHT = (10, 18)
 
 if __name__ == "__main__":
     print(sum(TIMEZONES_POPULATION.values()))
+
 
