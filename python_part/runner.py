@@ -54,6 +54,12 @@ class Runner:
         print("Monster productivity {} %/per monster"
               .format(self.processed_doors/(self.total_timezones_population*MONSTERS_NUMBER[scenario_num][experiment_num])))
 
+        return (self.queue_length + self.doors_stuck,
+                self.monsters_stuck,
+                self.processed_doors,
+                self.processed_doors / (self.total_timezones_population * MONSTERS_NUMBER[scenario_num][experiment_num])
+                )
+
     def source_doors(self, env):
         ind = 0
         while env.now < (HOUR * VISITING_HOURS[self.scenario_num]):

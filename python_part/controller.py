@@ -1,6 +1,10 @@
 import runner
-
+import table
 from constants import TIMEZONES_POPULATION, TIMEZONES_NUMBER
+
+out = table.Table()
+# out.open_table(("helle", "wedwe", "edwed",))
+
 
 TIMEZONES_POPULATION.update((x, int(round((y*25.44/100000)+5, 0))) for x, y in TIMEZONES_POPULATION.items())
 
@@ -8,6 +12,7 @@ print(TIMEZONES_POPULATION)
 
 print("\n-----------------------------\n")
 worker = runner.Runner()
+# queue_length, proc_doors, monsters_stuck, productivity = worker.execute(0, 0)
 worker.execute(0, 0)
 worker = runner.Runner()
 worker.execute(0, 1)
