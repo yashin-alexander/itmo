@@ -10,7 +10,7 @@ from constants import TIMEZONES_POPULATION, TIMEZONES_NUMBER
 # out.open_table(("helle", "wedwe", "edwed"))
 # print(out.content)
 
-TIMEZONES_POPULATION.update((x, int(round((y*25.44/100000)+5, 0))) for x, y in TIMEZONES_POPULATION.items())
+TIMEZONES_POPULATION.update((x, int(round((y*25.44/50000)+5, 0))) for x, y in TIMEZONES_POPULATION.items())
 
 print(TIMEZONES_POPULATION)
 
@@ -86,21 +86,21 @@ def calculate_confidence_intervals(SEs):  # x ± z∗SE
 
 print("\n-----------------------------\n")
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 worker = runner.Runner()
-returned.append(worker.execute(0, 3))
+returned.append(worker.execute(0, 0))
 
 middles = calculate_middles(returned)
 standart_deviations = calculate_standart_deviations(returned, middles)
