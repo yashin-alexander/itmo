@@ -48,7 +48,7 @@ TIMEZONES_POPULATION = {
 HOUR = 3600
 STUCK_TIME = 70000
 DURATION_OF_FRIGHT = (10, 18)
-TIME_DELAY = 4  # [-11:12]
+TIME_DELAY = 1  # [-11:12]
 
 
 if __name__ == "__main__":

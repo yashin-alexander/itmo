@@ -40,31 +40,28 @@ class Runner:
         self.experiment_num = 0
 
     def execute(self, scenario_num, experiment_num):
-        self.scenario_one = simpy.Resource(self.env, capacity=MONSTERS_NUMBER[scenario_num][experiment_num])
-        self.brave_child = simpy.Resource(self.env, capacity=MONSTERS_NUMBER[scenario_num][experiment_num])
+        self.scenario_one = simpy.Resource(self.env, capacity=MONSTERS_NUMBER[scenario_num][experiment_num])    #smo
 
         for i in range(TIMEZONES_NUMBER[scenario_num]):
             self.total_timezones_population += TIMEZONES_POPULATION[i+TIME_DELAY]
 
         self.env.process(self.source_doors(self.env))
         self.env.run(until=HOUR*VISITING_HOURS[scenario_num])
-        print("\nNot processed doors {}. Monsters stuck {}. Processed doors {}"
-              .format(self.queue_length + self.doors_stuck, self.monsters_stuck, self.processed_doors))
-
-        print("Monster productivity {} %/per monster"
-              .format(self.processed_doors/(self.total_timezones_population*MONSTERS_NUMBER[scenario_num][experiment_num])))
-
+        # print("\nNot processed doors {}. Monsters stuck {}. Processed doors {}"
+        #       .format(self.queue_length + self.doors_stuck, self.monsters_stuck, self.processed_doors))
+        #
+        # print("Monster productivity {} %/per monster"
+        #       .format((self.processed_doors*100)/(self.total_timezones_population*MONSTERS_NUMBER[scenario_num][experiment_num])))
+        print("\n")
         return (self.queue_length + self.doors_stuck,
                 self.monsters_stuck,
                 self.processed_doors,
-                self.processed_doors / (self.total_timezones_population * MONSTERS_NUMBER[scenario_num][experiment_num])
+                self.processed_doors*100 / (self.total_timezones_population * MONSTERS_NUMBER[scenario_num][experiment_num])
                 )
 
     def source_doors(self, env):
-        ind = 0
         while env.now < (HOUR * VISITING_HOURS[self.scenario_num]):
-            ind += 1
-            doors_number = TIMEZONES_POPULATION[int(env.now / HOUR)]
+            doors_number = TIMEZONES_POPULATION[int(env.now / HOUR) + TIME_DELAY]
 
             for _ in range(doors_number):
                 env.process(self.run())
@@ -86,10 +83,10 @@ class Runner:
                 self.processed_doors += 1
                 yield self.env.timeout(service_time)
             else:
-                with self.brave_child.request() as brave_child_request:  # SMO 2
+                service_time = STUCK_TIME
+                if self.monsters_stuck < MONSTERS_NUMBER[self.scenario_num][self.experiment_num]:
                     self.doors_stuck += 1
-                    yield brave_child_request
-                    self.doors_stuck -= 1
                     self.monsters_stuck += 1
-                    service_time = STUCK_TIME
                     yield self.env.timeout(service_time)
+                else:
+                    self.doors_stuck += 1
