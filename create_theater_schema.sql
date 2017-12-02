@@ -273,11 +273,11 @@ CREATE TABLE Cast
 (
   	castId NUMBER NOT NULL PRIMARY KEY,
   	eventId NUMBER,
-		personId NUMBER,
-		CONSTRAINT fk_cast_1 FOREIGN KEY(eventId)
-		REFERENCES Timetable(eventId),
-		CONSTRAINT fk_cast_2 FOREIGN KEY(personId)
-		REFERENCES STAFF(personId)
+	personId NUMBER,
+	CONSTRAINT fk_cast_1 FOREIGN KEY(eventId)
+	REFERENCES Timetable(eventId),
+	CONSTRAINT fk_cast_2 FOREIGN KEY(personId)
+	REFERENCES STAFF(personId)
 );
 
 CREATE SEQUENCE cast_id_seq
