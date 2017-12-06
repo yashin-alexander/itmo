@@ -1,6 +1,7 @@
 import cx_Oracle
 import sys
 from collections import namedtuple
+from recordtype import recordtype
 
 table = namedtuple('Name', 'name id_field fields')
 
@@ -15,6 +16,8 @@ Decoration  = table("decoration",   "DecorationId", ("stagingId", "requisiteId")
 Place       = table("place",        "PlaceId",      ("placeType", "placePrice"))
 Timetable   = table("timetable",    "TimetableId",  ("eventType", "eventDate", "stagingId"))
 Booking     = table("booking",      "BookingId",    ("eventId", "placeId", "placeNo"))
+
+staging = recordtype('Name', 'name price poster_text poster_pic presale duration event_date person1 person2 person3')
 
 tables = (Service,
           Post,
@@ -36,7 +39,8 @@ operations = ("create",
 package_functions = ("delete",
                      "priceup",
                      "expen",
-                     "pricedown")
+                     "pricedown",
+                     "addstaging")
 
 connection = cx_Oracle.connect('sonya/xkl088@localhost:1521')
 cursor = connection.cursor()
@@ -120,6 +124,8 @@ def process_function(func):
         print_theater_expenses()
     elif func == "pricedown":
         prices_down()
+    elif func == "addstaging":
+        add_staging()
 
 
 def prices_up():
@@ -142,16 +148,31 @@ def print_theater_expenses():
     print(myvar)
 
 
-if __name__ == '__main__':
-    if sys.argv[1] == "performance" and sys.argv[2] == "create":
-        fields = fixup_fields(Performance.fields)
-        query = ('INSERT INTO performance{} VALUES (\'{}\', {}, TO_BLOB(\'{}\'))'
-                 .format(fields, sys.argv[3], sys.argv[4], sys.argv[5]))
-        print(query)
-        cursor.execute(query)
-        connection.commit()
-        exit(0)
+def parse_staging_parameters(params):           # method to parse parameters for staging
+    staging_list = staging('staging_list')      # не уверен что это будет работать так, если не скмпилится - эту строку поменять
+                                                # staging_list создан ссверху
 
+    with open(params[3], "r") as picture:
+        picture_as_string = picture.readlines()
+
+    staging_list.name           = params[0]
+    staging_list.price          = params[1]
+    staging_list.poster_text    = params[2]
+    staging_list.poster_pic     = picture_as_string
+    staging_list.presale        = params[4]
+    staging_list.duration       = params[5]
+    staging_list.event_date     = params[6]
+    staging_list.person1        = params[7]
+    staging_list.person2        = params[8]
+    staging_list.person3        = params[9]
+
+
+def add_staging(parameters):  # сюда надо будет передать нормальные параметры. ух надо будет как то распарсить до этого
+    parse_staging_parameters(parameters)
+    description = cursor.callfunc('UTIL.create_staging', cx_Oracle.OBJECT, parameters=parameters)
+
+
+if __name__ == '__main__':
     if sys.argv[1] in package_functions:
         process_function(sys.argv[1])
         exit(0)
