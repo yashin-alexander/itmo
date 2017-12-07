@@ -145,14 +145,14 @@ create or replace package body util as
     test NUMBER;
     universal_person NUMBER;
     BEGIN
-      poster := DESCRIPTION(poster_text, poster_pic, presale);
+      poster := DESCRIPTION(poster_text, poster_pic, TO_DATE(presale, 'DD/MM/YYYY'));
 
       INSERT INTO STAGING (STAGINGNAME, STAGINGPRICE, DESCRIPTION, DURATIONTIME) VALUES
         (name, price, poster, duration) RETURNING STAGING.STAGINGID
 			INTO staging_id;
 
       INSERT INTO TIMETABLE (EVENTTYPE, EVENTDATE, STAGINGID) VALUES
-        ('performance', event_date, staging_id) RETURNING TIMETABLE.EVENTID INTO event_id;
+        ('performance', TO_DATE(event_date, 'DD/MM/YYYY'), staging_id) RETURNING TIMETABLE.EVENTID INTO event_id;
 
 
       test := 0;

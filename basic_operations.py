@@ -1,7 +1,6 @@
 import cx_Oracle
 import sys
 from collections import namedtuple
-from recordtype import recordtype
 
 table = namedtuple('Name', 'name id_field fields')
 
@@ -17,7 +16,6 @@ Place       = table("place",        "PlaceId",      ("placeType", "placePrice"))
 Timetable   = table("timetable",    "TimetableId",  ("eventType", "eventDate", "stagingId"))
 Booking     = table("booking",      "BookingId",    ("eventId", "placeId", "placeNo"))
 
-staging = recordtype('Name', 'name price poster_text poster_pic presale duration event_date person1 person2 person3')
 
 tables = (Service,
           Post,
@@ -115,7 +113,7 @@ def process_operation(table, operation, fields_info):
         delete(table, fields_info)
 
 
-def process_function(func):
+def process_function(func, parameters):
     if func == "delete":
         delete_all()
     elif func == "priceup":
@@ -125,11 +123,11 @@ def process_function(func):
     elif func == "pricedown":
         prices_down()
     elif func == "addstaging":
-        add_staging()
+        add_staging(parameters)
 
 
 def prices_up():
-    cursor.execute('BEGIN UTIL.UPD_PRICES_FOR_5_PERCENT; END;')
+    cursor.execute('BEGIN UTIL.UPDATE_PRICES_FOR_5_PERCENT; END;')
     connection.commit()
 
 
@@ -148,33 +146,23 @@ def print_theater_expenses():
     print(myvar)
 
 
-def parse_staging_parameters(params):           # method to parse parameters for staging
-    staging_list = staging('staging_list')      # не уверен что это будет работать так, если не скмпилится - эту строку поменять
-                                                # staging_list создан ссверху
-
-    with open(params[3], "r") as picture:
-        picture_as_string = picture.readlines()
-
-    staging_list.name           = params[0]
-    staging_list.price          = params[1]
-    staging_list.poster_text    = params[2]
-    staging_list.poster_pic     = picture_as_string
-    staging_list.presale        = params[4]
-    staging_list.duration       = params[5]
-    staging_list.event_date     = params[6]
-    staging_list.person1        = params[7]
-    staging_list.person2        = params[8]
-    staging_list.person3        = params[9]
+def convert_to_blob(path):
+    with open(path, "rb") as picture:
+        blob = picture.read()
+    return blob
 
 
-def add_staging(parameters):  # сюда надо будет передать нормальные параметры. ух надо будет как то распарсить до этого
-    parse_staging_parameters(parameters)
-    description = cursor.callfunc('UTIL.create_staging', cx_Oracle.OBJECT, parameters=parameters)
+def add_staging(parameters):
+    parameters[3] = convert_to_blob(parameters[3])
+    obj = cursor.var(cx_Oracle.Object, typename='DESCRIPTION')
+    poster = cursor.callfunc('UTIL.create_staging', obj, parameters=parameters)
+    connection.commit()
+    print(poster)
 
 
 if __name__ == '__main__':
     if sys.argv[1] in package_functions:
-        process_function(sys.argv[1])
+        process_function(sys.argv[1], sys.argv[2:])
         exit(0)
 
     for table in tables:
