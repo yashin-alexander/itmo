@@ -14,12 +14,15 @@ create or replace package util as
 
 	PROCEDURE read_timetable;
 
-	PROCEDURE update_prices_for_5_percent;
-
 	function clobfromblob(p_blob blob) return clob;
 
-  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale DATE, duration NUMBER,
-    event_date DATE, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION;
+  FUNCTION read_theater_expenses RETURN NUMBER;
+  PROCEDURE print_theater_expenses;
+  PROCEDURE upd_prices_for_5_percent;
+	PROCEDURE upd_prices_for_5_percent_down;
+
+  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale VARCHAR2, duration NUMBER,
+    event_date VARCHAR2, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION;
 
 end util;
 
@@ -98,13 +101,6 @@ create or replace package body util as
 			end loop;
 		end;
 
-	PROCEDURE update_prices_for_5_percent AS
-		BEGIN
-			UPDATE POST
-				SET SALARY = SALARY * 1.05;
-			UPDATE STAGING
-				SET stagingPRICE = stagingPRICE * 1.05;
-		END;
 
 	function clobfromblob(p_blob blob) return clob is
 	l_clob clob;
@@ -135,25 +131,53 @@ create or replace package body util as
 
 	end clobfromblob;
 
+	FUNCTION read_theater_expenses RETURN NUMBER IS
+		post_summary NUMBER;
+		BEGIN
+			SELECT SUM(SALARY) INTO post_summary FROM POST;
+			RETURN(post_summary);
+		END;
+
+  PROCEDURE print_theater_expenses as
+		BEGIN
+			DBMS_OUTPUT.PUT_LINE('Theater Expenses:');
+			DBMS_OUTPUT.PUT_LINE( UTIL.read_theater_expenses );
+		END;
+
+  PROCEDURE upd_prices_for_5_percent AS
+		BEGIN
+			UPDATE POST
+				SET SALARY = SALARY * 1.05;
+			UPDATE STAGING
+				SET STAGINGPRICE = STAGINGPRICE * 1.05;
+		END;
+
+	PROCEDURE upd_prices_for_5_percent_down AS
+		BEGIN
+			UPDATE POST
+				SET SALARY = SALARY * 0.95;
+			UPDATE STAGING
+				SET STAGINGPRICE = STAGINGPRICE * 0.95;
+		END;
 
 
-  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale DATE, duration NUMBER,
-    event_date DATE, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION IS
+
+  FUNCTION create_staging(name VARCHAR2, price NUMBER, poster_text CLOB, poster_pic BLOB, presale VARCHAR2, duration NUMBER,
+    event_date VARCHAR2, person1 NUMBER, person2 NUMBER, person3 NUMBER) RETURN DESCRIPTION IS
     staging_id NUMBER;
     event_id NUMBER;
     poster DESCRIPTION;
     test NUMBER;
     universal_person NUMBER;
     BEGIN
-      poster := DESCRIPTION(poster_text, poster_pic, TO_DATE(presale, 'DD/MM/YYYY'));
+      poster := DESCRIPTION(poster_text, poster_pic, TO_DATE(presale, 'YYYY/MM/DD'));
 
       INSERT INTO STAGING (STAGINGNAME, STAGINGPRICE, DESCRIPTION, DURATIONTIME) VALUES
         (name, price, poster, duration) RETURNING STAGING.STAGINGID
 			INTO staging_id;
 
       INSERT INTO TIMETABLE (EVENTTYPE, EVENTDATE, STAGINGID) VALUES
-        ('performance', TO_DATE(event_date, 'DD/MM/YYYY'), staging_id) RETURNING TIMETABLE.EVENTID INTO event_id;
-
+        ('performance', TO_DATE(event_date, 'YYYY/MM/DD'), staging_id) RETURNING TIMETABLE.EVENTID INTO event_id;
 
       test := 0;
       universal_person := person1;
@@ -161,7 +185,7 @@ create or replace package body util as
       if test > 0 THEN
           SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person1;
           IF test > 0 THEN
-            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast) and sex=(SELECT sex FROM STAFF WHERE PERSONID=person1);
           END IF;
         END IF;
       INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);
@@ -172,7 +196,7 @@ create or replace package body util as
       if test > 0 THEN
           SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person2;
           IF test > 0 THEN
-            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast) and sex=(SELECT sex FROM STAFF WHERE PERSONID=person2);
           END IF;
         END IF;
       INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);
@@ -183,7 +207,7 @@ create or replace package body util as
       if test > 0 THEN
           SELECT COUNT(*) INTO test FROM CAST WHERE PERSONID=person3;
           IF test > 0 THEN
-            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast);
+            SELECT max(personid) INTO universal_person FROM STAFF where personid not in (select personid from cast) and sex=(SELECT sex FROM STAFF WHERE PERSONID=person3);
           END IF;
         END IF;
       INSERT INTO CAST (EVENTID, PERSONID) VALUES (event_id, universal_person);

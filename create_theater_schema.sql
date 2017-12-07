@@ -57,6 +57,7 @@ CREATE TABLE Staff
 (
   	personId NUMBER NOT NULL PRIMARY KEY,
 	name VARCHAR2(70),
+	sex VARCHAR2(1),
   	postId NUMBER,
 	CONSTRAINT fk_staff FOREIGN KEY(postId)
 	REFERENCES POST(postId)
