@@ -3,29 +3,30 @@
 /* system clock freq = 100 MHz => 100 000 000 clk\per second. 
 50 000 000 by posedge. 50 000 000 / 96 00 = 10416.6(6) ~ 10417. 
 */
-`define FREQ 9600
+`define FREQ 10417	//9900
 
 module controller(
 input clk,
 input SW,
 input rst,
-//input rxd,
-output reg txd
-//output [7:0] LD
+input rxd,
+output reg txd,
+//output reg out,
+output [7:0] LD
 );
 
 reg [31:0] counter = `FREQ;
 reg [31:0] sub_couter = 0;
 reg freq_clk = 0;
 
-/*echo_mode echo(
+echo_mode echo(
     .clk(freq_clk),
     .rst(rst),
     .SW(SW),
     .rxd(rxd),
 	 .word(LD),
 	 .txd(txd_1)
-);*/
+);
 
 
 message_mode uut (
@@ -51,12 +52,14 @@ always @(posedge clk)
 		 
 always @(posedge clk)
 begin
-		txd <= txd_2;
-		/*if (SW)
+		//txd <= txd_2;
+		if (SW)
 			begin
 				txd <= txd_2;
+				//out <= txd_2;
 			end
 		else
-			txd <= txd_1;*/
+			txd <= txd_1;
+			//out <= txd_1;
 end
 endmodule

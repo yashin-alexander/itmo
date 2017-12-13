@@ -9,7 +9,7 @@ output reg transmit_ready,
 output reg txd);
 
 reg [7:0] transmissive_data;
-reg [3:0] counter = 0;
+reg [9:0] counter = 0;
 
 always @(posedge clk)
 begin
@@ -30,6 +30,15 @@ begin
 			if (counter == 9)
 				begin
 					txd = 0;
+					counter = counter + 1;
+				end
+			else if (counter > 9 && counter < 22)
+				begin
+					txd = 1;
+					counter = counter + 1;
+				end
+			else if (counter == 22)
+				begin 
 					counter = 0;
 					transmit_ready = 1;
 					transmissive_data = 0;

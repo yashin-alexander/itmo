@@ -35,7 +35,7 @@ always @(posedge clk)
 						counter = 0;
 						char = 0;
 					end
-				if (counter >= 11 && counter < 15000)
+				if (counter >= 13 && counter < 15000)
 					begin 
 						connection_status = 0;
 						counter = counter + 1;
