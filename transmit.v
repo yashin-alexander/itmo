@@ -32,11 +32,14 @@ begin
 					txd = 0;
 					counter = 0;
 					transmit_ready = 1;
+					transmissive_data = 0;
 				end
 			else
 				begin
 					if(counter == 0)
-						txd = 0;
+						begin
+							txd = 0;
+						end
 					else
 						begin
 							//txd = transmissive_data[7];
@@ -51,6 +54,7 @@ begin
 			begin
 				txd = 1;
 				counter = 0;
+				transmit_ready = 1;
 			end
 end
 
