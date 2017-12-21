@@ -24,32 +24,31 @@ begin
 			recieved_data_1 = 0;
 			word_on_line = 0;
 		end
-	else if (counter == 9 && rxd == 0 && recieve_ready == 0) // STOP BIT && REGISTER WRITING
+	else if (counter == 8 && rxd == 0 && recieve_ready == 0) // STOP BIT && REGISTER WRITING
 		begin
+			//recieved_data_1 = recieved_data_1 >> 1;
 			recieved_data = recieved_data_1;
-			counter = 0;
-			recieve_ready = 1;
-			word_on_line = 1;
-		end
-	else if (counter == 9 && rxd == 1 && recieve_ready == 0) // NO STOP BIT 
-		begin
-			recieved_data = 8'b1000_0001;
-			counter = 0;
-			recieve_ready = 1;
-			word_on_line = 0;
+			//counter = 0;
+			//recieve_ready = 1;
+			//word_on_line = 1;
 		end
 	else if(rxd == 0 && counter == 0 && recieve_ready == 1) // START BIT
-		begin
+		begin		
 			recieve_ready = 0;
-			counter = counter + 1;
 			word_on_line = 0;
 		end
-	else if(recieve_ready == 0 && counter < 9) // WRITING CYCLE 
+	else if(recieve_ready == 0 && counter < 8) // WRITING CYCLE 
 		begin
 			recieved_data_1 = recieved_data_1 << 1;
 			recieved_data_1[0] = rxd;
 			counter = counter + 1;
 			word_on_line = 0;
+		end
+	else if()
+		begin
+			counter = 0;
+			recieve_ready = 1;
+			word_on_line = 1;
 		end
 	else
 		word_on_line = 0;
