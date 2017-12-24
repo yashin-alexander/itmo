@@ -28,9 +28,9 @@ begin
 		begin
 			//recieved_data_1 = recieved_data_1 >> 1;
 			recieved_data = recieved_data_1;
-			//counter = 0;
-			//recieve_ready = 1;
-			//word_on_line = 1;
+			counter = 0;
+			recieve_ready = 1;
+			word_on_line = 1;
 		end
 	else if(rxd == 0 && counter == 0 && recieve_ready == 1) // START BIT
 		begin		

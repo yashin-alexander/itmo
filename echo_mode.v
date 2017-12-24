@@ -6,11 +6,15 @@ input rst,
 input SW,
 input rxd,
 output txd,
-output [7:0] word
+output [7:0] word,
+output word_on_line,
+output connection_status,
+output transmit_ready
 );
 
 
 reg connection_status = 0;
+reg [9:0] counter = 0;
 
 
 recieve uut3 (
@@ -33,8 +37,14 @@ transmit uut2 (
 
 always @(posedge clk)
 		if (!SW)
-			if(word_on_line)			  // TRANSMIT 
-				connection_status = 1;
-			else if(transmit_ready)
-				connection_status = 0;
+			begin
+				if(word_on_line)			  // TRANSMIT 
+					begin
+						connection_status = 1;
+						counter = 0;
+					end
+				else if(transmit_ready && counter > 1)
+					connection_status = 0;
+				counter = counter + 1;
+			end
 endmodule
