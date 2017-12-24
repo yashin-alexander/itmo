@@ -44,12 +44,6 @@ begin
 			counter = counter + 1;
 			word_on_line = 0;
 		end
-	else if()
-		begin
-			counter = 0;
-			recieve_ready = 1;
-			word_on_line = 1;
-		end
 	else
 		word_on_line = 0;
 	end
