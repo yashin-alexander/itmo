@@ -49,9 +49,12 @@ module test_modes;
 	
 	always begin
         # 50 rxd = 0;
-        # 2 rxd = 1;
-        # 16 rxd = 0;
-		  # 2 rxd = 1;
+        # 2 rxd = 1;	
+		  # 2 rxd = 0;	
+			# 2 rxd = 1;	
+		  # 12 rxd = 0;
+		  # 2 rxd = 1;	
+		  
     end
 
 endmodule

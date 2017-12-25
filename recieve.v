@@ -24,7 +24,7 @@ begin
 			recieved_data_1 = 0;
 			word_on_line = 0;
 		end
-	else if (counter == 8 && rxd == 0 && recieve_ready == 0) // STOP BIT && REGISTER WRITING
+	else if (counter == 8 && rxd == 1 && recieve_ready == 0) // STOP BIT && REGISTER WRITING
 		begin
 			//recieved_data_1 = recieved_data_1 >> 1;
 			recieved_data = recieved_data_1;

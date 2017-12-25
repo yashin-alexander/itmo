@@ -6,12 +6,8 @@ input rst,
 input SW,
 input rxd,
 output txd,
-output [7:0] word,
-output word_on_line,
-output connection_status,
-output transmit_ready
+output [7:0] word
 );
-
 
 reg connection_status = 0;
 reg [9:0] counter = 0;

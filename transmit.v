@@ -27,12 +27,7 @@ begin
 					transmissive_data = word;
 					transmit_ready = 0;
 				end
-			if (counter == 10)
-				begin
-					txd = 0;
-					counter = counter + 1;
-				end
-			else if (counter > 10 && counter < 23)
+			else if (counter >= 10 && counter < 23)
 				begin
 					txd = 1;
 					counter = counter + 1;
