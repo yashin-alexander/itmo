@@ -39,8 +39,8 @@ begin
 		end
 	else if(recieve_ready == 0 && counter < 8) // WRITING CYCLE 
 		begin
-			recieved_data_1 = recieved_data_1 << 1;
-			recieved_data_1[0] = rxd;
+			recieved_data_1 = recieved_data_1 >> 1;
+			recieved_data_1[7] = rxd;
 			counter = counter + 1;
 			word_on_line = 0;
 		end
