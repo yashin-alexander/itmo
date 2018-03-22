@@ -25,4 +25,8 @@ public class CrewMan{
     public String getFeeling() {
         return feeling;
     }
+
+    public Spaceship getSpaceship(){
+        return spaceship;
+    }
 }

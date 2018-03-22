@@ -21,10 +21,6 @@ public class Spaceship{
         throw new IllegalArgumentException("Incorrect engine type: '" + engine + "'");
     }
 
-    public String getName(){
-        return this.name;
-    }
-
     public String getEngine(){
         return this.engine;
     }
