@@ -1,9 +1,9 @@
 package spaceship_part;
 
 public class Atom {
-    private String moleculeRelation = Relations.STRANGE_PHYSICAL_PRINCIPLE.toString();
+    private Relation moleculeRelation = new StrangePhysicalPrincipleRelation();
 
-    public String getMoleculeRelation(){
+    public Relation getMoleculeRelation(){
         return this.moleculeRelation;
     }
 }

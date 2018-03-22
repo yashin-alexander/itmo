@@ -4,23 +4,22 @@ package spaceship_part;
 public class CrewMan{
     private String name;
     private String feeling;
-    private String relation;
+    private Relation relation;
     private Spaceship spaceship;
 
-    public CrewMan(String name, String relation){
-        for(Relations possible_relation : Relations.values()){
-            if (possible_relation.toString().equals(relation)){
-                this.name = name;
-                this.relation = relation;
-                if (relation.equals(Relations.STRANGE_PHYSICAL_PRINCIPLE.toString()))
-                    this.feeling = Feelings.UNCOMFORTABLY.toString();
-                else
-                    this.feeling = Feelings.GOOD.toString();
-                return;
-            }
-        }
+    public CrewMan(String name, Relation relation, Spaceship spaceship){
+        this.name = name;
+        this.relation = relation;
 
-        throw new IllegalArgumentException("Incorrect relation type: '" + relation + "'");
+        Relation atoma_relation = new Atom().getMoleculeRelation();
+
+        if (relation.getDescription().equals(atoma_relation.getDescription()))
+            this.feeling = Feelings.UNCOMFORTABLY.toString();
+        else
+            this.feeling = Feelings.GOOD.toString();
+
+        this.spaceship = spaceship;
+        spaceship.assignNewCrewMan(this);
     }
 
     public String getFeeling() {

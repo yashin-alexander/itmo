@@ -1,12 +1,12 @@
 package spaceship_part;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class Spaceship{
     private String name;
     private String engine;
-    private List<CrewMan> crew;
+    private ArrayList<CrewMan> crew = new ArrayList<CrewMan>();
 
     Spaceship(String name, String engine){
         for(Engines possible_engine : Engines.values()){
@@ -21,8 +21,20 @@ public class Spaceship{
         throw new IllegalArgumentException("Incorrect engine type: '" + engine + "'");
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     public String getEngine(){
         return this.engine;
+    }
+
+    void assignNewCrewMan(CrewMan crewMan){
+        this.crew.add(crewMan);
+    }
+
+    public ArrayList<CrewMan> getCrew(){
+        return this.crew;
     }
 
     void move(){
