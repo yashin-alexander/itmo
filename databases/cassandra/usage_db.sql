@@ -1,6 +1,4 @@
-use theater_db;
+use concierge;
 describe tables;
 
-DROP KEYSPACE theater_db;
-
-
+DROP KEYSPACE concierge;
