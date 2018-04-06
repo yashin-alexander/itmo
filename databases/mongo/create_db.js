@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/concierge');
  
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -87,3 +87,4 @@ user.profession = "president";
 user.reservations.push({ place: restaurant._id, time: new Date(2017, 10, 10), number_of_persons: 3});
 user.reservations.push({ place: restaurant._id, time: new Date(2018, 11, 11), number_of_persons: 20});
 user.save();
+
