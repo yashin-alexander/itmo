@@ -59,7 +59,7 @@ INSERT INTO register(day, user_id, device_type, event_time) VALUES (toDate(now()
 INSERT INTO register(day, user_id, device_type, event_time) VALUES (toDate(now()), 2, 'mobile', dateOf(now()));
 INSERT INTO register(day, user_id, device_type, event_time) VALUES (toDate(now()), 2, 'mobile', dateOf(now()));
 INSERT INTO register(day, user_id, device_type, event_time) VALUES (toDate(now()), 3, 'desktop', dateOf(now()));
-
+------------------------------------##
 
 SELECT * FROM attempts_to_enter_by_day;
 SELECT * FROM user_activity;

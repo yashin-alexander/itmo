@@ -48,11 +48,10 @@ var UserSchema = new Schema({
     ordering_food: [ {
 	place: {type: Schema.Types.ObjectId, ref: 'Restaurant'},
 	time: Date,
-	address: String
+	address: String,
+	dish: String
     } ],
-    alarm_clock: {
-	time: [ Date ]
-    },
+    alarm_clock: [ Date ],
     timetable: [ {
 	time: Date,
 	action: String,
