@@ -26,8 +26,8 @@ class FillerFakes(faker.providers.BaseProvider):
             'age': random.randint(16, 66),
             'family': self.family(last_name),
             'profession': self.fake.job(),
-            'reservations': self.reservations(),
-            'ordering_food': self.ordering_food(),
+            # 'reservations': self.reservations(), #
+            # 'ordering_food': self.ordering_food(),
             'alarm_clock': self.alarm_clock(),
             'timetable': self.timetable(),
         }
@@ -166,11 +166,27 @@ class MongoFiller:
     def create_user_record(self, data=None):
         if not data:
             data = self.faker.user()
+        data = self._add_referenced_fields(data)
         self.users.insert_one(data)
+
+    def _add_referenced_fields(self, data):
+        data.update({'reservations': []})
+        data.update({'ordering_food': []})
+        for i in range(random.randint(0, 3)):
+            data['reservations'].append(self.get_random_existing_place())
+        for i in range(random.randint(0, 3)):
+            data['ordering_food'].append(self.get_random_existing_place())
+        return data
 
     def create_users(self, record_number):
         for _ in range(record_number):
             self.create_user_record()
+
+    def get_random_existing_place(self):
+        places_count = self.places.count()
+        random_number = random.randint(0, places_count - 1)
+        random_record = self.places.find().limit(-1).skip(random_number).next()
+        return random_record
 
 
 if __name__ == "__main__":
@@ -180,11 +196,11 @@ if __name__ == "__main__":
     #                             'name': 'Thomas-Beard',
     #                             'phone': '723-755-6812x169',
     #                             'rating': 5})
-    # filler.create_place_record()
+    filler.create_places(2)
 
     # filler.get_users_data(echo=True)
-    filler.create_user_record()
-    filler.get_users_data(echo=True)
+    filler.create_users(10)
+    # filler.get_users_data(echo=True)
 
     # usr = filler.faker.user()
     # pp = pprint.PrettyPrinter(indent=1)
