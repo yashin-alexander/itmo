@@ -14,48 +14,42 @@ var UserSchema = new Schema({
     name: String,
     age: Number,
     family: {
-        wife: [
-	    { 	
+        spouse: {
 	        name: String,
 	        status: String,
 	        relationships: String
-	    }
-	],
-	children: [ 
-	    {
-		name: String,
-		age: Number,
-		relationships: String
-	    }
-	],
-	mother: 
-	    {
-		name: String,
-		relationships: String
-	    },
-	father: 
-	    {
-		name: String,
-		relationships: String
-	    }
+	    	},
+		children: [ {
+			name: String,
+			age: Number,
+			relationships: String
+	    	} ],
+		mother: {
+			name: String,
+			relationships: String
+	    	},
+		father: {
+			name: String,
+			relationships: String
+	    	}
     },
     profession: String,
     reservations: [ {
-	place: {type: Schema.Types.ObjectId, ref: 'Place'},
-	time: Date,
-	number_of_persons: Number
+    	place: {type: Schema.Types.ObjectId, ref: 'Place'},
+		time: Date,
+		number_of_persons: Number
     } ],
     ordering_food: [ {
-	place: {type: Schema.Types.ObjectId, ref: 'Place'},
-	time: Date,
-	address: String,
-	dish: String
+    	place: {type: Schema.Types.ObjectId, ref: 'Place'},
+		time: Date,
+		address: String,
+		dish: String
     } ],
     alarm_clock: [ Date ],
     timetable: [ {
-	time: Date,
-	action: String,
-	importance: Number
+		time: Date,
+		action: String,
+		importance: Number
     } ]
 });
 var User = mongoose.model('User', UserSchema);
