@@ -2,6 +2,7 @@ import faker
 import random
 import pprint
 import pymongo
+import multiprocessing
 
 import constants
 
@@ -183,25 +184,31 @@ class MongoFiller:
             self.create_user_record()
 
     def get_random_existing_place(self):
-        places_count = self.places.count()
-        random_number = random.randint(0, places_count - 1)
-        random_record = self.places.find().limit(-1).skip(random_number).next()
+        random_record = list(self.places.aggregate([{"$sample": {"size": 1}}]))
         return random_record
 
 
-if __name__ == "__main__":
+def fill():
     filler = MongoFiller()
-    filler.get_collections_list(echo=True)
+    filler.create_places(5)
+    filler.create_users(200000)
+
+
+def multiprocessing_fill(process_number):
     # filler.create_place_record({'address': '689 Mark Keys Apt. 098',
     #                             'name': 'Thomas-Beard',
     #                             'phone': '723-755-6812x169',
     #                             'rating': 5})
-    filler.create_places(2)
+    workers = []
+    for i in range(process_number):
+        workers.append(multiprocessing.Process(target=fill))
 
-    # filler.get_users_data(echo=True)
-    filler.create_users(10)
-    # filler.get_users_data(echo=True)
+    for i in range(process_number):
+        workers[i].start()
 
-    # usr = filler.faker.user()
-    # pp = pprint.PrettyPrinter(indent=1)
-    # pp.pprint(usr)
+    for i in range(process_number):
+        workers[i].join()
+
+
+if __name__ == "__main__":
+    multiprocessing_fill(10)
