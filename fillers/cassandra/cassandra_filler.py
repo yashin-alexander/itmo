@@ -1,8 +1,12 @@
 import faker
 import random
+import multiprocessing
 
 import constants
 from cassandra.cluster import Cluster
+
+
+PROCESS_NUMBER = 2
 
 
 class CassandraFillerFakes(faker.providers.BaseProvider):
@@ -13,14 +17,14 @@ class CassandraFillerFakes(faker.providers.BaseProvider):
     def register(self):
         return {
                 'day': "'{}'".format(self.fake.date()),
-                'user_id': 0,
+                'user_id': 'uuid()',
                 'device_type': "'{}'".format(random.choice(constants.DEVICE_TYPES)),
-                'event_time': "'{} {}'".format(self.fake.date(), self.fake.time())
+                'event_time': "'{} {}.123'".format(self.fake.date(), self.fake.time())
         }
 
     def user_activity(self):
         return {
-                'user_id': 0,
+                'user_id': 'uuid()',
                 'event_type': "'{}'".format(random.choice(constants.EVENT_TYPES)),
                 'device_type': "'{}'".format(random.choice(constants.DEVICE_TYPES)),
                 'event_time': "dateOf(now())"
@@ -29,7 +33,7 @@ class CassandraFillerFakes(faker.providers.BaseProvider):
     def enter_attempts(self):
         return {
                 'day': "toDate(now())",
-                'user_id': 0,
+                'user_id': 'uuid()',
                 'device_type': "'{}'".format(random.choice(constants.DEVICE_TYPES)),
                 'event_time': "dateOf(now())"
         }
@@ -41,14 +45,6 @@ class CassandraFiller:
         self.session = self.cluster.connect(constants.KEYSPACE_NAME)
         self.faker = faker.Faker()
         self.faker.add_provider(CassandraFillerFakes)
-
-    def get_max_registered_id(self):
-        query = 'SELECT MAX(user_id) FROM {}.{} ;'\
-            .format(constants.KEYSPACE_NAME, constants.DB_REGISTER)
-        registered_id = self.session.execute(query)[0][0]
-        if not registered_id:
-            registered_id = 0
-        return registered_id
 
     def _get_table_data(self, table):
         query = 'SELECT * FROM {}'.format(table)
@@ -66,7 +62,7 @@ class CassandraFiller:
     def _insert_record(self, database, record, ttl=''):
         query = "INSERT INTO {}{} VALUES ({}) {};" \
             .format(database, constants.DATABASES_COLUMNS[database], record, ttl)
-        print(query)
+        # print(query)
         self.session.execute(query)
 
     def insert_register_record(self, data=None):
@@ -74,8 +70,6 @@ class CassandraFiller:
             data = self.faker.register()
 
         values = ''
-        max_existing_id = self.get_max_registered_id()
-        data.update({'user_id': max_existing_id + 1})
 
         for key in data.keys():
             values += str(data[key])
@@ -93,12 +87,6 @@ class CassandraFiller:
 
         ttl = ''
         values = ''
-        max_existing_id = self.get_max_registered_id()
-        data.update({'user_id': random.randint(1, max_existing_id)})
-
-        if data['event_type'] == "'register'" and data['user_id'] <= max_existing_id:
-            data.update({'event_type': random.choice(constants.NON_REGISTER_EVENT_TYPES)})
-            ttl = constants.DEFAULT_TTL
 
         for key in data.keys():
             values += str(data[key])
@@ -115,8 +103,6 @@ class CassandraFiller:
             data = self.faker.enter_attempts()
 
         values = ''
-        max_existing_id = self.get_max_registered_id()
-        data.update({'user_id': random.randint(1, max_existing_id)})
         for key in data.keys():
             values += str(data[key])
             values += ', '
@@ -127,15 +113,45 @@ class CassandraFiller:
             data = self.faker.enter_attempts()
             self.insert_enter_attempts_record(data)
 
+    def remove_registers_by_uuids(self, uuids):
+        self.session.execute('DELETE FROM register WHERE user_id IN ({});'.format(uuids))
+
+    def update_register_by_uuid(self, update_str,  uuids):
+        self.session.execute('UPDATE register SET {} WHERE user_id IN ({});'.format(update_str, uuids))
+
+
+def fill():
+    filler = CassandraFiller()
+    # activity = filler.get_register()
+    # filler.insert_registers(200000)
+    # filler.insert_user_activities(200000)
+    filler.insert_enter_attempts(200)
+
+
+def multiprocessing_fill():
+    workers = []
+    for i in range(PROCESS_NUMBER):
+        workers.append(multiprocessing.Process(target=fill))
+
+    for worker in workers:
+        worker.start()
+
+    for worker in workers:
+        worker.join()
+
 
 if __name__ == '__main__':
     filler = CassandraFiller()
-    activity = filler.get_register()
-    print(list(activity))
+    # activity = filler.get_register()
+    # filler.insert_registers(20)
+    # print(list(activity))
     # filler.insert_register({'day': "'2018-01-03'", #'toconstants.Date(now())',
     #                         'user_id': i,
     #                         'device_type': "'mobile'",
     #                         'event_time':  'dateOf(now())'})
-    filler.insert_registers(4)
-    filler.insert_user_activities(4)
-    filler.insert_enter_attempts(4)
+    # multiprocessing_fill()
+    # filler.insert_user_activities(200000)
+    filler.insert_registers(200000)
+    # filler.insert_enter_attempts(20002)
+    # filler.remove_registers_by_uuids('bb1ed1ec-28b6-4b93-9ffa-e0e0d40d73da')
+    # filler.update_register_by_uuid("device_type = 'mobile'", '834cd519-b58b-490d-bf3e-953da8cdc8de')

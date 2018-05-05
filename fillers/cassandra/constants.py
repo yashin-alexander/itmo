@@ -4,7 +4,7 @@ DB_USER_ACTIVITY = 'user_activity'
 DB_ENTER_ATTEMPTS = 'attempts_to_enter_by_day'
 
 DEVICE_TYPES = ("mobile", "desktop")
-EVENT_TYPES = ("register", "log in", "log out")
+EVENT_TYPES = ("log in", "log out")
 NON_REGISTER_EVENT_TYPES = ("'log in'", "'log out'")
 DEFAULT_TTL = 'USING TTL 15552000'
 
