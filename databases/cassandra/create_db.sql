@@ -10,7 +10,7 @@ use concierge;
 CREATE TABLE IF NOT EXISTS attempts_to_enter_by_day
 (   
     day date,
-    user_id int,
+    user_id uuid,
     device_type text,
     event_time timestamp,
     PRIMARY KEY((day, user_id), event_time)
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS attempts_to_enter_by_day
 
 CREATE TABLE IF NOT EXISTS user_activity
 (   
-    user_id int,
+    user_id uuid,
     event_type text,
     device_type text,
     event_time timestamp,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS user_activity
 CREATE TABLE IF NOT EXISTS register
 (   
     day date,
-    user_id int,
+    user_id uuid,
     device_type text,
     event_time timestamp,
     PRIMARY KEY(user_id)
