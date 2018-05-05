@@ -5,6 +5,7 @@ import pymongo
 import multiprocessing
 
 import constants
+from bson.objectid import ObjectId
 
 
 class FillerFakes(faker.providers.BaseProvider):
@@ -187,11 +188,52 @@ class MongoFiller:
         random_record = list(self.places.aggregate([{"$sample": {"size": 1}}]))
         return random_record
 
+    def get_places_with_rating(self, rating, echo=False):
+        data = list(self.places.find({'rating': rating}))
+        if echo:
+            pp = pprint.PrettyPrinter(indent=1)
+            for document in data:
+                pp.pprint(document)
+        return data
+
+    def get_places_with_rating_more_than(self, rating, echo=False):
+        data = list(self.places.find({'rating': {'$gt': rating}}))
+        if echo:
+            pp = pprint.PrettyPrinter(indent=1)
+            for document in data:
+                pp.pprint(document)
+        return data
+
+    def get_places_by(self, condition, echo=False):
+        data = self.places.find(condition)
+        if echo:
+            pp = pprint.PrettyPrinter(indent=1)
+            for document in data:
+                pp.pprint(document)
+        return data
+
+    def remove_place_by(self, condition):
+        self.places.remove(condition)
+
+    def get_users_by(self, condition, echo=False):
+        data = self.users.find(condition)
+        if echo:
+            pp = pprint.PrettyPrinter(indent=1)
+            for document in data:
+                pp.pprint(document)
+        return data
+
+    def remove_user_by(self, condition):
+        self.users.remove(condition)
+
+    def update_user_with(self, condition, new_parameters):
+        self.users.update(condition, new_parameters)
+
 
 def fill():
     filler = MongoFiller()
     filler.create_places(5)
-    filler.create_users(200000)
+    filler.create_users(10)
 
 
 def multiprocessing_fill(process_number):
@@ -211,4 +253,16 @@ def multiprocessing_fill(process_number):
 
 
 if __name__ == "__main__":
-    multiprocessing_fill(10)
+    filler = MongoFiller()
+    # filler.create_places(5)
+    # filler.create_users(5)
+    # filler.get_places_with_rating_more_than(5, echo=True)
+    # filler.get_places_data(echo=True)
+    # filler.get_users_data(echo=True)
+    # filler.remove_place_by({'name': 'Powers-Brown'})
+    # filler.get_places_by({'name': 'Powers-Brown'}, echo=True)
+    # filler.get_users_data(echo=True)
+    # filler.get_users_by({"_id": ObjectId('5aed71b5d2ccda1a78409d34')}, echo=True)
+    filler.update_user_with({"_id": ObjectId('5aed71b5d2ccda1a78409d34')}, {"$set": {"age": 27}})
+    filler.get_users_by({'name': 'Kimberly Robertson'}, echo=True)
+
