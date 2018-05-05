@@ -2,10 +2,10 @@ import flask
 import json
 import pymongo
 from bson import json_util
-import mongo_filler
+import filler
 
 app = flask.Flask(__name__)
-filler = mongo_filler.MongoFiller()
+filler = filler.MongoFiller()
 
 
 def db_conn():
