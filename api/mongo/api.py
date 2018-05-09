@@ -1,67 +1,85 @@
-import flask
 import json
 import pymongo
 from bson import json_util
-import filler
+from flask import request, Response
 
-app = flask.Flask(__name__)
-filler = filler.MongoFiller()
-
-
-def db_conn():
-    client = pymongo.MongoClient()
-
-    return client['concierge']
+from . import constants
 
 
-def to_json(data):
-    return json.dumps(data) + "\n"
+class MongoAPI:
+    def __init__(self):
+        self.client = pymongo.MongoClient()
+        self.db = self.client[constants.DB_NAME]
+        self.users = self.db[constants.USERS_COLLECTION_NAME]
+        self.places = self.db[constants.PLACES_COLLECTION_NAME]
+
+    @staticmethod
+    def to_json(data):
+        return json.dumps(data) + "\n"
+
+    @property
+    def request_parameters(self):
+        conditions = request.args.to_dict()
+        if 'age' in conditions:
+            conditions['age'] = int(conditions['age'])
+        if 'rating' in conditions:
+            conditions['rating'] = int(conditions['rating'])
+
+        return conditions
+
+    def response(self, status_code, data):
+        return Response(
+            status=status_code,
+            mimetype="application/json",
+            response=self.to_json(data)
+        )
+
+# CREATE methods
+    def create_place(self):
+        self.places.insert_one(self.request_parameters)
+        return self.response(200, {})
+
+    def create_user(self):
+        self.users.insert_one(self.request_parameters)
+        return self.response(200, {})
 
 
-def resp(code, data):
-    return flask.Response(
-        status=code,
-        mimetype="application/json",
-        response=to_json(data)
-    )
+# READ methods
+    def read_collections(self):
+        return self.response(200, {'collections': self.db.collection_names()})
+
+    def read_users(self):
+        data = list(self.users.find(self.request_parameters))
+        return self.response(200, json.dumps(data, default=json_util.default))
+
+    def read_places(self):
+        data = list(self.places.find(self.request_parameters))
+        return self.response(200, json.dumps(data, default=json_util.default))
+
+    def read_places_with_rating_more_than(self):
+        rating = request.args.pop()
+        data = list(self.places.find({'rating': {'$gt': rating}}))
+        return self.response(200, json.dumps(data, default=json_util.default))
+
+# UPDATE methods
+    def update_users(self):
+        search_condition = self.request_parameters['condition']
+        new_parameters = self.request_parameters['new_parameters']
+        self.users.update(search_condition, {"$set": new_parameters})
+        return self.response(200, {})
+
+    def update_places(self):
+        search_condition = request.json['condition']
+        new_parameters = request.json['new_parameters']
+        self.places.update(search_condition, {"$set": new_parameters})
+        return self.response(200, {})
 
 
-@app.route('/')
-def root():
-    return flask.redirect('/api/')
+# DELETE methods
+    def delete_places(self):
+        self.places.remove(self.request_parameters)
+        return self.response(200, {})
 
-
-@app.route('/api/collections', methods=['GET'])
-def collections():
-    db = db_conn()
-    return resp(200, {'collections': db.collection_names()})
-
-
-@app.route('/api/places', methods=['GET'])
-def places():
-    data = filler.get_places_data()
-    return resp(200, json.dumps(data, default=json_util.default))
-
-
-@app.route('/api/users', methods=['GET'])
-def users():
-    data = filler.get_users_data()
-    return resp(200, json.dumps(data, default=json_util.default))
-
-
-@app.route('/api/users_by_condition', methods=['GET'])
-def users_by_condition():
-    field = flask.request.args.get('field')
-    value = flask.request.args.get('value')
-    if field == 'age':
-        value = int(value)
-
-    parameter = {field: value}
-    data = list(filler.get_users_by(parameter))
-
-    return resp(200, json.dumps(data, default=json_util.default))
-
-
-if __name__ == '__main__':
-    app.debug = True  # enables auto reload during development
-    app.run()
+    def delete_users(self):
+        self.users.remove(self.request_parameters)
+        return self.response(200, {})
