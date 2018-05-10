@@ -1,6 +1,5 @@
 import json
 import pymongo
-from bson import json_util
 from flask import request, Response
 
 from . import constants
@@ -28,7 +27,7 @@ class MongoAPI:
         return conditions
 
     def response(self, status_code, data):
-        json_data = json.dumps(data, default=json_util.default)
+        json_data = json.dumps(data, indent=4, sort_keys=True, default=str)
         return Response(
             status=status_code,
             mimetype="application/json",
