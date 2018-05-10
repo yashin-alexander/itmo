@@ -1,9 +1,24 @@
 import flask
 from mongo.api import MongoAPI
+from werkzeug.routing import BaseConverter
+
+
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
 
 
 app = flask.Flask(__name__)
 mongo_api = MongoAPI()
+
+app.url_map.converters['regex'] = RegexConverter
+
+
+@app.route('/<regex(".*"):address>/')
+def bad_request(address):
+    return flask.render_template('404.html', address=address)
+
 
 # MONGO API CALLS
 
