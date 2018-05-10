@@ -28,10 +28,11 @@ class MongoAPI:
         return conditions
 
     def response(self, status_code, data):
+        json_data = json.dumps(data, default=json_util.default)
         return Response(
             status=status_code,
             mimetype="application/json",
-            response=self.to_json(data)
+            response=json_data
         )
 
 # CREATE methods
@@ -43,23 +44,22 @@ class MongoAPI:
         self.users.insert_one(self.request_parameters)
         return self.response(200, {})
 
-
 # READ methods
     def read_collections(self):
         return self.response(200, {'collections': self.db.collection_names()})
 
     def read_users(self):
         data = list(self.users.find(self.request_parameters))
-        return self.response(200, json.dumps(data, default=json_util.default))
+        return self.response(200, data)
 
     def read_places(self):
         data = list(self.places.find(self.request_parameters))
-        return self.response(200, json.dumps(data, default=json_util.default))
+        return self.response(200, data)
 
     def read_places_with_rating_more_than(self):
         rating = request.args.pop()
         data = list(self.places.find({'rating': {'$gt': rating}}))
-        return self.response(200, json.dumps(data, default=json_util.default))
+        return self.response(200, data)
 
 # UPDATE methods
     def update_users(self):
@@ -73,7 +73,6 @@ class MongoAPI:
         new_parameters = request.json['new_parameters']
         self.places.update(search_condition, {"$set": new_parameters})
         return self.response(200, {})
-
 
 # DELETE methods
     def delete_places(self):
