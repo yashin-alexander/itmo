@@ -15,7 +15,10 @@ app = flask.Flask(__name__)
 app.url_map.converters['regex'] = RegexConverter
 
 mongo_api = MongoAPI()
-cassandra_api = CassandraAPI()
+try:
+    cassandra_api = CassandraAPI()
+except Exception:
+    print('No cassandra cluster available')
 
 
 @app.route('/')
@@ -75,7 +78,57 @@ def mongo_delete_places_by():
 def mongo_delete_users_by():
     mongo_api.delete_users()
 
+
 # CASSANDRA API CALLS
+
+@app.route('/cassandra/create_user_activity', methods=['POST'])
+def cassandra_create_user_activity():
+    return cassandra_api.create_user_activity()
+
+
+@app.route('/cassandra/update_register', methods=['POST'])
+def cassandra_update_register():
+    return cassandra_api.update_register_by_uuid()
+
+
+@app.route('/cassandra/register', methods=['POST'])
+def cassandra_create_register():
+    return cassandra_api.create_register()
+
+
+@app.route('/cassandra/enter_attempts', methods=['POST'])
+def cassandra_create_enter_attempts():
+    return cassandra_api.create_enter_attempts()
+
+
+@app.route('/cassandra/user_activity', methods=['GET'])
+def cassandra_user_activity():
+    return cassandra_api.user_activity()
+
+
+@app.route('/cassandra/register', methods=['GET'])
+def cassandra_register():
+    return cassandra_api.register()
+
+
+@app.route('/cassandra/enter_attempts_by_day', methods=['GET'])
+def cassandra_enter_attempts_by_day():
+    return cassandra_api.enter_attempts_by_day()
+
+
+@app.route('/cassandra/delete_registers', methods=['POST'])
+def cassandra_delete_registers():
+    return cassandra_api.delete_registers()
+
+
+@app.route('/cassandra/delete_user_activity', methods=['POST'])
+def cassandra_delete_user_activity():
+    return cassandra_api.delete_user_activity()
+
+
+@app.route('/cassandra/delete_enter_attempts', methods=['POST'])
+def cassandra_delete_enter_attempts():
+    return cassandra_api.delete_enter_attempts()
 
 # NEO4J API CALLS
 
