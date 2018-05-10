@@ -1,12 +1,9 @@
 import faker
 import random
 import multiprocessing
-
-import constants
 from cassandra.cluster import Cluster
 
-
-PROCESS_NUMBER = 2
+from . import constants
 
 
 class CassandraFillerFakes(faker.providers.BaseProvider):
@@ -128,9 +125,9 @@ def fill():
     filler.insert_enter_attempts(200)
 
 
-def multiprocessing_fill():
+def multiprocessing_fill(processes_number):
     workers = []
-    for i in range(PROCESS_NUMBER):
+    for i in range(processes_number):
         workers.append(multiprocessing.Process(target=fill))
 
     for worker in workers:

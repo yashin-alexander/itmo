@@ -1,6 +1,8 @@
 import flask
-from mongo.api import MongoAPI
 from werkzeug.routing import BaseConverter
+
+from mongo_api.api import MongoAPI
+from cassandra_api.api import CassandraAPI
 
 
 class RegexConverter(BaseConverter):
@@ -10,9 +12,15 @@ class RegexConverter(BaseConverter):
 
 
 app = flask.Flask(__name__)
-mongo_api = MongoAPI()
-
 app.url_map.converters['regex'] = RegexConverter
+
+mongo_api = MongoAPI()
+cassandra_api = CassandraAPI()
+
+
+@app.route('/')
+def index():
+    return flask.render_template('404.html', address='/')
 
 
 @app.route('/<regex(".*"):address>/')
