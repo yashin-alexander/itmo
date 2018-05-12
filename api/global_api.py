@@ -1,5 +1,7 @@
 import flask
 from werkzeug.routing import BaseConverter
+from requests.exceptions import ConnectionError
+from functools import wraps
 
 from mongo_api.api import MongoAPI
 from neo4j_api.api import Neo4jAPI
@@ -16,11 +18,24 @@ app = flask.Flask(__name__)
 app.url_map.converters['regex'] = RegexConverter
 
 mongo_api = MongoAPI()
-neo4j_api = Neo4jAPI()
+try:
+    neo4j_api = Neo4jAPI()
+except ConnectionError:
+    print('No neo4j cluster available')
 try:
     cassandra_api = CassandraAPI()
 except Exception:
     print('No cassandra cluster available')
+
+
+def catcher(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception:
+            return flask.Response(status=500)
+    return decorated
 
 
 @app.route('/')
@@ -38,12 +53,12 @@ def bad_request(address):
 
 @app.route('/mongo/create_user', methods=['POST'])
 def mongo_create_user():
-    mongo_api.create_user()
+    return mongo_api.create_user()
 
 
 @app.route('/mongo/create_place', methods=['POST'])
 def mongo_create_place():
-    mongo_api.create_place()
+    return mongo_api.create_place()
 
 
 @app.route('/mongo/collections', methods=['GET'])
@@ -68,17 +83,17 @@ def mongo_update_places():
 
 @app.route('/mongo/update_users', methods=['POST'])
 def mongo_update_users():
-    mongo_api.update_users()
+    return mongo_api.update_users()
 
 
 @app.route('/mongo/delete_places', methods=['GET'])
 def mongo_delete_places_by():
-    mongo_api.delete_places()
+    return mongo_api.delete_places()
 
 
 @app.route('/mongo/delete_users', methods=['GET'])
 def mongo_delete_users_by():
-    mongo_api.delete_users()
+    return mongo_api.delete_users()
 
 
 # CASSANDRA API CALLS
