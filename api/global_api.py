@@ -145,9 +145,9 @@ def neo4j_history():
     return neo4j_api.history()
 
 
-@app.route('/neo4j/update_history', methods=['POST'])
-def neo4j_update_history():
-    return neo4j_api.update_history()
+@app.route('/neo4j/update_history_name', methods=['GET'])
+def neo4j_update_history_name():
+    return neo4j_api.update_history_name()
 
 
 @app.route('/neo4j/delete_history', methods=['GET'])

@@ -70,6 +70,13 @@ class Neo4jAPI:
         return self.response(200, (raw_data.rows))
 
     # UPDATE methods
+    def update_history_name(self):
+        data = self.request_parameters
+        id = data['id']
+        name = data['name']
+        query = 'MATCH(p: perid {id: ' + id + ' }) SET p.name = "' + name + '" RETURN p'
+        self.db.query(query, data_contents=True)
+        return self.response(200, {})
 
     # DELETE methods
     def delete_history(self):
