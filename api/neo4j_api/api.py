@@ -65,8 +65,7 @@ class Neo4jAPI:
     def history(self):
         data = self.request_parameters
         id = data['id']
-        query = 'MATCH (a:perid {id: ' + id + '})-[r*1..3]-(b) RETURN r, a, b'
-        # query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c'
+        query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c'
         raw_data = self.db.query(query)
         return self.response(200, list(raw_data))
 
