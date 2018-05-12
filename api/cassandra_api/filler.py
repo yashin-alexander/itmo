@@ -127,8 +127,8 @@ if __name__ == '__main__':
     #                         'device_type': "'mobile'",
     #                         'event_time':  'dateOf(now())'})
     # multiprocessing_fill()
-    filler.insert_user_activities(20)
-    filler.insert_registers(20)
-    filler.insert_enter_attempts(20)
+    filler.insert_user_activities(20000)
+    filler.insert_registers(20000)
+    filler.insert_enter_attempts(20000)
     # filler.remove_registers_by_uuids('bb1ed1ec-28b6-4b93-9ffa-e0e0d40d73da')
     # filler.update_register_by_uuid("device_type = 'mobile'", '834cd519-b58b-490d-bf3e-953da8cdc8de')

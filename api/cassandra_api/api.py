@@ -1,8 +1,19 @@
 import json
 from flask import request, Response
 from cassandra.cluster import Cluster
+from functools import wraps
 
 from . import constants
+
+
+def catcher(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception:
+            return Response(status=500, response='{"status": "Failure"}')
+    return decorated
 
 
 class CassandraAPI:
@@ -40,14 +51,17 @@ class CassandraAPI:
         print(query)
         self.session.execute(query)
 
+    @catcher
     def create_register(self):
         self._create_record(constants.DB_REGISTER)
         return self.response(200, {})
 
+    @catcher
     def create_user_activity(self):
         self._create_record(constants.DB_USER_ACTIVITY)
         return self.response(200, {})
 
+    @catcher
     def create_enter_attempts(self):
         self._create_record(constants.DB_ENTER_ATTEMPTS)
         return self.response(200, {})
@@ -58,20 +72,24 @@ class CassandraAPI:
         query = 'SELECT * FROM {}'.format(table)
         return self.session.execute(query)
 
+    @catcher
     def user_activity(self):
         data = list(self._get_table_data(constants.DB_USER_ACTIVITY))
         return self.response(200, data)
 
+    @catcher
     def register(self):
         data = list(self._get_table_data(constants.DB_REGISTER))
         return self.response(200, data)
 
+    @catcher
     def enter_attempts_by_day(self):
         data = list(self._get_table_data(constants.DB_ENTER_ATTEMPTS))
         return self.response(200, data)
 
     # UPDATE methods
 
+    @catcher
     def update_register_by_uuid(self):
         uuid = request.json['uuid']
         data = request.json['data']
@@ -82,18 +100,21 @@ class CassandraAPI:
 
     # DELETE methods
 
+    @catcher
     def delete_registers(self):
         uuids = request.json['uuids']
         self.session.execute('DELETE FROM {} WHERE user_id IN ({});'
                              .format(constants.DB_REGISTER, uuids))
         return self.response(200, {})
 
+    @catcher
     def delete_enter_attempts(self):
         uuids = request.json['uuids']
         self.session.execute('DELETE FROM {} WHERE user_id IN ({});'
                              .format(constants.DB_ENTER_ATTEMPTS, uuids))
         return self.response(200, {})
 
+    @catcher
     def delete_user_activity(self):
         uuids = request.json['uuids']
         self.session.execute('DELETE FROM {} WHERE user_id IN ({});'
