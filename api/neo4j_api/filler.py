@@ -57,6 +57,6 @@ if __name__ == '__main__':
         sys.argv[1]
         filler.drop_db()
     except IndexError:
-        filler.create_person_nodes(10)
+        filler.create_person_nodes(1000)
 
 

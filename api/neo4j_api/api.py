@@ -1,9 +1,19 @@
 import json
 from flask import Response, request
 from neo4jrestclient.client import GraphDatabase
-
+from functools import wraps
 
 from . import constants
+
+
+def catcher(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception:
+            return Response(status=500, response='{"status": "Failure"}')
+    return decorated
 
 
 class Neo4jAPI:
@@ -28,6 +38,7 @@ class Neo4jAPI:
         )
 
     # CREATE methods
+    @catcher
     def create_history(self):
         person_node = self.db.nodes.create(name=request.json['name'], id=request.json['id'])
         person_node.labels.add(constants.PERID)
@@ -62,14 +73,16 @@ class Neo4jAPI:
         company_node.labels.add(constants.COMPANY)
 
     # READ methods
+    @catcher
     def history(self):
         data = self.request_parameters
         id = data['id']
-        query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c'
+        query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c LIMIT 25'
         raw_data = self.db.query(query, data_contents=True)
         return self.response(200, (raw_data.rows))
 
     # UPDATE methods
+    @catcher
     def update_history_name(self):
         data = self.request_parameters
         id = data['id']
@@ -79,6 +92,7 @@ class Neo4jAPI:
         return self.response(200, {})
 
     # DELETE methods
+    @catcher
     def delete_history(self):
         data = self.request_parameters
         id = data['id']
