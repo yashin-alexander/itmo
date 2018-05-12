@@ -66,8 +66,8 @@ class Neo4jAPI:
         data = self.request_parameters
         id = data['id']
         query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c'
-        raw_data = self.db.query(query)
-        return self.response(200, list(raw_data))
+        raw_data = self.db.query(query, data_contents=True)
+        return self.response(200, (raw_data.rows))
 
     # UPDATE methods
 
