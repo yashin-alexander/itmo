@@ -1,4 +1,4 @@
-DB_NAME = 'te'
+DB_NAME = 'concierge'
 USERS_COLLECTION_NAME = 'users'
 PLACES_COLLECTION_NAME = 'places'
 

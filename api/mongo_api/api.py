@@ -1,8 +1,20 @@
 import json
 import pymongo
 from flask import request, Response
+from functools import wraps
+from bson.objectid import ObjectId
 
 from . import constants
+
+
+def catcher(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception:
+            return Response(status=500, response='{"status": "Failure"}')
+    return decorated
 
 
 class MongoAPI:
@@ -23,8 +35,17 @@ class MongoAPI:
             conditions['age'] = int(conditions['age'])
         if 'rating' in conditions:
             conditions['rating'] = int(conditions['rating'])
+        if '_id' in conditions:
+            conditions['_id'] = ObjectId(conditions['_id'])
 
         return conditions
+
+    @property
+    def post_params(self):
+        if 'condition' in request.json:
+            if '_id' in request.json['condition']:
+                request.json['condition']['_id'] = ObjectId(request.json['condition']['_id'])
+        return request.json
 
     def response(self, status_code, data):
         json_data = json.dumps(data, indent=4, sort_keys=True, default=str)
@@ -35,49 +56,61 @@ class MongoAPI:
         )
 
 # CREATE methods
+    @catcher
     def create_place(self):
-        self.places.insert_one(self.request_parameters)
-        return self.response(200, {})
+        print(request.json)
+        id = self.places.insert_one(dict(request.json))
+        return self.response(200, {'id': id})
 
+    @catcher
     def create_user(self):
-        self.users.insert_one(self.request_parameters)
-        return self.response(200, {})
+        id = self.users.insert(dict(request.json))
+        return self.response(200, {'id': id})
 
 # READ methods
+    @catcher
     def read_collections(self):
         return self.response(200, {'collections': self.db.collection_names()})
 
+    @catcher
     def read_users(self):
-        data = list(self.users.find(self.request_parameters))
+        print(self.request_parameters)
+        data = list(self.users.find(self.request_parameters).limit(20))
         return self.response(200, data)
 
+    @catcher
     def read_places(self):
-        data = list(self.places.find(self.request_parameters))
+        data = list(self.places.find(self.request_parameters).limit(20))
         return self.response(200, data)
 
+    @catcher
     def read_places_with_rating_more_than(self):
         rating = request.args.pop()
-        data = list(self.places.find({'rating': {'$gt': rating}}))
+        data = list(self.places.find({'rating': {'$gt': rating}}).limit(20))
         return self.response(200, data)
 
 # UPDATE methods
+    @catcher
     def update_users(self):
-        search_condition = self.request_parameters['condition']
-        new_parameters = self.request_parameters['new_parameters']
+        new_parameters = self.post_params['new_parameters']
+        search_condition = self.post_params['condition']
         self.users.update(search_condition, {"$set": new_parameters})
         return self.response(200, {})
 
+    @catcher
     def update_places(self):
-        search_condition = request.json['condition']
-        new_parameters = request.json['new_parameters']
+        new_parameters = self.post_params['new_parameters']
+        search_condition = self.post_params['condition']
         self.places.update(search_condition, {"$set": new_parameters})
         return self.response(200, {})
 
 # DELETE methods
+    @catcher
     def delete_places(self):
         self.places.remove(self.request_parameters)
         return self.response(200, {})
 
+    @catcher
     def delete_users(self):
         self.users.remove(self.request_parameters)
         return self.response(200, {})
