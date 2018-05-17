@@ -1,0 +1,50 @@
+<template>
+
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <!--  Display three horizontal lines when navbar collapsed. -->
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand"> Play & Aurelia ^_^ </a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-left">
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#/login">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 200px">
+    <div class="col-sm-4 col-sm-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading" style="white-space:nowrap">
+          <h3 id="wrong" class="panel-title" style="display:inline-block;">Register here!</h3>
+        </div>
+        <div class="panel-body">
+          <fieldset>
+            <div class="form-group" >
+              <input id="name" value.bind="name" class="form-control" placeholder="Name" type="text"/><br />
+            </div>
+            <div class="form-group" >
+              <input id="pass" value.bind="pass"  class="form-control" placeholder="Password" type="password"/><br />
+            </div>
+            <input class="btn btn-lg btn-success btn-block" type="submit" value="Register" click.trigger="signup()">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="header" style="margin-top: 255px; text-align: center;">
+    ${bio}, Group ${group} <br />
+    Variant ${var} <br />
+  </div>
+
+</template>

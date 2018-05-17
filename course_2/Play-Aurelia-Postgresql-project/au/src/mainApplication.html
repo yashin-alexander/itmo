@@ -1,0 +1,78 @@
+<template>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7 /js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" style="color: white" click.trigger="logout()" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          Out
+        </button>
+        <button type="button"  style="color: white" id="clear" click.trigger=deletePoints() class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          Clean
+        </button>
+	<button type="button" style="display: none;" class="navbar-toogle"  data-toogle="collapse" data-target="navbar-brand">
+	</button>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-left">
+		<li><a class="navbar-brand">${login}</a></li>
+  	</ul>
+        <ul class="nav navbar-nav navbar-right">
+       	  <li><a click.trigger=deletePoints()>Clean</a></li>
+          <li><a href="#/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <p style="position: absolute; top: 10%; left: 10px" > <b></b>
+    <input id="r=1" class="button_r" type="button" name="r" value="1" click.trigger="pressedR(1)">
+    <input id="r=2" class="button_r" type="button" name="r" value="2" click.trigger="pressedR(2)">
+    <input id="r=3" class="button_r" type="button" name="r" value="3" click.trigger="pressedR(3)">
+    <input type="hidden" id="hidden_r" name="r" value="" >
+  </p>
+
+  <div class="container">
+    <div class="box">
+      <canvas id="interactive-area" width="400px" height="400px"></canvas>
+      <div class="scrolltable" id="scrollable_tarble">
+        <table id="answer"></table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="main_container">
+    <div>
+
+
+      <p> <b>X=</b>
+        <input id="x=-5" class="button_x" type="button" name="x" value="-5" click.trigger="pressedX(-5)">
+        <input id="x=-4" class="button_x" type="button" name="x" value="-4" click.trigger="pressedX(-4)">
+        <input id="x=-3" class="button_x" type="button" name="x" value="-3" click.trigger="pressedX(-3)">
+        <input id="x=-2" class="button_x" type="button" name="x" value="-2" click.trigger="pressedX(-2)">
+        <input id="x=-1" class="button_x" type="button" name="x" value="-1" click.trigger="pressedX(-1)">
+        <input id="x=0" class="button_x" type="button" name="x" value="0" click.trigger="pressedX(0)">
+        <input id="x=1" class="button_x" type="button" name="x" value="1" click.trigger="pressedX(1)">
+        <input id="x=2" class="button_x" type="button" name="x" value="2" click.trigger="pressedX(2)">
+        <input id="x=3" class="button_x" type="button" name="x" value="3" click.trigger="pressedX(3)">
+        <input type="hidden" id="hidden_x" name="x" value="" >
+      </p>
+
+    </div>
+
+    <input id="y" name="y" style="margin: auto" style="margin-left: 50px" placeholder="-5<y<3" type="text" input.trigger="checkText()">
+    <input type="button" style="margin-left: 50px" id="submit" value="Send" click.trigger=submitClick()>
+    <p id="text_fail_y">
+    <p id="r_fail">
+    <p id="x_fail">
+  <div>
+
+</template>
