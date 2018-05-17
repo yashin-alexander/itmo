@@ -1,0 +1,27 @@
+#include <iostream>
+
+using namespace std;
+
+int Diverge(int n, int *A) {
+  int max_energy = 0;
+  int curr_energy = 0;
+  for (int i = 0; i < n; i++) {
+    curr_energy = curr_energy + A[i];
+    if (curr_energy < 0)
+      curr_energy = 0;
+    if (max_energy < curr_energy)
+      max_energy = curr_energy;
+  }
+  printf("%d", max_energy);
+}
+
+int main() {
+  int n;
+  cin >> n;
+  int *A = new int[n];
+  for (int i = 0; i < n; i++)
+    cin >> A[i];
+  Diverge(n, A);
+  return 0;
+}
+

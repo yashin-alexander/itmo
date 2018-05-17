@@ -1,0 +1,109 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+struct point {
+  int index;
+  int freq;
+};
+
+typedef struct Node {
+  int value;
+  struct Node *next;
+} Node;
+
+void push(Node **head, int data) {
+  Node *tmp = (Node *)malloc(sizeof(Node));
+  tmp->value = data;
+  tmp->next = (*head);
+  (*head) = tmp;
+}
+
+void insert(Node *head, unsigned n, int val) {
+  unsigned i = 0;
+  Node *tmp = NULL;
+  while (i < n && head->next) {
+    head = head->next;
+    i++;
+  }
+  tmp = (Node *)malloc(sizeof(Node));
+  tmp->value = val;
+  if (head->next) {
+    tmp->next = head->next;
+  } else {
+    tmp->next = NULL;
+  }
+  head->next = tmp;
+}
+
+void printLinkedList(const Node *head) {
+  while (head) {
+    printf("%d ", head->value);
+    head = head->next;
+  }
+  printf("\n");
+}
+
+void Sort(point *arr, int left, int right) {
+  int i = left, r = right;
+  int center_angle = arr[(i + r) / 2].freq;
+
+  while (i <= r) {
+    while (arr[i].freq > center_angle)
+      i++;
+    while (arr[r].freq < center_angle)
+      r--;
+    if (i <= r) {
+      int tmp_fr = arr[i].freq;
+      arr[i].freq = arr[r].freq;
+      arr[r].freq = tmp_fr;
+      int tmp_ind = arr[i].index;
+      arr[i].index = arr[r].index;
+      arr[r].index = tmp_ind;
+      i++;
+      r--;
+    }
+  }
+  if (left < r)
+    Sort(arr, left, r);
+  if (right > i)
+    Sort(arr, i, right);
+}
+
+int main() {
+  Node *head = NULL;
+  int number;
+  scanf("%d", &number);
+  struct point arr[number];
+  for (int i = 0; i < number; i++) {
+    scanf("%d", &arr[i].freq);
+    arr[i].index = i + 1;
+  }
+  Sort(arr, 0, number - 1);
+
+  int adress = 0, multy = 1;
+  int how_much_in = 0;
+  for (int i = 0; i < number; i++) {
+    if (adress == 0) {
+      how_much_in = arr[i].freq;
+      while (arr[i].freq != 0) {
+        push(&head, arr[i].index);
+        arr[i].freq--;
+      }
+      adress = 1;
+    } else {
+      while (arr[i].freq != 0) {
+        if (adress >= how_much_in + 1) {
+          adress = multy;
+          multy++;
+        }
+        insert(head, adress - 1, arr[i].index);
+        arr[i].freq--;
+        adress += multy + 1;
+        how_much_in++;
+      }
+    }
+  }
+  printLinkedList(head);
+}

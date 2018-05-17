@@ -1,0 +1,153 @@
+#include <iostream>
+#include <limits.h>
+
+using namespace std;
+
+int Power(int x, int p) {
+  if (p == 0)
+    return 1;
+  if (p % 2 == 0)
+    return (Power(x, (p / 2)) * Power(x, p / 2));
+  else
+    return (x * Power(x, p - 1));
+}
+int FindMaxFilling(int n) {
+  int max_filling = 0;
+  for (int i = 0; i < n; i++)
+    max_filling = (max_filling * 4) + 1;
+  return max_filling;
+}
+
+int draw(int n, int x, int y, int power, int **table, int filling,
+         int max_filling, int offset_x, int offset_y) {
+
+  if (n == 1) {
+    filling++;
+    if (x % 2 == 0 && y % 2 == 0) {
+      table[offset_x + 1][offset_y + 1] = filling;
+      table[offset_x + 1][offset_y] = filling;
+      table[offset_x][offset_y + 1] = filling;
+    }
+    if (x % 2 == 1 && y % 2 == 0) {
+      table[offset_x][offset_y] = filling;
+      table[offset_x][offset_y + 1] = filling;
+      table[offset_x + 1][offset_y + 1] = filling;
+    }
+    if (x % 2 == 1 && y % 2 == 1) {
+      table[offset_x][offset_y] = filling;
+      table[offset_x + 1][offset_y] = filling;
+      table[offset_x][offset_y + 1] = filling;
+    }
+    if (x % 2 == 0 && y % 2 == 1) {
+      table[offset_x][offset_y] = filling;
+      table[offset_x + 1][offset_y + 1] = filling;
+      table[offset_x + 1][offset_y] = filling;
+    }
+    return filling;
+  } // 2_points case
+  else {
+    if (x < power / 2 && y < power / 2) {
+      filling = draw(n - 1, x, y, power / 2, table, filling, max_filling,
+                     offset_x, offset_y);
+      filling++;
+      table[offset_x + power / 2][offset_y + power / 2] = filling;
+      table[offset_x + power / 2 - 1][offset_y + power / 2] = filling;
+      table[offset_x + power / 2][offset_y + power / 2 - 1] = filling;
+
+      filling =
+          draw(n - 1, 0, 0, power / 2, table, filling, FindMaxFilling(n - 1),
+               offset_x + power / 2, offset_y + power / 2);
+      filling = draw(n - 1, power / 2 - 1, 0, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x, offset_y + power / 2);
+      filling = draw(n - 1, 0, power / 2 - 1, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x + power / 2, offset_y);
+      return filling;
+    }
+    if (x >= power / 2 && y >= power / 2) {
+      filling =
+          draw(n - 1, x - power / 2, y - power / 2, power / 2, table, filling,
+               max_filling, offset_x + power / 2, offset_y + power / 2);
+      filling++;
+      table[offset_x + power / 2 - 1][offset_y + power / 2 - 1] = filling;
+      table[offset_x + power / 2 - 1][offset_y + power / 2] = filling;
+      table[offset_x + power / 2][offset_y + power / 2 - 1] = filling;
+
+      filling = draw(n - 1, power / 2 - 1, power / 2 - 1, power / 2, table,
+                     filling, FindMaxFilling(n - 1), offset_x, offset_y);
+      filling = draw(n - 1, power / 2 - 1, 0, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x, offset_y + power / 2);
+      filling = draw(n - 1, 0, power / 2 - 1, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x + power / 2, offset_y);
+      return filling;
+    }
+    if (x >= power / 2 && y < power / 2) {
+      filling = draw(n - 1, x - power / 2, y, power / 2, table, filling,
+                     max_filling, offset_x + power / 2, offset_y);
+      filling++;
+      table[offset_x + power / 2 - 1][offset_y + power / 2 - 1] = filling;
+      table[offset_x + power / 2 - 1][offset_y + power / 2] = filling;
+      table[offset_x + power / 2][offset_y + power / 2] = filling;
+
+      filling = draw(n - 1, power / 2 - 1, power / 2 - 1, power / 2, table,
+                     filling, FindMaxFilling(n - 1), offset_x, offset_y);
+      filling = draw(n - 1, power / 2 - 1, 0, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x, offset_y + power / 2);
+      filling =
+          draw(n - 1, 0, 0, power / 2, table, filling, FindMaxFilling(n - 1),
+               offset_x + power / 2, offset_y + power / 2);
+      return filling;
+    }
+    if (x < power / 2 && y >= power / 2) {
+      filling = draw(n - 1, x, y - power / 2, power / 2, table, filling,
+                     max_filling, offset_x, offset_y + power / 2);
+      filling++;
+      table[offset_x + power / 2 - 1][offset_y + power / 2 - 1] = filling;
+      table[offset_x + power / 2][offset_y + power / 2 - 1] = filling;
+      table[offset_x + power / 2][offset_y + power / 2] = filling;
+
+      filling =
+          draw(n - 1, 0, 0, power / 2, table, filling, FindMaxFilling(n - 1),
+               offset_x + power / 2, offset_y + power / 2);
+      filling = draw(n - 1, power / 2 - 1, power / 2 - 1, power / 2, table,
+                     filling, FindMaxFilling(n - 1), offset_x, offset_y);
+      filling = draw(n - 1, 0, power / 2 - 1, power / 2, table, filling,
+                     FindMaxFilling(n - 1), offset_x + power / 2, offset_y);
+      return filling;
+    }
+  }
+}
+
+int main() {
+  int n, x, y;
+  cin >> n;
+  cin >> x;
+  cin >> y;
+
+  x--;
+  y--;
+
+  int power = Power(2, n);
+
+  int **table = new int *[power];
+  for (int i = 0; i < power; i++)
+    table[i] = new int[power];
+
+  for (int i = 0; i < power; i++) {
+    for (int j = 0; j < power; j++) {
+      table[i][j] = 9;
+    }
+  }
+
+  table[x][y] = 0; // arr iniz
+  draw(n, x, y, power, table, 0, FindMaxFilling(n), 0, 0);
+
+  for (int i = 0; i < power; i++) {
+    for (int j = 0; j < power; j++) {
+      printf(" %d ", table[i][j]);
+    }
+    printf("\n");
+  } // arr output
+
+  return 0;
+}
+

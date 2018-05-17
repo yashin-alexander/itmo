@@ -1,0 +1,51 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+void Sort(long long *arr, long long *arr2, long left, long long right) {
+  int i = left, r = right;
+  int center_angle = arr[(i + r) / 2];
+
+  while (i <= r) {
+    while (arr[i] < center_angle)
+      i++;
+    while (arr[r] > center_angle)
+      r--;
+    if (i <= r) {
+      int tmp_x = arr[i];
+      arr[i] = arr[r];
+      arr[r] = tmp_x;
+      i++;
+      r--;
+    }
+  }
+  if (left < r)
+    Sort(arr, arr2, left, r);
+  if (right > i)
+    Sort(arr, arr2, i, right);
+}
+
+int main() {
+  long long number;
+  cin >> number;
+  long long *yth = new long long[number];
+  long long *xth = new long long[number];
+  for (long long i = 0; i < number; i++) {
+    cin >> xth[i];
+    cin >> yth[i];
+  }
+
+  Sort(xth, yth, 0, number - 1);
+  Sort(yth, xth, 0, number - 1);
+
+  int64_t ans = 0, ans_y = 0;
+  for (long long i = number - 1; i > 0; i--) {
+    ans += (xth[i] - xth[i - 1]) * i * (number - i) * 2;
+    ans_y += (yth[i] - yth[i - 1]) * i * (number - i) * 2;
+  }
+
+  printf("%.0f", floor((ans + ans_y) / (number * (number - 1))));
+
+  return 0;
+}
