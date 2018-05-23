@@ -1,6 +1,8 @@
 DB_NAME = 'concierge'
 USERS_COLLECTION_NAME = 'users'
 PLACES_COLLECTION_NAME = 'places'
+REPLICA_IPS = ('127.0.0.1:27001', '127.0.0.1:27002', '127.0.0.1:27003')
+REPLICASET = 'rs0'
 
 ACTIONS_LIST = ('Park', 'Cinema', 'Trip to the sea', 'English lesson', 'Work', 'Chill out')
 STATUSES_LIST = ('angry', 'upset', 'feels good', 'feels good', 'friendly')

@@ -125,7 +125,7 @@ class MongoFiller:
         self.faker = faker.Faker()
         self.faker.add_provider(FillerFakes)
 
-        self.client = pymongo.MongoClient()
+        self.client = pymongo.MongoClient('127.0.0.1:27001')
         self.db = self.client[constants.DB_NAME]
         self.users = self.db[constants.USERS_COLLECTION_NAME]
         self.places = self.db[constants.PLACES_COLLECTION_NAME]

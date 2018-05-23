@@ -19,7 +19,7 @@ def catcher(f):
 
 class MongoAPI:
     def __init__(self):
-        self.client = pymongo.MongoClient()
+        self.client = pymongo.MongoClient(constants.REPLICA_IPS, replicaset=constants.REPLICASET)
         self.db = self.client[constants.DB_NAME]
         self.users = self.db[constants.USERS_COLLECTION_NAME]
         self.places = self.db[constants.PLACES_COLLECTION_NAME]
