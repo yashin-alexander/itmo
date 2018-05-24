@@ -64,10 +64,14 @@ Or, as a last resort, in mongoshell for the last secondary replica:
     rs.reconfig(cfg, {force : true})
 
 #### Cassandra
-ccm is a perfect script/lib to create, launch and remove an Apache Cassandra cluster on localhost.
+ccm is a script/lib to create, launch and remove an Apache Cassandra cluster on localhost.
 Simply:
 
-    ccm create test -v 2.2.12 -n 3 -s
+    ccm create concierge -v 2.2.12 -n 3 -s
 
 #### Neo4j
 
+- Download Neo4j Enterprise Edition.
+- Configure the HA related settings from `clustering/neo4j*.conf`
+and paste to the `node*/conf/neo4j.conf` for each node. Change your parameters the way you want,
+but keep urls for each node different.

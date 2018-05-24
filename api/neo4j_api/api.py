@@ -19,7 +19,7 @@ def catcher(f):
 
 class Neo4jAPI:
     def __init__(self):
-        self.db = GraphDatabase("http://localhost:7474/db/data/",
+        self.db = GraphDatabase("http://localhost:17474/db/data/",
                                 username=constants.USERNAME, password=constants.PASSWORD)
 
     @staticmethod
