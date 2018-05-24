@@ -96,22 +96,22 @@ class MongoAPI:
         new_parameters = self.post_params['new_parameters']
         search_condition = self.post_params['condition']
         self.users.update(search_condition, {"$set": new_parameters})
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
 
     @catcher
     def update_places(self):
         new_parameters = self.post_params['new_parameters']
         search_condition = self.post_params['condition']
         self.places.update(search_condition, {"$set": new_parameters})
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
 
 # DELETE methods
     @catcher
     def delete_places(self):
         self.places.remove(self.request_parameters)
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
 
     @catcher
     def delete_users(self):
         self.users.remove(self.request_parameters)
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})

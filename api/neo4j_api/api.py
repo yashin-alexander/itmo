@@ -44,7 +44,7 @@ class Neo4jAPI:
         person_node = self.db.nodes.create(name=request.json['name'], id=request.json['id'])
         person_node.labels.add(constants.PERID)
         self._assign_history_node(person_node)
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
 
     def _assign_history_node(self, person_node):
         for j in range(len(request.json['records'])):
@@ -80,7 +80,7 @@ class Neo4jAPI:
         id = data['id']
         query = 'Match (a)-[r1]-(b)-[r2]-(c) where a.id= ' + id + ' return a, type(r1), id(b), type(r2), c LIMIT 25'
         raw_data = self.db.query(query, data_contents=True)
-        return self.response(200, (raw_data.rows))
+        return self.response(200, (raw_data.rows, ))
 
     # UPDATE methods
     @catcher
@@ -90,7 +90,7 @@ class Neo4jAPI:
         name = data['name']
         query = 'MATCH(p: perid {id: ' + id + ' }) SET p.name = "' + name + '" RETURN p'
         self.db.query(query, data_contents=True)
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
 
     # DELETE methods
     @catcher
@@ -99,4 +99,4 @@ class Neo4jAPI:
         id = data['id']
         query = 'MATCH (n:perid {id: ' + id + '}) DETACH DELETE n'
         self.db.query(query)
-        return self.response(200, {})
+        return self.response(200, {"status": "Success"})
