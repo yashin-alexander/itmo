@@ -12,7 +12,8 @@ def catcher(f):
     def decorated(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except Exception:
+        except Exception as err:
+            print(err)
             return Response(status=500, response='{"status": "Failure"}')
     return decorated
 
