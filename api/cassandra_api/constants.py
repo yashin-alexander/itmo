@@ -2,6 +2,7 @@ KEYSPACE_NAME = 'concierge'
 DB_REGISTER = 'register'
 DB_USER_ACTIVITY = 'user_activity'
 DB_ENTER_ATTEMPTS = 'attempts_to_enter_by_day'
+NODE_IPS = ['127.0.0.1', '127.0.0.2', '127.0.0.3']
 
 DEVICE_TYPES = ("mobile", "desktop")
 EVENT_TYPES = ("log in", "log out")
