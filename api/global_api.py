@@ -1,7 +1,8 @@
 import flask
+
+from functools import wraps
 from werkzeug.routing import BaseConverter
 from requests.exceptions import ConnectionError
-from functools import wraps
 
 from mongo_api.api import MongoAPI
 from neo4j_api.api import Neo4jAPI

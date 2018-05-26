@@ -1,7 +1,8 @@
 import json
+
 from flask import request, Response
-from cassandra.cluster import Cluster
 from functools import wraps
+from cassandra.cluster import Cluster
 
 from . import constants
 

@@ -1,9 +1,10 @@
 import sys
 import faker
 import random
-import constants
 
 from neo4jrestclient.client import GraphDatabase
+
+import constants
 
 
 class Neo4jFiller:
