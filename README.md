@@ -69,6 +69,8 @@ Simply:
 
     ccm create concierge -v 2.2.12 -n 3 -s
 
+Then run `cqlsh` and paste sql code from `databases/cassandra/create_db.sql` there to create tables.
+
 #### Neo4j
 
 - Download Neo4j Enterprise Edition.

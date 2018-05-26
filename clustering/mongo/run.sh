@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mongod --config ~/Documents/helper-concierge/replications/mongo/mongodb$1.conf --replSet "rs0"
+mongod --config ~/Documents/helper-concierge/clustering/mongo/mongodb$1.conf --replSet "rs0"
