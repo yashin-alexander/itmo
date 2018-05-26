@@ -9,7 +9,7 @@
 
 #### Сведения об обслуживании
 
-Для того, чтобы напугать ребенка, монстр должен зайти в дверь, где тот спит. Если ребенок коснется монстра, монстр не сможет пугать детей до конца рабочего дня. Дети бывают пугливые, пугливые дети точно не будут трогать ребенка. Двери от дестких комнат появляются перед монстром по следующим правилам:
+Для того, чтобы напугать ребенка, монстр должен зайти в дверь, где тот спит. Если ребенок коснется монстра, монстр не сможет пугать детей до конца рабочего дня. Монстры бывают пугливые, пугливые монстры точно не будут трогать ребенка. Двери от дестких комнат появляются перед монстром по следующим правилам:
 
 - К монстру должна приехать дверь, после чего он заходит в нее.
 - Монстр проведет за дверью некоторое количество времени, зависящее от пугливости ребенка (пугливый ребенок испугается быстрее).
@@ -54,12 +54,12 @@
 - [3] - Abdnormal child psychology, second edition. Wadsworth 2003. page 417
 - [4] - (10+18)/2 = 14    0:14:08 (10 с.), 0:14:10 (18 с.) Мультфильм.
 - [5] - 12*60=720         12 монстров в ангаре (monsters_number). Всего 60 ангаров (inc). Мультфильм. 
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/monsters_number.png)
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/inc.png)
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/monsters_number.png)
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/inc.png)
 
 - [6] - 1/92 = 0.0108     За один рабочий день один монстр испугался (scared_monster). К тому времени было напугано уже 92 ребенка (children_scared). Мультфильм.
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/children_scared.png)
-- [7] Двери приходят в очередь каждые 7 секунд. Мультфильм. 
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/children_scared.png)
+- [7] Двери приходят в очередь каждые 7 секунд. Мультфильм.
 
 ## Часть 2
 
@@ -67,69 +67,69 @@
 
 #### 1 опыт
 720 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/1info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/1info.PNG)
 
 #### 2 опыт 
 360 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/2info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/2info.PNG)
 
 #### 3 опыт
 180 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/3info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/3info.PNG)
 
 #### 4 опыт
 90 монстров, 8 часовых поясов, 8 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/4info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/4info.PNG)
 
 для сценария 1 характерны следующие особенности:
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_1.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_1.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_1.png?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/queue_size_1.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/broken_monsters_1.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/productivity_1.png)
 
 # Сценарий №2
 #### 5 опыт
 720 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/5info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/5info.PNG)
 
 #### 6 опыт
 360 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/6info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/6info.PNG)
 
 #### 7 опыт
 180 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/7info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/7info.PNG)
 
 #### 8 опыт
 90 монстров, 10 часовых поясов, 10 часов работы, 98.92% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/8info.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/8info.PNG)
 
 для сценария 2 характерны следующие особенности:
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_2.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_2.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_2.png?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/queue_size_2.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/broken_monsters_2.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/productivity_2.png)
 
 
 # Сценарий №3
 #### 9 опыт
 720 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/9.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/9.PNG)
 
 #### 10 опыт 
 360 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/10.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/10.PNG)
 
 #### 11 опыт
 180 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/11.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/11.PNG)
 
 #### 12 опыт
 90 монстров, 8 часовых поясов, 8 часов работы, 97% несмелых детей 
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/12.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/12.PNG)
 
 для сценария 3 характерны следующие особенности:
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_3.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/broken_monsters_3.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_3.png?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/queue_size_3.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/broken_monsters_3.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/productivity_3.png)
 
 
 
@@ -137,23 +137,23 @@
 
 #### 13 опыт
 720 монстров, 8 часовых поясов(забитие очереди происходит в первых трех), 3 часа работы, 98.92% очень смелых детей. Монстры не пугаются.
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/13.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/13.PNG)
 
 #### 14 опыт
 360 монстров, 8 часовых поясов(забитие очереди происходит в первых трех), 8 часов работы, 98.92% очень смелых детей.
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/14.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/14.PNG)
 
 #### 15 опыт
 180 монстров, 8 часовых поясов(забитие очереди происходит в первых трех), 8 часов работы, 98.92% очень смелых детей.
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/15.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/15.PNG)
 
 #### 16 опыт
 90 монстров, 8 часовых поясов(забитие очереди происходит в первых трех), 8 часов работы, 98.92% очень смелых детей.
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/16.PNG?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/16.PNG)
  
 для сценария 4 характерны следующие особенности:
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/queue_size_4.png?raw=true)
-![alt tag](https://github.com/yashin-alexander/Monsters-Inc-modeling/blob/master/anylogic_part/screens/productivity_4.png?raw=true)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/queue_size_4.png)
+![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/anylogic_part/screens/productivity_4.png)
 
 
 В связи с тем, что свободно распространяемая версия anylogic позволяет генерировать только 50000 заявок, реальное количество детей было уменьшено ~ в 1000 раз. 

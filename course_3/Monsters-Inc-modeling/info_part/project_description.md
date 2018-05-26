@@ -7,7 +7,7 @@
 
 #### Сведения об обслуживании
 
-Для того, чтобы напугать ребенка, монстр должен зайти в дверь, где тот спит. Если ребенок коснется монстра, монстр не сможет пугать детей до конца рабочего дня. Дети бывают пугливые, пугливые дети точно не будут трогать ребенка. Двери от дестких комнат появляются перед монстром по следующим правилам:
+Для того, чтобы напугать ребенка, монстр должен зайти в дверь, где тот спит. Если ребенок коснется монстра, монстр не сможет пугать детей до конца рабочего дня. Монстры бывают пугливые, пугливые монстры точно не будут трогать ребенка. Двери от дестких комнат появляются перед монстром по следующим правилам:
 
 - К монстру должна приехать дверь, после чего он заходит в нее.
 - Монстр проведет за дверью некоторое количество времени, зависящее от пугливости ребенка (пугливый ребенок испугается быстрее).
@@ -52,9 +52,9 @@
 - [3] - Abdnormal child psychology, second edition. Wadsworth 2003. page 417
 - [4] - (10+18)/2 = 14    0:14:08 (10 с.), 0:14:10 (18 с.) Мультфильм.
 - [5] - 12*60=720         12 монстров в ангаре (monsters_number). Всего 60 ангаров (inc). Мультфильм. 
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/monsters_number.png)
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/inc.png)
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/monsters_number.png)
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/inc.png)
 
 - [6] - 1/92 = 0.0108     За один рабочий день один монстр испугался (scared_monster). К тому времени было напугано уже 92 ребенка (children_scared). Мультфильм.
-  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/Monsters-Inc-modeling/master/info/screens/children_scared.png)
-- [7] Двери приходят в очередь каждые 7 секунд. Мультфильм. 
+  ![alt tag](https://raw.githubusercontent.com/yashin-alexander/itmo/master/course_3/Monsters-Inc-modeling/info_part/screens/children_scared.png)
+- [7] Двери приходят в очередь каждые 7 секунд. Мультфильм.
