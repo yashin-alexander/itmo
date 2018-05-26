@@ -15,66 +15,66 @@ mov ax, data
 mov ds, ax      
 
 mov si, 1        
-lea bx, arr     ;в bx записываем адрес начала массива
+lea bx, arr
 
 forr:              
 mov dl, 5       
 mov ax, si      
 mul dl		
 mov dl, 3		
-div dl			;остаток попал в ah, целая часть попала в al 
+div dl
 xor ah,ah
 add ax, si	
-mov [bx], ax	;результат переносим в адрес, который записан в bx
+mov [bx], ax
 inc bx		 
-inc si 						;начало вывода массива
+inc si
 	mov dl, 10
 	xor ah, ah
-	div dl					;остаток в аl, целое в ah
+	div dl
 		mov cl, ah			
 		cmp al, 0 			
 		jz out1
-			mov dl, al		;если число было >=10
+			mov dl, al
 			add dl, 30h
 			mov ah, 02h
 			int 21h
-		out1:				;для последнего разряда
+		out1:
 		mov dl, cl
 		add dl, 30h
 		mov ah, 02h
 		int 21h
-	mov al, 20h				;пробел
+	mov al, 20h
 	int 29h					
-cmp si, 26					;пока результат отрицателен cf=1, потом 0
+cmp si, 26
 jc  forr	
 		mov al, 0dh 		
 		int 29h
 		mov al, 0ah
-		int 29h				;конец вывода массива
+		int 29h
 
-mov cx,25					;начало подсчета четных\нечетных
+mov cx,25
 xor bx,bx
 xor di,di
 xor si,si
 form: 
-	mov dl, byte ptr [arr+bx]	;в dx записываем значение из начала массива
-	and dx, 01h					;умножаем побитно, т.к. загрузилось сразу 2 числа
+	mov dl, byte ptr [arr+bx]
+	and dx, 01h
 	cmp dx,1
 
-jne che 					;используем флаг нуля. и усл переход
-	inc si					;счетчик нечетных
+jne che
+	inc si
 	jmp skip	
 
-	che: 					;формирование массива нечетных
-	inc di					;счетчик четных 
+	che:
+	inc di
 skip:
 inc bx
-loop form					;конец подсчета четных\нечетных
+loop form
 
-mov dl, 10 					;вывод x1
+mov dl, 10
 	mov ax, di
 	xor ah, ah
-	div dl ; 
+	div dl
 		mov cl, ah			
 		cmp al, 0 			
 			jz out2
@@ -92,9 +92,9 @@ mov dl, 10 					;вывод x1
 	mov al, 0dh 		
 	int 29h
 mov al, 0ah
-int 29h						;конец вывода x1
+int 29h
 
-mov dl, 10 					;вывод x2
+mov dl, 10
 	mov ax, si
 	xor ah, ah
 	div dl 	
@@ -113,42 +113,42 @@ mov dl, 10 					;вывод x2
 	mov al, 0dh 		
 	int 29h
 mov al, 0ah
-int 29h				;конец вывода x2
+int 29h
 	
 xor ax,ax
 xor bx,bx
 xor dx,dx
 xor cx,cx
-mov dx,di 			;нечетные в di
-mov cx, si 			;четные в si
+mov dx,di
+mov cx, si
 lea di, brr
-lea si, crr			;записываем адреса начала массивов
+lea si, crr
 
 mass:							
 	mov al, byte ptr [arr+bx]	
 	cmp ax,dx
-		jle pro 				;если ax<17, переходим 
-			mov [di],al			;создание массива "больше количесва четных" >X1
+		jle pro
+			mov [di],al
 			inc di
-			inc q 				;счетчик для вывода
+			inc q
 	pro:
 		cmp ax,cx
-		jge pro1				;если ax>8, переходим 
-			mov [si],al			;создание массива "меньше количесва нечетных" <X2
+		jge pro1
+			mov [si],al
 			inc si
-			inc i 				;счетчик для вывода
+			inc i
 	pro1:
 		inc bx
 		dec k
 		cmp k,0
-jne mass							; если k не=0 - переход
+jne mass
 
-mov di,0 						;вывод "больше количества четных"
+mov di,0
 perv:
 	mov dl, 10 				
 		mov al, byte ptr [brr+di]
 		xor ah, ah
-		div dl ; 
+		div dl
 			mov cl, ah			
 			cmp al, 0 			
 			jz out4
@@ -161,23 +161,23 @@ perv:
 			add dl, 30h
 			mov ah, 02h
 			int 21h
-		mov al, 20h			;пробел
+		mov al, 20h
 		int 29h					
 	inc di 		
 	dec q
 	cmp q,0
 jg perv
-		mov al, 0dh 		;перенос строки
+		mov al, 0dh
 		int 29h
 		mov al, 0ah
-		int 29h					;конец вывода "больше количества четных"
+		int 29h
 
-mov si,0 		;вывод "меньше количества нечетных" (переход пока счетчик > 0)
+mov si,0
 vtor:
 	mov dl, 10 				
 		mov al, byte ptr [crr+si]
 		xor ah, ah
-		div dl ; 
+		div dl
 			mov cl, ah			
 			cmp al, 0 			
 			jz out5
@@ -195,7 +195,7 @@ vtor:
 	inc si 		
 	dec i
 	cmp i,0
-jg vtor			;конец вывода "меньше количества нечетных" (переход пока счетчик > 0)
+jg vtor
 	
 mov ax, 4c01h 
 int 21h	

@@ -9,11 +9,11 @@ orig dd ?
 
 tsr proc
 	pushf
-	cmp ax,2229h		;если 9 прерывание вызвала эта программа, то выполнится оригинальный обработчик
+	cmp ax,2229h
 	jne rezid
 	inc ax
 	inc sp
-	inc sp 				;iret убирает из стека 3 значения, поэтому дважды увеличиваем его
+	inc sp
 	iret
 rezid:
 
@@ -22,28 +22,28 @@ rezid:
 	push ds
 
 	mov bx, 40h
-	mov ds, bx				;по адресу 40:0017 в памяти находится kbflag
+	mov ds, bx
 	mov al, byte ptr ds:[17h]
-	and ax,000fh			;если нажат ctrl то 3 бит выставлен
+	and ax,000fh
 	push cs
 	pop ds
-	cmp al,00000100b		;проверяем 3 бит
+	cmp al,00000100b
 
-jne bez_kombinazii		; выход на оригинальный обработчик
+jne bez_kombinazii
 
 ctrls:
-	in al,60h			;проверка на нажатые ctrl+s
+	in al,60h
 	cmp al,01fh	
 	jne ctrlx
 	call ochistka
 	call vivod_sostoyaniya
 
-ctrlx:					;проверка на нажатые ctrl+x
+ctrlx:
 	cmp al,02dh
 	jne bez_kombinazii
 	call vigruzka
 
-bez_kombinazii:				; ориг обработчик
+bez_kombinazii:
 	pop ds
 	pop bx
 	pop ax
@@ -53,25 +53,25 @@ iret
 
 tsr endp
 
-ochistka proc 					; процедура сотрет старые слова на нужном месте экрана
+ochistka proc
 	push ax
 	push bx
 	push cx
 	push dx
-			mov bh,0 				;узнаем координаты курсора
+			mov bh,0
 			mov ah,03h
 			int 10h
-			push dx					;сохраняем их в стек
-				mov bh,00 			;перемещаем курсор в нужное нам место 
+			push dx
+				mov bh,00
 				mov dx,0000h
 				mov ah, 02h
 				int 10h
-			mov cx,99h 				;заполняем пробелами место 
+			mov cx,99h
 		probely:
 			mov al,20h
 			int 29h
 			loop probely
-		mov bh,0 					;возвращаемся к исходному месту курсора
+		mov bh,0
 		pop dx
 		mov ah,02h
 		int 10h	
@@ -82,15 +82,15 @@ ochistka proc 					; процедура сотрет старые слова н�
 	ret
 	ochistka endp
 
-vivod_sostoyaniya proc 			; процедура вывода состояния клавы
+vivod_sostoyaniya proc
 	push ax
 	push bx 
 	push ds
 	push cx
 
-	mov cx,0 				; cx будем использовать для вывода 'nothing'
+	mov cx,0
 	mov bx, 40h
-	mov ds, bx				; обращаемся опять к kbflag
+	mov ds, bx
 	mov al, byte ptr ds:[17h]
 	push cs
 	pop ds
@@ -98,12 +98,12 @@ vivod_sostoyaniya proc 			; процедура вывода состояния �
 	push ax
 	push ax
 
-proverka_na_caps:						; на капс
+proverka_na_caps:
 	mov bl,al
 	and bl, 01000000b
 	cmp bl, 01000000b
 	jne proverka_na_num
-				mov bh,0 				;устанавливаем где печатать
+				mov bh,0
 				mov ah,03h
 				int 10h
 				push dx	
@@ -121,17 +121,17 @@ proverka_na_caps:						; на капс
 		mov al,'s'
 		int 29h
 			pop ax
-				mov bh,0 				;возвращаем каретку на место
+				mov bh,0
 				pop dx
 				mov ah,02h
 				int 10h
-proverka_na_num:						; на нам
+proverka_na_num:
 	pop ax
 	mov bl,al
 	and bl, 00100000b
 	cmp bl, 00100000b
 	jne proverka_na_scroll
-				mov bh,0 				;устанавливаем где печатать
+				mov bh,0
 				mov ah,03h
 				int 10h
 				push dx	
@@ -148,17 +148,17 @@ proverka_na_num:						; на нам
 			mov al,'m'
 			int 29h
 			pop ax
-				mov bh,0 				;возвращаем каретку на место
+				mov bh,0
 				pop dx
 				mov ah,02h
 				int 10h
-proverka_na_scroll:						; на скроллл
+proverka_na_scroll:
 	pop ax
 	mov bl,al
 	and bl, 00010000b
 	cmp bl, 00010000b
 	jne nothing_p
-				mov bh,0 				;устанавливаем где печатать
+				mov bh,0
 				mov ah,03h
 				int 10h
 				push dx	
@@ -181,15 +181,15 @@ proverka_na_scroll:						; на скроллл
 		mov al,'l'
 		int 29h
 		pop ax
-				mov bh,0 				;возвращаем каретку на место
+				mov bh,0
 				pop dx
 				mov ah,02h
 				int 10h
-nothing_p:							;клавиши не нажаты
+nothing_p:
 	pop ax
 	cmp cx,0
 	jne konez
-			mov bh,0 				;устанавливаем где печатать
+			mov bh,0
 			mov ah,03h
 			int 10h
 			push dx	
@@ -213,7 +213,7 @@ nothing_p:							;клавиши не нажаты
 		mov al,'g'
 		int 29h
 		pop ax
-			mov bh,0 				;возвращаем каретку на место
+			mov bh,0
 			pop dx
 			mov ah,02h
 			int 10h
@@ -226,7 +226,7 @@ konez:
 ret
 vivod_sostoyaniya endp
 
-vigruzka proc 				;выгрузка из памяти
+vigruzka proc
 	push ds					
 	push es
 	push dx
@@ -247,13 +247,13 @@ call ochistka
 	pop es
 	pop ds
 ret
-vigruzka endp				; конец резидентной части
+vigruzka endp
 
 setup: 
-	mov ax,2229h			;проверка на загруженность в памяти
-	int 9h					;если резидент не загружен, то обратимся к оригинальному обработчику
-	cmp ax,222ah			;оригинальный обработчик не поменяет 2229 
-	jz nosetup				;поэтому устанавливаем резидент
+	mov ax,2229h
+	int 9h
+	cmp ax,222ah
+	jz nosetup
 
 		mov ax,3509h
 		int 21h
