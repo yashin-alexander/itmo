@@ -1,0 +1,14 @@
+{
+  "name": "mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "create_db.js",
+  "scripts": {
+    "start": "node create_db.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.0.12"
+  }
+}

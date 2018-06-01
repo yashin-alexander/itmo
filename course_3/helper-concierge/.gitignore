@@ -1,0 +1,9 @@
+*/__pycache__/
+*.pyc
+*.idea
+*node_modules
+*/mongo/1/*
+*/mongo/2/*
+*/mongo/3/*
+*/mongo/4/*
+*/mongo/5/*

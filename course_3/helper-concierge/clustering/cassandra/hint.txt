@@ -1,0 +1,3 @@
+ccm create test -v 2.2.12 -n 3 -s  # create 3 nodes
+ccm node1 ring  # check cluster set up
+ccm node1 stop

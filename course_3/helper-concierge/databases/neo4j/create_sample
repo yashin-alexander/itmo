@@ -1,0 +1,15 @@
+CREATE (:hisId {Id:325})-[:WHO]->(:perId {Id:7})<-[:WHO]-(:hisId {Id:373})
+CREATE (:hisId {Id:341})-[:WHO]->(:perId {Id:4})<-[:WHO]-(:hisId {Id:12})
+CREATE (:hisId {Id:34})-[:WHO]->(:perId {Id:5})
+
+MATCH (a:hisId) WHERE a.Id=325 CREATE (a)-[:WHEN]->(:Time {time: "23-44-05-08-2017"})
+MATCH (a:hisId) WHERE a.Id=373 CREATE (a)-[:WHEN]->(:Time {time: "11-01-25-05-2017"})
+MATCH (a:hisId) WHERE a.Id=341 CREATE (a)-[:WHEN]->(:Time {time: "11-14-15-08-2017"})
+MATCH (a:hisId) WHERE a.Id=12 CREATE (a)-[:WHEN]->(:Time {time: "8-54-04-08-2017"})
+MATCH (a:hisId) WHERE a.Id=34 CREATE (a)-[:WHEN]->(:Time {time: "21-30-23-05-2017"})
+
+MATCH (a:hisId) WHERE a.Id=34 CREATE (a)-[:WHAT]->(:Alarm {clock: "7-00"})
+MATCH (a:hisId) WHERE a.Id=325 CREATE (a)-[:WHAT]->(:Taxi {Comp: "uber"})
+MATCH (a:hisId) WHERE a.Id=373 CREATE (a)-[:WHAT]->(:Food {Comp: "Dodo"})
+MATCH (a:hisId) WHERE a.Id=341 CREATE (a)-[:WHAT]->(:Ticket {Comp: "Cineplex"})
+MATCH (a:hisId) WHERE a.Id=12 CREATE (a)-[:WHAT]->(:Food {Comp: "Dodo"})

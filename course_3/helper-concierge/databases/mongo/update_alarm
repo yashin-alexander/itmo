@@ -1,0 +1,15 @@
+db.users.update(
+    { "name" : "sonya" },
+    { $push: {ordering_food: { place: ObjectId("5ac8acac5b3ff83806f8a513"), time: new Date(), address: "Pushkina", dish: "pizza"} }}
+)
+db.users.update(
+    { "name" : "sonya" },
+    { $push: {ordering_food: { place: ObjectId("5ac8acac5b3ff83806f8a513"), time: new Date(), address: "Pushkina", dish: "soup"} }}
+)
+db.users.update(
+    { "name" : "sonya" },
+    { $push: {ordering_food: { place: ObjectId("5ac8acac5b3ff83806f8a513"), time: new Date(), address: "Pushkina", dish: "ice cream"} }}
+)
+
+db.users.update({}, {$unset : {"ordering_food.1" : 1 }}) 
+db.users.update({}, {$pull : {"ordering_food" : null}})
