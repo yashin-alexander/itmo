@@ -6,3 +6,5 @@ UART interface realization:
  - 2 two operating modes
  - 9600 baud rate
 
+#### Developed with `Artix 7`.
+#### Tested on terminal emulator & serial port on Windows 7.
