@@ -2,7 +2,7 @@
 Diode animation example for stm32f3xx
 
 - Download IDE [System Workbench for STM32](https://www.st.com/en/development-tools/sw4stm32.html)
-- Download flashin tool [st-link](https://github.com/texane/stlink)
+- Clone and install flashing tool [st-link](https://github.com/texane/stlink)
 - Create new C project
 - Choose your board (for example STM32F3 Nucleo F303ZE)
 - Choose hardware libary (StdPeriph)
