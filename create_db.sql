@@ -4,12 +4,9 @@ STARTUP NOMOUNT;
 CREATE DATABASE talldata
     CHARACTER SET UTF8
     DATAFILE '/u01/osp51/talldata/node04/ucoyu41.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
-             '/u01/osp51/talldata/node01/icoti84.dbf' SIZE 100M REUSE AUTOEXTEND ON
-
+             '/u01/osp51/talldata/node01/icoti84.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED
     SYSAUX DATAFILE '/u01/osp51/talldata/node04/nuv53.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED
-
     UNDO TABLESPACE undotbs1 DATAFILE '/u01/osp51/talldata/undo.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED
-
     DEFAULT TABLESPACE USERS
         DATAFILE '/u01/osp51/talldata/node04/ibakeza114.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
 CREATE TABLESPACE DARK_PINK_LAB
@@ -18,12 +15,12 @@ CREATE TABLESPACE DARK_PINK_LAB
              '/u01/osp51/talldata/node02/darkpinklab03.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node02/darkpinklab04.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node01/darkpinklab05.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
-
 CREATE TABLESPACE FAST_BLACK_LAKE
     DATAFILE '/u01/osp51/talldata/node03/fastblacklake01.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node01/fastblacklake02.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node04/fastblacklake03.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node03/fastblacklake04.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED,
              '/u01/osp51/talldata/node04/fastblacklake05.dbf' SIZE 100M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;
-
+    @?/rdbms/admin/catalog.sql
+    @?/rdbms/admin/catproc.sql
 EXIT

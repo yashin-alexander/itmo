@@ -1,6 +1,6 @@
 db_name="talldata"
 SGA_MAX_SIZE=720M
 db_block_size=4096
-undo_management = MANUAL
+undo_management = AUTO
 control_files = (/u01/osp51/talldata/ora_control1, /u01/osp51/talldata/ora_control2)
 compatible = "11.2.0"
