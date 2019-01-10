@@ -1,0 +1,18 @@
+talldata_primary=
+	(DESCRIPTION=
+		(ADDRESS_LIST=
+			(ADDRESS=(PROTOCOL=tcp)(HOST=db177)(PORT=1521))
+		)
+	(CONNECT_DATA=
+		(SERVICE_NAME=talldata_primary)
+	)
+)
+talldata_standby=
+	(DESCRIPTION=
+		(ADDRESS_LIST=
+			(ADDRESS=(PROTOCOL=tcp)(HOST=db174)(PORT=1521))
+		)
+	(CONNECT_DATA=
+		(SERVICE_NAME=talldata_standby)
+	)
+)

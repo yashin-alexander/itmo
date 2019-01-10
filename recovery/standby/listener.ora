@@ -1,0 +1,16 @@
+LISTENER =
+        (DESCRIPTION_LIST=
+                (DESCRIPTION=
+                        (ADDRESS_LIST=
+        (ADDRESS=(PROTOCOL=tcp)(HOST=db174)(PORT=1521))
+                )
+        )
+)
+SID_LIST_LISTENER=
+        (SID_LIST=
+        (SID_DESC=
+                (SID_NAME=s207687)
+                (ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1)
+                (GLOBAL_DBNAME=talldata_standby)
+        )
+)
