@@ -1,5 +1,5 @@
 db_name="talldata"
-DB_UNIQUE_NAME='talldata_primary'
+DB_UNIQUE_NAME='talldata_standby'
 SGA_MAX_SIZE=720M
 db_block_size=4096
 #undo_management = AUTO

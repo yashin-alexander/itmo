@@ -11,6 +11,5 @@ SID_LIST_LISTENER=
         (SID_DESC=
                 (SID_NAME=s207687)
                 (ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1)
-#                (GLOBAL_DBNAME=talldata_primary)
         )
 )

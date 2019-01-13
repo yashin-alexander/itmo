@@ -1,4 +1,3 @@
-#talldata_primary=
 s207687=
 	(DESCRIPTION=
 		(ADDRESS_LIST=
@@ -8,7 +7,6 @@ s207687=
 		(ORACLE_SID=s207687)
 	)
 )
-#talldata_standby=
 s1=
 	(DESCRIPTION=
 		(ADDRESS_LIST=
