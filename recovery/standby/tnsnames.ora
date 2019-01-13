@@ -1,18 +1,20 @@
-talldata_primary=
+#talldata_primary=
+s207687=
 	(DESCRIPTION=
 		(ADDRESS_LIST=
 			(ADDRESS=(PROTOCOL=tcp)(HOST=db174)(PORT=1521))
 		)
 	(CONNECT_DATA=
-		(SERVICE_NAME=talldata_primary)
+		(ORACLE_SID=s207687)
 	)
 )
-talldata_standby=
+#talldata_standby=
+s1=
 	(DESCRIPTION=
 		(ADDRESS_LIST=
 			(ADDRESS=(PROTOCOL=tcp)(HOST=db177)(PORT=1521))
 		)
 	(CONNECT_DATA=
-		(SERVICE_NAME=talldata_standby)
+		(ORACLE_SID=s1)
 	)
 )

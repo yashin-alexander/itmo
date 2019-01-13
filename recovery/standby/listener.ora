@@ -8,9 +8,9 @@ LISTENER =
 )
 SID_LIST_LISTENER=
         (SID_LIST=
-        (SID_DESC=
-                (SID_NAME=s207687)
+          (SID_DESC=
+                (SID_NAME=s1)
                 (ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1)
-                (GLOBAL_DBNAME=talldata_standby)
+#                (GLOBAL_DBNAME=talldata_standby)
         )
 )
