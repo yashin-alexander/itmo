@@ -2,6 +2,8 @@
 LIGHT_GREEN="\033[1;32m"
 NO_COLOR="\033[0m"
 CONTROL_FILE_BACKUP="/u01/osp51/talldata/archive/standbycontrol.ctl"
+ARCHIVE_DIR_PATH="/u01/osp51/talldata/archive/"
+ 
 
 
 recreate_redo_logs() 
@@ -51,11 +53,15 @@ EOF
 
 do_standby_recover()
 {
-  scp -r /u01/osp51/talldata/archive/* oracle@db174:/u01/osp51/talldata/archive/
+  scp -r ${ARCHIVE_DIR_PATH}/* oracle@db174:${ARCHIVE_DIR_PATH}
+  echo -e "${LIGHT_GREEN}[SUCCESS]${NO_COLOR} Backup files cloned"
+  scp -r recover.sql oracle@db174:~
+  echo -e "${LIGHT_GREEN}[SUCCESS]${NO_COLOR} recover.sql cloned"
   ssh oracle@db174 <<EOF
     bash
-    source dbms/configure/env.sh
+    source /u01/dbms/configure/env.sh
     sqlplus / as sysdba @recover
+  echo -e "${LIGHT_GREEN}[SUCCESS]${NO_COLOR} recovery done!"
 EOF
 }
 
